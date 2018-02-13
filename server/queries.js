@@ -14,7 +14,6 @@ var connection = {
 }
 
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/metroidprimerun';
 var connectionSettings = {
   host: config.database.host || 'localhost',
   user: config.database.user,
