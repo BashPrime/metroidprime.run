@@ -15,8 +15,13 @@ var connection = {
 
 var pgp = require('pg-promise')(options);
 var connectionString = 'postgres://localhost:5432/metroidprimerun';
-var db = pgp(connectionString);
-
-// add query functions
+var connectionSettings = {
+  host: config.database.host || 'localhost',
+  user: config.database.user,
+  password: config.database.password,
+  port: config.database.port || 5432,
+  database: config.database.database || 'metroidprimerun'
+}
+var db = pgp(connectionSettings);
 
 module.exports = db;
