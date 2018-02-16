@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 
-import { AuthService } from './services/auth.service';
 import { RegisterComponent } from './register/register.component';
 
 
@@ -27,7 +26,7 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule,
     SuiModule
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

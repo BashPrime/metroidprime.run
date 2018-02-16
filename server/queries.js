@@ -6,20 +6,14 @@ var options = {
   promiseLib: promise
 };
 
-var connection = {
-  host: config.database.host,
-  user: config.database.user || 'localhost',
-  password: config.database.password,
-  database: config.database.password || 'metroidprimerun'
-}
-
 var pgp = require('pg-promise')(options);
+
 var connectionSettings = {
-  host: config.database.host || 'localhost',
+  host: config.database.host,
   user: config.database.user,
   password: config.database.password,
-  port: config.database.port || 5432,
-  database: config.database.database || 'metroidprimerun'
+  port: config.database.port,
+  database: config.database.database
 }
 var db = pgp(connectionSettings);
 

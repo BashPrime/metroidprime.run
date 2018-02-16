@@ -1,5 +1,13 @@
-// Load configuration file first
+const utilities = require('./utilities');
+try {
+    require.resolve("../config");
+} catch(e) {
+    require('./utilities').generateConfig();
+    console.log("You will need to set your config.js file before running the server.");
+    process.exit(e.code);
+}
 var config = require('../config');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -31,7 +39,7 @@ app.get('*', (req, res) => {
 });
 
 //Set Port
-const port = config.server ? config.server.port : '3000';
+const port = config.server.port;
 app.set('port', port);
 
 const server = http.createServer(app);
