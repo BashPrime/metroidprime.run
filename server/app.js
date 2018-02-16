@@ -13,8 +13,17 @@ app.use(bodyParser.urlencoded({ extended: false}));
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, '../dist')));
 
-// API location
-app.use('/users', require('./routes/users'));
+// API location (all node routes will fall under /api path)
+app.use('/api', require('./routes/api'));
+
+// Error handler
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500)
+    .json({
+      status: 'error',
+      message: err.message
+    });
+});
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
@@ -22,7 +31,7 @@ app.get('*', (req, res) => {
 });
 
 //Set Port
-const port = config.server.port || '3000';
+const port = config.server ? config.server.port : '3000';
 app.set('port', port);
 
 const server = http.createServer(app);

@@ -1,0 +1,4 @@
+CREATE TABLE regions (
+	id INTEGER PRIMARY KEY,
+	name TEXT NOT NULL
+);
