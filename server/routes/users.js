@@ -58,6 +58,9 @@ function registerUser(req, res, next) {
 
   // Hash password with bcrypt before storing in database
   bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+    if (err) {
+      throw err;
+    }
     req.body.password = hash;
     db.none('insert into users (${this:name}) values (${this:csv})', req.body)
     .then(function () {
