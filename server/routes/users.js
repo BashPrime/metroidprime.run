@@ -10,6 +10,8 @@ var db = require('../queries');
 // Define routes
 router.get('/', getAllUsers);
 router.get('/:username', getSingleUser);
+router.post('/userexists', userExists);
+router.post('/emailexists', emailExists);
 router.post('/register', registerUser);
 
 
@@ -23,7 +25,7 @@ function getAllUsers(req, res, next) {
     .then(function (data) {
       res.status(200)
         .json({
-          status: 'success',
+          success: true,
           data: data,
           message: 'Retrieved ALL users'
         });
@@ -43,13 +45,59 @@ function getSingleUser(req, res, next) {
     .then(function (data) {
       res.status(200)
         .json({
-          status: 'success',
+          success: true,
           data: data,
           message: 'Returned user'
         });
     })
     .catch(function (err) {
       return next(err);
+    });
+}
+
+function userExists(req, res, next) {
+  const obj = {
+    columns: ['id'],
+    username: req.body.username
+  };
+
+  db.one('select ${columns:name} from users where lower(name) = lower(${username})', obj)
+    .then(function (data) {
+      res.status(403)
+        .json({
+          success: false,
+          message: 'Username is taken'
+        });
+    })
+    .catch(function (err) {
+      res.status(200)
+        .json({
+          success: true,
+          message: 'Username is available'
+        });
+    });
+}
+
+function emailExists(req, res, next) {
+  const obj = {
+    columns: ['id'],
+    email: req.body.email
+  };
+
+  db.one('select ${columns:name} from users where lower(email) = lower(${email})', obj)
+    .then(function (data) {
+      res.status(403)
+        .json({
+          success: false,
+          message: 'Email is taken'
+        });
+    })
+    .catch(function (err) {
+      res.status(200)
+        .json({
+          success: true,
+          message: 'Email is available'
+        });
     });
 }
 
@@ -66,8 +114,8 @@ function registerUser(req, res, next) {
     .then(function () {
       res.status(200)
         .json({
-          status: 'success',
-          message: 'Registered user'
+          success: true,
+          message: 'Successfully registered user'
         });
     })
     .catch(function (err) {
