@@ -1,33 +1,44 @@
-<section class="hero is-light">
+<section class="hero is-light is-fullheight">
   <div class="hero-body">
     <div class="container">
+      <h3 class="title has-text-grey has-text-centered">Register a User Account</h3>
       <div class="columns">
-        <div class="column is-half is-offset-one-quarter">
+        <div class="column is-4 is-offset-4">
           <div class="box">
-            <h2 class="title is-size-4">Register an Account</h2>
-            <form #registerForm="ngForm">
+            <form [formGroup]="registerForm" novalidate>
               <div class="field">
                 <label class="label">Username</label>
                 <div class="control">
-                  <input class="input" type="text" [(ngModel)]="editedUser['name']" name="name" #name="ngModel" required [ngClass]="{ 'is-danger': name.invalid && (name.dirty || name.touched) }">
+                  <input class="input" type="text"
+                  [(ngModel)]="editedUser['name']" formControlName="name"
+                  [ngClass]="{ 'is-danger': name.invalid && (name.dirty || name.touched) }"
+                  >
                 </div>
                 <div *ngIf="name.invalid && (name.dirty || name.touched)">
-                  <p class="help is-danger" *ngIf="name.errors.required">A username is required.</p>
+                  <p class="help is-danger" *ngIf="name.errors?.required">Please enter a username.</p>
+                  <p class="help is-danger" *ngIf="name.errors?.usernameTaken">Username is already taken.</p>
                 </div>
               </div>
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control">
-                  <input class="input" type="email" [(ngModel)]="editedUser['email']" name="email" #email="ngModel" required [ngClass]="{ 'is-danger': email.invalid && (email.dirty || email.touched) }">
+                  <input class="input" type="email"
+                  [(ngModel)]="editedUser['email']" formControlName="email"
+                  [ngClass]="{ 'is-danger': email.invalid && (email.dirty || email.touched) }"
+                  >
                 </div>
                 <div *ngIf="email.invalid && (email.dirty || email.touched)">
-                  <p class="help is-danger" *ngIf="email.errors.required">An email is required.</p>
+                  <p class="help is-danger" *ngIf="!email.errors.required && (email.errors.email || email.errors?.emailTaken)">Email is invalid or already taken.</p>
+                  <p class="help is-danger" *ngIf="email.errors.required">Please enter an email.</p>
                 </div>
               </div>
               <div class="field">
                 <label class="label">Password</label>
                 <div class="control">
-                  <input class="input" type="password" [(ngModel)]="editedUser['password']" name="password" #password="ngModel" required [ngClass]="{ 'is-danger': password.invalid && (password.dirty || password.touched) }">
+                  <input class="input" type="password"
+                  [(ngModel)]="editedUser['password']" formControlName="password"
+                  [ngClass]="{ 'is-danger': password.invalid && (password.dirty || password.touched) }"
+                  >
                 </div>
                 <div *ngIf="password.invalid && (password.dirty || password.touched)">
                   <p class="help is-danger" *ngIf="password.errors.required">Please enter a password.</p>
@@ -36,14 +47,26 @@
               <div class="field">
                 <label class="label">Confirm Password</label>
                 <div class="control">
-                  <input class="input" type="password" [(ngModel)]="editedUser['confirmPassword']" name="confirmPassword" #confirmPassword="ngModel"
-                    required [ngClass]="{ 'is-danger': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched) }">
+                  <input class="input" type="password"
+                  [(ngModel)]="editedUser['confirmPassword']" formControlName="confirmPassword"
+                  [ngClass]="{ 'is-danger': (confirmPassword.invalid || registerForm.errors?.mismatch) && (confirmPassword.dirty || confirmPassword.touched) }"
+                  >
                 </div>
-                <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
-                  <p class="help is-danger" *ngIf="confirmPassword.errors.required">Please confirm your password.</p>
+                <div *ngIf="confirmPassword.dirty || confirmPassword.touched">
+                  <p class="help is-danger" *ngIf="confirmPassword.invalid && confirmPassword.errors.required">Please confirm your password.</p>
+                  <p class="help is-danger" *ngIf="registerForm.errors?.mismatch">Passwords do not match.</p>
                 </div>
               </div>
+              <button class="button is-block is-link is-large is-fullwidth" (click)="registerUser()" [disabled]="!registerForm.valid"
+                [ngClass]="{ 'is-loading': submitted }"
+              >
+                Register
+              </button>
             </form>
+          </div>
+          <div class="notification is-danger" *ngIf="errMsg">
+            <button class="delete" (click)="errMsg = undefined"></button>
+            {{ errMsg }}
           </div>
         </div>
       </div>
