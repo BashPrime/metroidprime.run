@@ -29,6 +29,7 @@
     "bulma": "^0.6.2",
     "core-js": "^2.4.1",
     "express": "^4.16.2",
+    "font-awesome": "^4.7.0",
     "fs-extra": "^5.0.0",
     "ng2-semantic-ui": "^0.9.6",
     "pg-promise": "^7.5.2",
