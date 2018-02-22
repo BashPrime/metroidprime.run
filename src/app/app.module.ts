@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { SuiModule } from 'ng2-semantic-ui';
 
 import { UserService } from './services/user.service';
 import { ValidatorService } from './services/validator.service';
@@ -29,8 +28,7 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    SuiModule
+    HttpClientModule
   ],
   providers: [UserService, ValidatorService],
   bootstrap: [AppComponent]
