@@ -8,6 +8,10 @@ var config = {
     },
     server: {
         port: 3000
+    },
+    token: {
+      privateKey: 'privatekey',
+      expiry: 1 * 60 * 60 * 1000
     }
 };
 
