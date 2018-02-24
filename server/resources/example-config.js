@@ -10,8 +10,8 @@ var config = {
     port: 3000
   },
   token: {
-    privateKey: 'privatekey',
-    expiresIn: 806400 // 1 week
+    secretKey: '', // use "npm run genSecretKey" to generate a secret key. Copy and paste it here
+    expiresIn: 806400 // 1 week in seconds
   }
 };
 

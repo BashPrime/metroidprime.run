@@ -34,7 +34,7 @@ function authenticateUser(req, res, next) {
       } else {
         // Password accepted, generate JSON token and send in response
         const payload = prepareJwtPayload(user);
-        const token = jwt.sign(payload, config.token.privateKey, {
+        const token = jwt.sign(payload, config.token.secretKey, {
           expiresIn: config.token.expiresIn
         });
 
