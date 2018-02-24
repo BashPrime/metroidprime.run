@@ -16,16 +16,32 @@
       </a>
     </div>
     <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="field is-grouped">
-          <p class="control">
-            <a class="button is-link" routerLink="/login">Login</a>
-          </p>
-          <!-- <p class="control">
-            <a class="button" routerLink="/register">Register</a>
-          </p> -->
+      <div *ngIf="user; then loggedIn else loggedOut"></div>
+      <ng-template #loggedIn>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">{{ user.name }}</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" (click)="onLogoutClicked()">
+              <span class="icon is-small">
+                  <i class="fa fa-sign-out" aria-hidden="true"></i>
+              </span>
+              Logout
+            </a>
+          </div>
         </div>
-      </div>
+      </ng-template>
+      <ng-template #loggedOut>
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="button is-link" routerLink="/login">Login</a>
+            </p>
+            <!-- <p class="control">
+              <a class="button" routerLink="/register">Register</a>
+            </p> -->
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
 </nav>

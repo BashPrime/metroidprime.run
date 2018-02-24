@@ -4,12 +4,22 @@
       <h3 class="title has-text-grey has-text-centered">Log In</h3>
       <div class="columns">
         <div class="column is-4 is-offset-4">
+          <div class="notification is-success" *ngIf="notification">
+            <button class="delete" (click)="notification = undefined"></button>
+            {{ notification }}
+          </div>
+          <div class="notification is-danger" *ngIf="errMsg">
+            <button class="delete" (click)="errMsg = undefined"></button>
+            {{ errMsg }}
+          </div>
           <div class="box">
-            <form>
+            <form #loginForm="ngForm">
               <div class="field">
                 <label class="label">Username</label>
                 <div class="control has-icons-left">
-                  <input class="input" type="text">
+                  <input class="input" type="text"
+                  [(ngModel)]="editedUser['username']" name="username" #username="ngModel"
+                  />
                   <span class="icon is-small is-left">
                     <i class="fa fa-user"></i>
                   </span>
@@ -18,13 +28,17 @@
               <div class="field">
                 <label class="label">Password</label>
                 <div class="control has-icons-left">
-                  <input class="input" type="password">
+                  <input class="input" type="password"
+                  [(ngModel)]="editedUser['password']" name="password" #password="ngModel"
+                  />
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
                 </div>
               </div>
-              <button class="button is-block is-link is-large is-fullwidth">
+              <button class="button is-block is-link is-large is-fullwidth" (click)="onLoginSubmit()"
+                [ngClass]="{ 'is-loading': submitted }"
+              >
                 Log In
               </button>
             </form>

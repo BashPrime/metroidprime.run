@@ -23,42 +23,54 @@ function authenticateUser(req, res, next) {
   })
   .then(user => {
     // User returned, verify password
-    var candidatePassword = req.body.password;
-    var hash = user.password;
-
-    bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+    comparePassword(req.body.password, user.password, (err, isMatch) => {
       if (err) {
         return next(err);
       }
+
       if (!isMatch) {
         // Invalid password, return unauthorized response
-        res.status(401)
-        .json({
-          success: false,
-          message: 'Wrong password'
-        });
+        returnUnauthorizedCredentials(res);
       } else {
         // Password accepted, generate JSON token and send in response
-        const payload = {
-          id: user.id,
-          name: user.name,
-          email: user.email
-        };
+        const payload = prepareJwtPayload(user);
         const token = jwt.sign(payload, config.token.privateKey);
 
         res.status(200)
         .json({
           success: true,
-          token: 'JWT ' + token,
-          message: 'Password accepted'
+          token: token,
+          user: payload
         });
       }
     });
   })
   .catch(err => {
-    err.message = 'Username not recognized';
-    return next(err);
+    returnUnauthorizedCredentials(res);
   });
+}
+
+function comparePassword(candidatePassword, hash, callback) {
+  bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+    if (err) throw err;
+    callback(null, isMatch);
+  });
+}
+
+function returnUnauthorizedCredentials(res) {
+  res.status(401)
+  .json({
+    success: false,
+    message: 'Incorrect username or password.'
+  });
+}
+
+function prepareJwtPayload(user) {
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email
+  };
 }
 
 module.exports = router;
