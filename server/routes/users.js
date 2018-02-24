@@ -94,10 +94,10 @@ function emailExists(req, res, next) {
     })
     .catch(function (err) {
       res.status(200)
-        .json({
-          success: true,
-          message: 'Email is available'
-        });
+      .json({
+        success: true,
+        message: 'Email is available'
+      });
     });
 }
 

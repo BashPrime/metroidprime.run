@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
-import { tokenNotExpired } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
@@ -9,7 +9,10 @@ export class AuthService {
   user: any;
   authenticationChange: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private jwtHelperService: JwtHelperService
+  ) {
     this.authToken = localStorage.getItem('id_token');
     this.user = JSON.parse(localStorage.getItem('user'));
   }
@@ -32,7 +35,11 @@ export class AuthService {
   }
 
   get loggedIn() {
-    return tokenNotExpired('id_token');
+    if (!this.authToken) {
+      return false;
+    }
+
+    return !this.jwtHelperService.isTokenExpired(this.authToken);
   }
 
   logout() {

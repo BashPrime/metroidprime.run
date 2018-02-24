@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   showNav = false;
   user: any;
   _authSub: any;
@@ -17,12 +17,14 @@ export class NavbarComponent implements OnInit {
     private authService: AuthService
   ) {
     this._authSub = this.authService.authenticationChange.subscribe(loggedIn => {
-      this.user = loggedIn ? this.getUserFromAuthService() : undefined;
-    })
+      if (loggedIn) {
+        this.getUserFromAuthService();
+      }
+    });
   }
 
   ngOnInit() {
-    this.user = this.getUserFromAuthService();
+    this.getUserFromAuthService();
   }
 
   ngOnDestroy() {
@@ -30,7 +32,12 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserFromAuthService() {
-    return this.authService.loggedIn ? this.authService.user : undefined;
+    if (this.authService.loggedIn) {
+      this.user = this.authService.user;
+    } else {
+      this.user = undefined;
+      this.authService.logout();
+    }
   }
 
   onLogoutClicked() {
