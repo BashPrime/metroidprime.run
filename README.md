@@ -35,14 +35,18 @@ database: {
 }
 ```
 
-Then, you will need to run the `.sql` files found in `/server/db/schema` to scaffold your Postgres database. There will be a script written in the future to automate this, but for the time being run the following files using `psql` or your preferred Postgres tool in their specific order:
+In the `token` section of your `config.js` file, you will see the `secretKey` entry; it is higly recommended you use a randomly-generated key for signing any authentication tokens the app creates. For convenience, you can run the following command to generate a secret key.
 
+```bash
+npm run genSecretKey
 ```
-users.sql
-regions.sql
-games.sql
-categories.sql
-records.sql
+
+Just copy and paste the generated key to your `secretKey` value once it is generated.
+
+After setting up your server/database configuration, run the following command to scaffold your Postgres database:
+
+```bash
+npm run initDb
 ```
 
 ## Running the Application

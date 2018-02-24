@@ -11,7 +11,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "genSecretKey": "node ./server/scripts/secretKey.js"
+    "genSecretKey": "node ./server/scripts/secretKey.js",
+    "initDb": "node ./server/scripts/initDb.js"
   },
   "private": true,
   "dependencies": {
