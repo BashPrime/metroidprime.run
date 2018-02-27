@@ -10,6 +10,7 @@ var config = require('../config');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const path = require('path');
 const http = require('http');
 const app = express();
@@ -17,6 +18,12 @@ const app = express();
 // Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
+
+require('./passport')(passport);
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, '../dist')));

@@ -6,10 +6,6 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(username: string) {
-    return this.http.get('/api/users/' + username);
-  }
-
   registerUser(user) {
     return this.http.post('/api/users/register', user);
   }

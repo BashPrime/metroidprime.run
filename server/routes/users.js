@@ -1,4 +1,5 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
 
 // Properties
@@ -9,7 +10,7 @@ var db = require('../queries');
 
 // Define routes
 router.get('/', getAllUsers);
-router.get('/:username', getSingleUser);
+router.get('/profile', passport.authenticate('jwt', {session:false}), getUserProfile);
 router.post('/userexists', userExists);
 router.post('/emailexists', emailExists);
 router.post('/register', registerUser);
@@ -28,26 +29,6 @@ function getAllUsers(req, res, next) {
           success: true,
           data: data,
           message: 'Retrieved ALL users'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
-}
-
-function getSingleUser(req, res, next) {
-  const obj = {
-    columns: ['id', 'name', 'isenabled', 'userlevel', 'twitter', 'twitch', 'youtube'],
-    username: req.params.username
-  };
-
-  db.one('select ${columns:name} from users where lower(name) = lower(${username})', obj)
-    .then(function (data) {
-      res.status(200)
-        .json({
-          success: true,
-          data: data,
-          message: 'Returned user'
         });
     })
     .catch(function (err) {
@@ -122,6 +103,10 @@ function registerUser(req, res, next) {
       return next(err);
     });
   });
+}
+
+function getUserProfile(req, res, next) {
+  res.json({user: req.user});
 }
 
 module.exports = router;
