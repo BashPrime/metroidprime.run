@@ -7,6 +7,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 
 import { UserService } from './services/user.service';
+import { NewsService } from './services/news.service';
 import { AuthService } from './services/auth.service';
 import { ValidatorService } from './services/validator.service';
 import { AuthGuard } from './guards/auth.guard';
@@ -16,7 +17,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { NewsComponent } from './news/news.component';
 
+export function getToken() {
+  return localStorage.getItem('id_token');
+}
 
 @NgModule({
   declarations: [
@@ -24,7 +29,8 @@ import { LoginComponent } from './login/login.component';
     NavbarComponent,
     HomeComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    NewsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -34,13 +40,17 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem('id_token');
-        }
+        tokenGetter: getToken
       }
     })
   ],
-  providers: [UserService, AuthService, ValidatorService, AuthGuard],
+  providers: [
+    AuthGuard,
+    UserService,
+    NewsService,
+    AuthService,
+    ValidatorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

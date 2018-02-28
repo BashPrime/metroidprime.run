@@ -1,0 +1,9 @@
+<div class="section">
+  <div class="container">
+    <div *ngFor="let item of newsItems">
+      <h2 class="title">{{ item.title }}</h2>
+      <p>{{ item.content }}</p>
+      <p>-{{item.author}}, {{ item.dateSubmitted | date }}</p>
+    </div>
+  </div>
+</div>
