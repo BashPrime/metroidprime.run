@@ -6,17 +6,21 @@ var router = express.Router();
 var db = require('../queries');
 
 // Define routes
-router.get('/', getAllNews);
+router.get('/', getNews);
 
 // Router functions
-function getAllNews(req, res, next) {
-  db.any('select news.*, users.name as author from news left outer join users on (news.authorid = users.id)')
+function getNews(req, res, next) {
+  var sql = 'select news.*, users.name as author from news left outer join users on (news.authorid = users.id)';
+  if (req.query.count) {
+    sql += ' limit ' + parseInt(req.query.count);
+  }
+  db.any(sql)
     .then(function (data) {
       res.status(200)
         .json({
           success: true,
           data: data,
-          message: 'Retrieved all news entries'
+          message: 'Retrieved ' + data.length + ' news entries'
         });
     })
     .catch(function (err) {
