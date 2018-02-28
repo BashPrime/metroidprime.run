@@ -1,0 +1,26 @@
+@import '~bulma';
+
+.article-title {
+    font-weight: normal;
+    margin-bottom: 1.75rem;
+}
+
+.card {
+    .media-content {
+        margin-bottom: 2rem;
+    }
+}
+
+.card:not(:first-child) {
+    margin-top: 6rem;
+}
+
+.loader {
+    @include loader;
+    width: 10em;
+    height: 10em;
+    border: 2px solid $primary;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    margin: 0 auto;
+}

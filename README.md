@@ -67,7 +67,7 @@ To start the Express server, run the following command. The server does not supp
 npm run server
 ```
 
-## Production
+### Production
 
 First, run a production build of the Angular webapp:
 

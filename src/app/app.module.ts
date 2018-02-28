@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -38,6 +39,7 @@ export function getToken() {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MarkdownModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: getToken
