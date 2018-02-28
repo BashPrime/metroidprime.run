@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { ValidatorService } from './services/validator.service';
+import { AuthGuard } from './guards/auth.guard';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -39,7 +40,7 @@ import { LoginComponent } from './login/login.component';
       }
     })
   ],
-  providers: [UserService, AuthService, ValidatorService],
+  providers: [UserService, AuthService, ValidatorService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

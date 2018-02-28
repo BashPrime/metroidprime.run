@@ -4,13 +4,11 @@
       <h3 class="title has-text-grey has-text-centered">Log In</h3>
       <div class="columns">
         <div class="column is-4 is-offset-4">
-          <div class="notification is-success" *ngIf="notification">
+          <div class="notification is-success" *ngIf="notification"
+            [ngClass]="{ 'is-success': notification.success, 'is-danger': !notification.success }"
+          >
             <button class="delete" (click)="notification = undefined"></button>
-            {{ notification }}
-          </div>
-          <div class="notification is-danger" *ngIf="errMsg">
-            <button class="delete" (click)="errMsg = undefined"></button>
-            {{ errMsg }}
+            {{ notification.message }}
           </div>
           <div class="box">
             <form #loginForm="ngForm">

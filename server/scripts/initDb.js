@@ -4,6 +4,7 @@ var path = require('path');
 
 var sqlFiles = [
   'users.sql',
+  'news.sql',
   'regions.sql',
   'games.sql',
   'categories.sql',

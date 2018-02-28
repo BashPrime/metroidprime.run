@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -9,12 +9,11 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   @ViewChild('loginForm') loginForm: NgForm;
-  notification: string;
-  submitted: boolean = false;
+  notification: { success: boolean, message: string };
+  submitted = false;
   editedUser: object = {};
-  errMsg: string;
   private sub: any;
 
   constructor(
@@ -26,11 +25,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       if (params['registered']) {
-        this.notification = 'You are now registered and can log in.';
+        this.notification = { success: true, message: 'You are now registered and can log in.' };
       } else if (params['loggedOut']) {
-        this.notification = 'You have successfully logged out.';
+        this.notification = { success: true, message: 'You have successfully logged out.' };
+      } else if (params['accessDenied']) {
+        this.notification = { success: false, message: 'You must be logged in to do that.' };
       }
-    })
+    });
   }
 
   ngOnDestroy() {
@@ -49,7 +50,7 @@ export class LoginComponent implements OnInit {
       this.submitted = false;
     },
     error => {
-      this.errMsg = error.error.message;
+      this.notification = { success: false, message: error.error.message };
       this.submitted = false;
     });
   }
