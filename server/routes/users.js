@@ -19,7 +19,7 @@ router.post('/register', registerUser);
 // Router functions
 function getAllUsers(req, res, next) {
   const obj = {
-    columns: ['id', 'name', 'isenabled', 'userlevel', 'twitter', 'twitch', 'youtube']
+    columns: ['id', 'name', 'displayname', 'isenabled', 'userlevel', 'twitter', 'twitch', 'youtube']
   };
 
   db.any('select ${columns:name} from users', obj)
@@ -42,7 +42,7 @@ function userExists(req, res, next) {
     username: req.body.username
   };
 
-  db.one('select ${columns:name} from users where lower(name) = lower(${username})', obj)
+  db.one('select ${columns:name} from users where name = lower(${username})', obj)
     .then(function (data) {
       res.status(403)
         .json({
@@ -90,6 +90,8 @@ function registerUser(req, res, next) {
     if (err) {
       throw err;
     }
+    req.body.displayname = req.body.name;
+    req.body.name = req.body.name.toLowerCase();
     req.body.password = hash;
     db.none('insert into users (${this:name}) values (${this:csv})', req.body)
     .then(function () {

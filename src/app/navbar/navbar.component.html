@@ -22,7 +22,7 @@
       <div *ngIf="user; then loggedIn else loggedOut"></div>
       <ng-template #loggedIn>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">{{ user.name }}</a>
+          <a class="navbar-link">{{ user.displayname }}</a>
           <div class="navbar-dropdown">
             <a class="navbar-item" (click)="onLogoutClicked()">
               <span class="icon is-small">

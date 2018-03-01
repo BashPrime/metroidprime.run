@@ -18,7 +18,7 @@ router.post('/', authenticateUser);
 function authenticateUser(req, res, next) {
   db.one({
     name: 'find-user',
-    text: 'select * from users where lower(name) = lower($1)',
+    text: 'select * from users where name = lower($1)',
     values: [req.body.username]
   })
   .then(user => {
@@ -71,6 +71,7 @@ function prepareJwtPayload(user) {
   return {
     id: user.id,
     name: user.name,
+    displayname: user.displayname,
     email: user.email
   };
 }
