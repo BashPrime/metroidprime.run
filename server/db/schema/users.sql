@@ -3,8 +3,8 @@ CREATE TABLE users (
 	name TEXT NOT NULL UNIQUE,
 	password TEXT NOT NULL,
 	email TEXT NOT NULL UNIQUE,
-	isEnabled BOOLEAN DEFAULT TRUE,
-	userLevel SMALLINT DEFAULT 0,
+  enabled BOOLEAN DEFAULT TRUE,
+	userlevel SMALLINT DEFAULT 0,
 	twitter TEXT NULL,
 	twitch TEXT NULL,
 	youtube TEXT NULL

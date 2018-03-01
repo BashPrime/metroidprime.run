@@ -2,29 +2,41 @@ var db = require('../queries');
 var fs = require('fs');
 var path = require('path');
 
-var sqlFiles = [
+var dbSchemas = [
   'users.sql',
   'news.sql',
-  'regions.sql',
   'games.sql',
+  'sections.sql',
+  'category_parents.sql',
   'categories.sql',
   'records.sql'
 ];
 
-runQuery(0);
+var dbData = [
+  'games.sql',
+  'sections.sql',
+  'category_parents.sql',
+  'categories.sql'
+];
 
-function runQuery(index) {
-  if (index >= sqlFiles.length) {
-    process.exit();
+// runQuery(0, dbSchemas, '../db/schema/', true);
+runQuery(0, dbData, '../db/data/', true);
+
+function runQuery(index, dbArray, dir, terminate = false) {
+  if (index >= dbArray.length) {
+    if (terminate) {
+      process.exit();
+    }
+    return;
   }
 
-  var sqlFile = sqlFiles[index];
-  var sql = fs.readFileSync(path.resolve(__dirname, '../db/schema/' + sqlFile), 'utf8');
+  var sqlFile = dbArray[index];
+  var sql = fs.readFileSync(path.resolve(__dirname, dir + sqlFile), 'utf8');
 
   db.none(sql)
     .then(function () {
       console.log("Successfully ran query from file: " + sqlFile);
-      runQuery(index + 1);
+      return runQuery(index + 1, dbArray, dir, terminate);
     })
     .catch(function (err) {
       console.error("Error running query from file: " + sqlFile);

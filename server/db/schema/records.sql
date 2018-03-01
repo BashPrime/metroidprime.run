@@ -2,7 +2,6 @@ CREATE TABLE records (
     id SERIAL PRIMARY KEY,
     categoryId INTEGER NOT NULL REFERENCES categories(id),
     playerId INTEGER NOT NULL REFERENCES users(id),
-    regionId INTEGER NOT NULL REFERENCES regions(id),
     realTime INTEGER NOT NULL, -- milliseconds
     gameTime INTEGER NOT NULL, -- milliseconds
     comment VARCHAR(500) NULL,
