@@ -1,5 +1,8 @@
 var express = require('express');
+var passport = require('passport');
+var jwt = require('jsonwebtoken');
 var config = require('../../config');
+var utilities = require('../utilities');
 var router = express.Router();
 
 // Initialize database object
@@ -10,11 +13,21 @@ router.get('/', getNews);
 
 // Router functions
 function getNews(req, res, next) {
-  var sql = 'select news.*, users.name as author from news left outer join users on (news.authorid = users.id)';
-  if (req.query.count) {
-    sql += ' limit ' + parseInt(req.query.count);
+  var sql = 'select * from news';
+  const obj = {
+    where: {
+      id: req.query.id,
+      slug: req.query.slug
+    }
   }
-  db.any(sql)
+
+  var where = utilities.buildWhereClause(obj.where, 'or', 'where');
+
+  if (where) {
+    sql += where;
+  }
+  
+  db.any(sql, obj)
     .then(function (data) {
       res.status(200)
         .json({

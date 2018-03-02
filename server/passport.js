@@ -9,12 +9,12 @@ module.exports = function (passport) {
   opts.secretOrKey = config.token.secretKey;
   passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
     const obj = {
-      columns: ['id', 'name', 'isenabled', 'userlevel', 'twitter', 'twitch', 'youtube'],
+      columns: ['id', 'name', 'enabled', 'userlevel'],
       id: jwt_payload.data.id
     };
     db.one('select ${columns:name} from users where id = ${id}', obj)
       .then(function (user) {
-        if (user) {
+        if (user && user.enabled) {
           return done(null, user);
         } else {
           return done(null, false);

@@ -9,6 +9,25 @@ function generateConfig() {
     }
 }
 
+function buildWhereClause(obj, logic, prefix = undefined) {
+    var where;
+    Object.keys(obj).forEach(key => {
+      if (obj[key]) {
+        var keyFilter = key;
+        if (prefix)
+          keyFilter = prefix + '.' + key
+        const whereIn = key + ' in (${' + keyFilter + ':csv})'
+        if (where)
+          where += ' ' + logic + ' ' + whereIn;
+        else
+          where = ' where ' + whereIn;
+      }
+    });
+  
+    return where;
+  }
+
 module.exports = {
-    generateConfig: generateConfig
+    generateConfig: generateConfig,
+    buildWhereClause: buildWhereClause
 };
