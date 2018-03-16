@@ -7,7 +7,7 @@ var router = express.Router();
 const saltRounds = 10;
 
 // Initialize database object
-var db = require('../queries');
+var knex = require('../queries');
 
 // Define routes
 router.get('/', getUsers);
@@ -19,32 +19,34 @@ router.post('/register', registerUser);
 
 // Router functions
 function getUsers(req, res, next) {
-  var sql = 'select ${columns:name} from users';
-  const obj = {
-    columns: ['id', 'name', 'displayname', 'twitter', 'twitch', 'youtube'],
-    where: {
-      id: req.query.id,
-      name: req.query.name
+  var queryBuilder = knex('users').select([
+    'id', 'name',
+    'displayname', 'twitter',
+    'twitch', 'youtube'
+  ]);
+
+  var allowedParams = ['id', 'name'];
+  var queryKeys = Object.keys(req.query).filter(function (e) { return this.indexOf(e) > -1; }, allowedParams);
+
+  for (var i = 0; i < queryKeys.length; i++) {
+    let queryParam = queryKeys[i];
+    if (i === 0) {
+      queryBuilder.where(queryParam, 'in', req.query[queryParam]);
+    } else {
+      queryBuilder.orWhere(queryParam, 'in', req.query[queryParam]);
     }
-  };
+  }
 
-  // Build where clause
-  var where = utilities.buildWhereClause(obj.where, 'or', 'where');
-
-  if (where)
-    sql += where;
-
-  db.any(sql, obj)
-    .then(function (data) {
-      res.status(200)
-        .json({
-          success: true,
-          data: data,
-          message: 'Successfully retrieved users'
-        });
-    })
+  console.log(queryBuilder.toString());
+  queryBuilder.then(function (user) {
+    res.json({
+      success: true,
+      data: user,
+      message: 'Successfully retrieved users'
+    });
+  })
     .catch(function (err) {
-      return next(err);
+      console.error(err);
     });
 }
 
