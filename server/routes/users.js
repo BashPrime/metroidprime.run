@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var utilities = require('../utilities');
+var User = require('../models/user');
 var router = express.Router();
 
 // Properties
@@ -19,81 +20,63 @@ router.post('/register', registerUser);
 
 // Router functions
 function getUsers(req, res, next) {
-  var queryBuilder = knex('users').select([
-    'id', 'name',
-    'displayname', 'twitter',
-    'twitch', 'youtube'
-  ]);
-
-  var allowedParams = ['id', 'name'];
-  var queryKeys = Object.keys(req.query).filter(function (e) { return this.indexOf(e) > -1; }, allowedParams);
-
-  for (var i = 0; i < queryKeys.length; i++) {
-    let queryParam = queryKeys[i];
-    if (i === 0) {
-      queryBuilder.where(queryParam, 'in', req.query[queryParam]);
-    } else {
-      queryBuilder.orWhere(queryParam, 'in', req.query[queryParam]);
+  User.getUsers(req.query, (err, users) => {
+    if (err) {
+      return next(err);
     }
-  }
-
-  console.log(queryBuilder.toString());
-  queryBuilder.then(function (user) {
-    res.json({
-      success: true,
-      data: user,
-      message: 'Successfully retrieved users'
-    });
-  })
-    .catch(function (err) {
-      console.error(err);
-    });
+    if (users) {
+      return res.json({
+        success: true,
+        data: users,
+        message: 'Successfully retrieved users'
+      });
+    }
+    return res.status(404).end();
+  });
 }
 
 function userExists(req, res, next) {
-  const obj = {
-    columns: ['id'],
-    username: req.body.username
-  };
-
-  db.one('select ${columns:name} from users where name = lower(${username})', obj)
-    .then(function (data) {
-      res.status(403)
-        .json({
-          success: false,
-          message: 'Username is taken'
-        });
-    })
-    .catch(function (err) {
-      res.status(200)
-        .json({
-          success: true,
-          message: 'Username is available'
-        });
-    });
+  User.getUserByName(req.body.username, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (user && user.length > 0) {
+      return res.status(403)
+      .json({
+        success: false,
+        message: 'Username is taken'
+      });
+    } else {
+      return res.status(200)
+      .json({
+        success: true,
+        message: 'Username is available'
+      });
+    }
+    return res.status(404).end();
+  });
 }
 
 function emailExists(req, res, next) {
-  const obj = {
-    columns: ['id'],
-    email: req.body.email
-  };
-
-  db.one('select ${columns:name} from users where lower(email) = lower(${email})', obj)
-    .then(function (data) {
-      res.status(403)
-        .json({
-          success: false,
-          message: 'Email is taken'
-        });
-    })
-    .catch(function (err) {
-      res.status(200)
-        .json({
-          success: true,
-          message: 'Email is available'
-        });
-    });
+  User.getUserByParamter(req.body.email, 'email', (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (user && user.length > 0) {
+      return res.status(403)
+      .json({
+        success: false,
+        message: 'Email is taken'
+      });
+    } else {
+      return res.status(200)
+      .json({
+        success: true,
+        message: 'Email is available'
+      });
+    }
+    return res.status(404).end();
+  });
 }
 
 function registerUser(req, res, next) {
