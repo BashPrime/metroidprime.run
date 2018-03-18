@@ -2,32 +2,22 @@ var express = require('express');
 var config = require('../../config');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+var User = require('../models/user');
 var router = express.Router();
-
-// Properties
-const saltRounds = 10;
-
-// Initialize database object
-var db = require('../queries');
 
 // Define routes
 router.post('/', authenticateUser);
 
-
 // Router functions
 function authenticateUser(req, res, next) {
-  db.one({
-    name: 'find-user',
-    text: 'select * from users where name = lower($1)',
-    values: [req.body.username]
-  })
-  .then(user => {
-    // User returned, verify password
+  User.getUserByName(req.body.username, (err, user) => {
+    if (err) {
+      return next(err);
+    }
     comparePassword(req.body.password, user.password, (err, isMatch) => {
       if (err) {
         return next(err);
       }
-
       if (!isMatch) {
         // Invalid password, return unauthorized response
         returnUnauthorizedCredentials(res);
@@ -37,8 +27,7 @@ function authenticateUser(req, res, next) {
         const token = jwt.sign({data: payload}, config.token.secretKey, {
           expiresIn: config.token.expiresIn
         });
-
-        res.status(200)
+        return res.status(200)
         .json({
           success: true,
           token: token,
@@ -46,15 +35,14 @@ function authenticateUser(req, res, next) {
         });
       }
     });
-  })
-  .catch(err => {
-    returnUnauthorizedCredentials(res);
   });
 }
 
 function comparePassword(candidatePassword, hash, callback) {
   bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-    if (err) throw err;
+    if (err) {
+      callback(err);
+    }
     callback(null, isMatch);
   });
 }

@@ -2,6 +2,8 @@
 var knex = require('../queries');
 var bcrypt = require('bcrypt');
 
+var tableName = 'users';
+
 module.exports = {
   tableName: 'users',
   selectableColumns: ['id', 'name', 'displayname', 'twitter', 'twitch', 'youtube'],
@@ -21,38 +23,53 @@ module.exports = {
       }
     }
   
-    console.log(queryBuilder.toString());
     queryBuilder.then(users => done(null, users))
     .catch(err => done(err));
   },
 
   getUserById(userId, done) {
-    knex.select(this.selectableColumns)
-    .from(this.tableName)
+    knex(this.tableName)
     .where('id', userId)
-    .then(user => done(null, user))
+    .then(users => {
+      if (users.length > 0) {
+        return done(null, users[0]);
+      } else {
+        return done(Error('User not found'));
+      }
+    })
     .catch(err => done(err));
   },
 
   getUserByName(userName, done) {
-    knex.select(this.selectableColumns)
-    .from(this.tableName)
+    knex(this.tableName)
     .whereRaw('name = lower(?)', [userName])
-    .then(user => done(null, user))
+    .then(users => {
+      if (users.length > 0) {
+        return done(null, users[0]);
+      } else {
+        return done(Error('User not found'));
+      }
+    })
     .catch(err => done(err));
   },
 
-  getUserByParamter(val, paramter, done) {
-    knex.select(this.selectableColumns)
-    .from(this.tableName)
-    .where(paramter, val)
-    .then(user => done(null, user))
+  getUserByParameter(val, parameter, done) {
+    knex(this.tableName)
+    .where(parameter, val)
+    .then(users => {
+      if (users.length > 0) {
+        return done(null, users[0]);
+      } else {
+        return done(Error('User not found'));
+      }
+    })
     .catch(err => done(err));
   },
 
   addUser(newUser, done) {
     // Number of bcrypt saltrounds to perform
     const saltRounds = 10;
+    const tableName = this.tableName;
 
     // Hash password with bcrypt before storing in database
     bcrypt.hash(newUser.password, saltRounds, function (err, hash) {
@@ -65,7 +82,7 @@ module.exports = {
       newUser.password = hash;
 
       knex.insert(newUser)
-      .into(this.tableName)
+      .into(tableName)
       .then(user => done(null, user))
       .catch(err => done(err));
     });
