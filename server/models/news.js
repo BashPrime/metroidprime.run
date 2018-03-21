@@ -13,7 +13,7 @@ module.exports = {
     authorid: 'news.authorid',
     submitted: 'news.submitted',
     slug: 'news.slug',
-    author: 'users.name'
+    author: 'users.displayname'
   },
 
   getNews(params = undefined, done) {
