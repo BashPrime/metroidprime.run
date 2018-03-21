@@ -28,15 +28,14 @@ async function initDb() {
 async function runQueries(fileArray, dir) {
   for (var i = 0; i < fileArray.length; i++) {
     const filePath = dir + fileArray[i];
-    await runQuery(filePath)
-    .then(() => {
+    try {
+      await runQuery(filePath);
       console.log("Successfully ran " + filePath);
-    })
-    .catch(err => {
+    } catch (err) {
       console.error("Error running query from file: " + filePath);
       console.error(err);
       process.exit(1);
-    });
+    }
   }
 }
 
