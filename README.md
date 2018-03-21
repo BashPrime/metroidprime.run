@@ -6,11 +6,11 @@ Code and database scaffolding for the metroidprime.run website.
 
 The web application is powered by [Angular](https://angular.io), [Node.js](https://nodejs.org), and [Express.js](https://expressjs.com/).
 
-The database used on metroidprime.run is [PostgreSQL 10](https://www.postgresql.org/). As the project uses the `pg-promise` dependency, no other database servers outside of Postgres are currently supported.
+The database used on metroidprime.run is [PostgreSQL 10](https://www.postgresql.org/). While other databases can technically be used due this project using [Knex.js](http://knexjs.org), this project assumes you are using a PostgreSQL server.
 
 ## Install
 
-You will need [Node.js](https://nodejs.org) to download the project dependencies using NPM. Once you're ready to go, run the following commands:
+You will need [Node.js](https://nodejs.org) to download the project dependencies using `npm`. Once you're ready to go, run the following commands:
 
 ```bash
 npm install -g @angular/cli
@@ -38,15 +38,15 @@ database: {
 In the `token` section of your `config.js` file, you will see the `secretKey` entry; it is higly recommended you use a randomly-generated key for signing any authentication tokens the app creates. For convenience, you can run the following command to generate a secret key.
 
 ```bash
-npm run genSecretKey
+npm run generate:secret
 ```
 
 Just copy and paste the generated key to your `secretKey` value once it is generated.
 
-After setting up your server/database configuration, run the following command to scaffold your Postgres database:
+After setting up your server/database configuration, run the following command to scaffold your Postgres tables:
 
 ```bash
-npm run initDb
+npm run initdb
 ```
 
 ## Running the Application
