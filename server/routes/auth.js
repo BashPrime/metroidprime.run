@@ -10,7 +10,7 @@ router.post('/', authenticateUser);
 
 // Router functions
 function authenticateUser(req, res, next) {
-  User.getUserByName(req.body.username, (err, user) => {
+  User.getUserByParameter(req.body.username.toLowerCase(), 'name', true, (err, user) => {
     if (err) {
       return next(err);
     }

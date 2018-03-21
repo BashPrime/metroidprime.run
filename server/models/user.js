@@ -10,10 +10,10 @@ module.exports = {
 
   getUsers(params = undefined, done) {
     var queryBuilder = knex.select(this.selectableColumns).from(this.tableName);
-  
+
     var allowedParams = ['id', 'name'];
     var queryKeys = Object.keys(params).filter(function (e) { return this.indexOf(e) > -1; }, allowedParams);
-  
+
     for (var i = 0; i < queryKeys.length; i++) {
       let queryParam = queryKeys[i];
       if (i === 0) {
@@ -22,15 +22,17 @@ module.exports = {
         queryBuilder.orWhere(queryParam, 'in', params[queryParam]);
       }
     }
-  
+
     queryBuilder.then(users => done(null, users))
     .catch(err => done(err));
   },
 
   getUserById(userId, done) {
-    knex(this.tableName)
+    knex.select(this.selectableColumns)
+    .from(this.tableName)
     .where('id', userId)
     .then(users => {
+      console.log(users);
       if (users.length > 0) {
         return done(null, users[0]);
       } else {
@@ -41,7 +43,8 @@ module.exports = {
   },
 
   getUserByName(userName, done) {
-    knex(this.tableName)
+    knex.select(this.selectableColumns)
+    .from(this.tableName)
     .whereRaw('name = lower(?)', [userName])
     .then(users => {
       if (users.length > 0) {
@@ -53,8 +56,9 @@ module.exports = {
     .catch(err => done(err));
   },
 
-  getUserByParameter(val, parameter, done) {
-    knex(this.tableName)
+  getUserByParameter(val, parameter, getFullData, done) {
+    knex.select(!getFullData ? this.selectableColumns : '*')
+    .from(this.tableName)
     .where(parameter, val)
     .then(users => {
       if (users.length > 0) {

@@ -47,7 +47,7 @@ function userExists(req, res, next) {
 }
 
 function emailExists(req, res, next) {
-  User.getUserByParameter(req.body.email, 'email', (err, user) => {
+  User.getUserByParameter(req.body.email, 'email', false, (err, user) => {
     if (err) {
       return res.status(200)
       .json({
@@ -77,7 +77,16 @@ function registerUser(req, res, next) {
 }
 
 function getUserProfile(req, res, next) {
-  res.json({ user: req.user });
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    return res.json({
+      success: true,
+      data: user,
+      message: 'Successfully retrieved user profile'
+    });
+  });
 }
 
 module.exports = router;
