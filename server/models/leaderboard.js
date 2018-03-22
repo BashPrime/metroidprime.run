@@ -9,27 +9,28 @@ module.exports = {
   getLeaderboards(params = undefined, done) {
     var queryBuilder = knex.select({
       id: 'records.id',
-      categoryid: 'records.categoryid',
-      categoryName: 'categories.name',
-      categoryParent: 'category_parents.name',
+      subcategoryid: 'records.subcategoryid',
+      subcategory: 'subcategories.name',
+      category: 'categories.name',
       game: 'games.name',
       playerid: 'records.playerid',
-      player: 'users.displayname',
+      player: 'playerusers.displayname',
       realtime: 'records.realtime',
       gametime: 'records.gametime',
       comment: 'records.comment',
       videourl: 'records.videourl',
       submitted: 'records.submitted',
       submitterid: 'records.submitterid',
-      submitter: 'users.displayname'
+      submitter: 'submitusers.displayname'
     })
-    .from({records: this.tableName, users: 'users', categories: 'categories', category_parents: 'category_parents', games: 'games'})
+    .from(this.tableName)
     queryBuilder.where('records.hidden', false)
-    .andWhereRaw('?? = ??', ['records.categoryid', 'categories.id'])
-    .andWhereRaw('?? = ??', ['categories.parentid', 'category_parents.id'])
-    .andWhereRaw('?? = ??', ['category_parents.gameid', 'games.id'])
-    .andWhereRaw('?? = ??', ['records.playerid', 'users.id'])
-    .andWhereRaw('?? = ??', ['records.submitterid', 'users.id']);
+    .andWhere('records.rejected', false)
+    .leftJoin('subcategories', 'records.subcategoryid', 'subcategories.id')
+    .leftJoin('categories', 'subcategories.parentid', 'categories.id')
+    .leftJoin('games', 'categories.gameid', 'games.id')
+    .leftJoin('users as playerusers', 'records.playerid', 'playerusers.id')
+    .leftJoin('users as submitusers', 'records.submitterid', 'submitusers.id');
 
     var allowedParams = ['id', 'categoryid', 'playerid'];
     var queryKeys = Object.keys(params).filter(function (e) { return this.indexOf(e) > -1; }, allowedParams);

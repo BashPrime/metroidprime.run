@@ -1,6 +1,6 @@
 CREATE TABLE records (
     id SERIAL PRIMARY KEY,
-    categoryid INTEGER NOT NULL REFERENCES categories(id),
+    subcategoryid INTEGER NOT NULL REFERENCES subcategories(id),
     playerid INTEGER NOT NULL REFERENCES users(id),
     realtime INTEGER NOT NULL, -- milliseconds
     gametime INTEGER NOT NULL, -- milliseconds

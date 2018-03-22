@@ -7,16 +7,16 @@ var dbSchemas = [
   'news.sql',
   'games.sql',
   'sections.sql',
-  'category_parents.sql',
   'categories.sql',
+  'subcategories.sql',
   'records.sql'
 ];
 
 var dbData = [
   'games.sql',
   'sections.sql',
-  'category_parents.sql',
-  'categories.sql'
+  'categories.sql',
+  'subcategories.sql'
 ];
 
 async function initDb() {
