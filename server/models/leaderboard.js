@@ -12,6 +12,7 @@ module.exports = {
       categoryid: 'records.categoryid',
       categoryName: 'categories.name',
       categoryParent: 'category_parents.name',
+      game: 'games.name',
       playerid: 'records.playerid',
       player: 'users.displayname',
       realtime: 'records.realtime',
@@ -22,10 +23,11 @@ module.exports = {
       submitterid: 'records.submitterid',
       submitter: 'users.displayname'
     })
-    .from({records: this.tableName, users: 'users', categories: 'categories', category_parents: 'category_parents'})
+    .from({records: this.tableName, users: 'users', categories: 'categories', category_parents: 'category_parents', games: 'games'})
     queryBuilder.where('records.hidden', false)
     .andWhereRaw('?? = ??', ['records.categoryid', 'categories.id'])
     .andWhereRaw('?? = ??', ['categories.parentid', 'category_parents.id'])
+    .andWhereRaw('?? = ??', ['category_parents.gameid', 'games.id'])
     .andWhereRaw('?? = ??', ['records.playerid', 'users.id'])
     .andWhereRaw('?? = ??', ['records.submitterid', 'users.id']);
 
@@ -39,6 +41,15 @@ module.exports = {
       } else {
         queryBuilder.orWhere('records.' + queryParam, 'in', params[queryParam]);
       }
+    }
+
+    if (params.orderBy) {
+      const splitOrderBy = params.orderBy.split(' ');
+      queryBuilder.orderBy(splitOrderBy[0], splitOrderBy[1]);
+    }
+
+    if (params.limit) {
+      queryBuilder.limit(params.limit);
     }
 
     queryBuilder.then(users => done(null, users))
