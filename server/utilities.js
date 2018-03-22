@@ -9,25 +9,30 @@ function generateConfig() {
     }
 }
 
-function buildWhereClause(obj, logic, prefix = undefined) {
-    var where;
-    Object.keys(obj).forEach(key => {
-      if (obj[key]) {
-        var keyFilter = key;
-        if (prefix)
-          keyFilter = prefix + '.' + key
-        const whereIn = key + ' in (${' + keyFilter + ':csv})'
-        if (where)
-          where += ' ' + logic + ' ' + whereIn;
-        else
-          where = ' where ' + whereIn;
-      }
-    });
-  
-    return where;
+function handleQueryParams(params, allowedParams, queryBuilder) {
+  var queryKeys = Object.keys(params).filter(function (e) { return this.indexOf(e) > -1; }, Object.keys(allowedParams));
+  for (var i = 0; i < queryKeys.length; i++) {
+    let queryParam = queryKeys[i];
+    if (i === 0) {
+      queryBuilder.where(allowedParams[queryParam], 'in', params[queryParam]);
+    } else {
+      queryBuilder.andWhere(allowedParams[queryParam], 'in', params[queryParam]);
+    }
   }
+
+  if (params.orderBy) {
+    const splitOrderBy = params.orderBy.split(' ');
+    queryBuilder.orderBy(splitOrderBy[0], splitOrderBy[1]);
+  }
+
+  if (params.limit) {
+    queryBuilder.limit(params.limit);
+  }
+
+  return queryBuilder;
+}
 
 module.exports = {
     generateConfig: generateConfig,
-    buildWhereClause: buildWhereClause
+    handleQueryParams: handleQueryParams
 };

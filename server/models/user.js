@@ -1,5 +1,6 @@
 // Initialize database object
 var knex = require('../queries');
+var Utilities = require('../utilities');
 var bcrypt = require('bcrypt');
 
 var tableName = 'users';
@@ -11,17 +12,12 @@ module.exports = {
   getUsers(params = undefined, done) {
     var queryBuilder = knex.select(this.selectableColumns).from(this.tableName);
 
-    var allowedParams = ['id', 'name'];
-    var queryKeys = Object.keys(params).filter(function (e) { return this.indexOf(e) > -1; }, allowedParams);
+    const allowedParams = {
+      id: 'id',
+      name: 'name'
+    };
 
-    for (var i = 0; i < queryKeys.length; i++) {
-      let queryParam = queryKeys[i];
-      if (i === 0) {
-        queryBuilder.where(queryParam, 'in', params[queryParam]);
-      } else {
-        queryBuilder.orWhere(queryParam, 'in', params[queryParam]);
-      }
-    }
+    queryBuilder = Utilities.handleQueryParams(params, allowedParams, queryBuilder);
 
     queryBuilder.then(users => done(null, users))
     .catch(err => done(err));

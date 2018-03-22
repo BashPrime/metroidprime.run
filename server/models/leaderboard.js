@@ -1,5 +1,6 @@
 // Initialize database object
 var knex = require('../queries');
+var Utilities = require('../utilities');
 var bcrypt = require('bcrypt');
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
       id: 'records.id',
       subcategoryid: 'records.subcategoryid',
       subcategory: 'subcategories.name',
+      categoryid: 'categories.id',
       category: 'categories.name',
       game: 'games.name',
       playerid: 'records.playerid',
@@ -24,7 +26,7 @@ module.exports = {
       submitter: 'submitusers.displayname'
     })
     .from(this.tableName)
-    queryBuilder.where('records.hidden', false)
+    .where('records.hidden', false)
     .andWhere('records.rejected', false)
     .leftJoin('subcategories', 'records.subcategoryid', 'subcategories.id')
     .leftJoin('categories', 'subcategories.parentid', 'categories.id')
@@ -32,27 +34,19 @@ module.exports = {
     .leftJoin('users as playerusers', 'records.playerid', 'playerusers.id')
     .leftJoin('users as submitusers', 'records.submitterid', 'submitusers.id');
 
-    var allowedParams = ['id', 'categoryid', 'playerid'];
-    var queryKeys = Object.keys(params).filter(function (e) { return this.indexOf(e) > -1; }, allowedParams);
+    const allowedParams = {
+      id: 'records.id',
+      categoryid: 'categories.id',
+      category: 'categories.label',
+      game: 'games.label',
+      subcategoryid: 'subcategories.id',
+      subcategory: 'subcategories.label',
+      playerid: 'records.playerid',
+      submitterid: 'records.submitterid'
+    };
 
-    for (var i = 0; i < queryKeys.length; i++) {
-      let queryParam = queryKeys[i];
-      if (i === 0) {
-        queryBuilder.where('records.' + queryParam, 'in', params[queryParam]);
-      } else {
-        queryBuilder.orWhere('records.' + queryParam, 'in', params[queryParam]);
-      }
-    }
-
-    if (params.orderBy) {
-      const splitOrderBy = params.orderBy.split(' ');
-      queryBuilder.orderBy(splitOrderBy[0], splitOrderBy[1]);
-    }
-
-    if (params.limit) {
-      queryBuilder.limit(params.limit);
-    }
-
+    queryBulder = Utilities.handleQueryParams(params, allowedParams, queryBuilder);
+    
     queryBuilder.then(users => done(null, users))
     .catch(err => done(err));
   }
