@@ -21,6 +21,8 @@
       "styles": [
         "../node_modules/bulma/bulma.sass",
         "../node_modules/font-awesome/scss/font-awesome.scss",
+        "../node_modules/ag-grid/dist/styles/ag-grid.css",
+        "../node_modules/ag-grid/dist/styles/ag-theme-balham.css",
         "styles.scss"
       ],
       "scripts": [
