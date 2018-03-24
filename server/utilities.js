@@ -32,7 +32,24 @@ function handleQueryParams(params, allowedParams, queryBuilder) {
   return queryBuilder;
 }
 
+function sortAndRankRecords(records, sortField) {
+  var sortedRecords = records.sort(function(a, b) {
+    if (a[sortField] < b[sortField])
+      return -1;
+    if (a[sortField] > b[sortField])
+      return 1;
+    return 0;
+  });
+
+  for (var i = 0; i < sortedRecords.length; i++) {
+    sortedRecords[i].rank = i + 1;
+  }
+
+  return sortedRecords;
+}
+
 module.exports = {
     generateConfig: generateConfig,
-    handleQueryParams: handleQueryParams
+    handleQueryParams: handleQueryParams,
+    sortAndRankRecords: sortAndRankRecords
 };
