@@ -7,11 +7,17 @@ module.exports = {
   tableName: 'records',
   selectableColumns: ['id', 'categoryid', 'playerid', 'realtime', 'gametime', 'comment', 'videourl', 'submitted', 'submitter'],
 
-  getLeaderboardsBySubcategory(params = undefined, done) {
+  getLeaderboards(params = undefined, done) {
+    var minTimes = knex.select(['playerid', 'tagid'])
+      .min('gametime as mingametime')
+      .from('records')
+      .groupBy(['playerid', 'tagid'])
+      .as('min_times');
+
     var queryBuilder = knex.select({
       id: 'records.id',
-      subcategoryid: 'records.subcategoryid',
-      subcategory: 'subcategories.name',
+      tagid: 'records.tagid',
+      tagname: 'category_tags.name',
       categoryid: 'categories.id',
       category: 'categories.name',
       game: 'games.name',
@@ -26,69 +32,32 @@ module.exports = {
       submitter: 'submitusers.displayname'
     })
     .from(this.tableName)
-    .where('records.hidden', false)
+    .whereRaw('records.gametime = min_times.mingametime')
+    .andWhereRaw('records.tagid = min_times.tagid')
+    .andWhere('records.hidden', false)
     .andWhere('records.rejected', false)
-    .leftJoin('subcategories', 'records.subcategoryid', 'subcategories.id')
-    .leftJoin('categories', 'subcategories.parentid', 'categories.id')
+    .leftJoin('category_tags', 'records.tagid', 'category_tags.id')
+    .leftJoin('categories', 'category_tags.categoryid', 'categories.id')
     .leftJoin('games', 'categories.gameid', 'games.id')
     .leftJoin('users as playerusers', 'records.playerid', 'playerusers.id')
     .leftJoin('users as submitusers', 'records.submitterid', 'submitusers.id');
 
     const allowedParams = {
-      id: 'subcategories.id',
-      category: 'subcategories.label',
+      id: 'records.id',
+      tagid: 'category_tags.id',
+      tag: 'category_tags.tag',
+      game: 'games.label',
+      playerid: 'records.playerid',
+      submitterid: 'records.submitterid'
     };
 
-    queryBulder = Utilities.handleQueryParams(params, allowedParams, queryBuilder);
+    queryBulder = Utilities.handleQueryParams(params, allowedParams, queryBuilder)
+    .innerJoin(minTimes, 'min_times.playerid', 'records.playerid');
 
     queryBuilder.then(users => {
       const sortedUsers = Utilities.sortAndRankRecords(users, "gametime");
       return done(null, sortedUsers);
     })
-    .catch(err => done(err));
-  },
-
-  getLeaderboards(params = undefined, done) {
-    var queryBuilder = knex.select({
-      id: 'records.id',
-      subcategoryid: 'records.subcategoryid',
-      subcategory: 'subcategories.name',
-      categoryid: 'categories.id',
-      category: 'categories.name',
-      game: 'games.name',
-      playerid: 'records.playerid',
-      player: 'playerusers.displayname',
-      realtime: 'records.realtime',
-      gametime: 'records.gametime',
-      comment: 'records.comment',
-      videourl: 'records.videourl',
-      submitted: 'records.submitted',
-      submitterid: 'records.submitterid',
-      submitter: 'submitusers.displayname'
-    })
-    .from(this.tableName)
-    .where('records.hidden', false)
-    .andWhere('records.rejected', false)
-    .leftJoin('subcategories', 'records.subcategoryid', 'subcategories.id')
-    .leftJoin('categories', 'subcategories.parentid', 'categories.id')
-    .leftJoin('games', 'categories.gameid', 'games.id')
-    .leftJoin('users as playerusers', 'records.playerid', 'playerusers.id')
-    .leftJoin('users as submitusers', 'records.submitterid', 'submitusers.id');
-
-    const allowedParams = {
-      id: 'records.id',
-      categoryid: 'categories.id',
-      category: 'categories.label',
-      game: 'games.label',
-      subcategoryid: 'subcategories.id',
-      subcategory: 'subcategories.label',
-      playerid: 'records.playerid',
-      submitterid: 'records.submitterid'
-    };
-
-    queryBulder = Utilities.handleQueryParams(params, allowedParams, queryBuilder);
-
-    queryBuilder.then(users => done(null, users))
     .catch(err => done(err));
   }
 };

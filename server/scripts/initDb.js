@@ -8,6 +8,7 @@ var dbSchemas = [
   'games.sql',
   'sections.sql',
   'categories.sql',
+  'category_tags.sql',
   'subcategories.sql',
   'records.sql'
 ];
@@ -16,6 +17,7 @@ var dbData = [
   'games.sql',
   'sections.sql',
   'categories.sql',
+  'category_tags.sql',
   'subcategories.sql'
 ];
 
