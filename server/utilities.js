@@ -41,8 +41,22 @@ function sortAndRankRecords(records, sortField) {
     return 0;
   });
 
+  let rank = 1;
+  let numSameVal = 0;
+  let lastVal;
+
   for (var i = 0; i < sortedRecords.length; i++) {
-    sortedRecords[i].rank = i + 1;
+    currentVal = sortedRecords[i][sortField];
+    
+    if (lastVal && currentVal === lastVal) {
+      numSameVal++;
+    } else {
+      rank += numSameVal;
+      numSameVal = 1;
+    }
+
+    sortedRecords[i].rank = rank;
+    lastVal = currentVal;
   }
 
   return sortedRecords;
