@@ -1,9 +1,11 @@
 CREATE TABLE records (
     id SERIAL PRIMARY KEY,
-    tagid INTEGER NOT NULL REFERENCES category_tags(id),
+    categoryid INTEGER NOT NULL REFERENCES categories(id),
+    tagid INTEGER NULL REFERENCES category_tags(id),
     playerid INTEGER NOT NULL REFERENCES users(id),
-    realtime INTEGER NOT NULL, -- milliseconds
-    gametime INTEGER NOT NULL, -- milliseconds
+    realtime INTEGER NULL, -- milliseconds
+    ingametime INTEGER NULL, -- milliseconds
+    escapetime INTEGER NULL, -- milliseconds
     comment VARCHAR(500) NULL,
     videourl VARCHAR(100) NULL,
     submitted timestamp NULL,

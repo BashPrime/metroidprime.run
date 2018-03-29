@@ -41,9 +41,9 @@ function sortAndRankRecords(records, sortField) {
     return 0;
   });
 
-  let rank = 1;
-  let numSameVal = 0;
-  let lastVal;
+  var rank = 1;
+  var numSameVal = 0;
+  var lastVal;
 
   for (var i = 0; i < sortedRecords.length; i++) {
     currentVal = sortedRecords[i][sortField];
@@ -62,8 +62,31 @@ function sortAndRankRecords(records, sortField) {
   return sortedRecords;
 }
 
+function rankRecords(records, timeField) {
+  var rank = 1;
+  var numSameVal = 0;
+  var lastVal;
+
+  for (var i = 0; i < records.length; i++) {
+    currentVal = records[i][timeField];
+    
+    if (lastVal && currentVal === lastVal) {
+      numSameVal++;
+    } else {
+      rank += numSameVal;
+      numSameVal = 1;
+    }
+
+    records[i].rank = rank;
+    lastVal = currentVal;
+  }
+
+  return records;
+}
+
 module.exports = {
     generateConfig: generateConfig,
     handleQueryParams: handleQueryParams,
-    sortAndRankRecords: sortAndRankRecords
+    sortAndRankRecords: sortAndRankRecords,
+    rankRecords: rankRecords
 };
