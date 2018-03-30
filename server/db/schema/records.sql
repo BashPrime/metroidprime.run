@@ -3,9 +3,9 @@ CREATE TABLE records (
     categoryid INTEGER NOT NULL REFERENCES categories(id),
     tagid INTEGER NULL REFERENCES category_tags(id),
     playerid INTEGER NOT NULL REFERENCES users(id),
-    realtime INTEGER NULL, -- milliseconds
-    ingametime INTEGER NULL, -- milliseconds
-    escapetime INTEGER NULL, -- milliseconds
+    realtime INTERVAL NULL, -- milliseconds
+    ingametime INTERVAL NULL, -- milliseconds
+    escapetime INTERVAL NULL, -- milliseconds
     comment VARCHAR(500) NULL,
     videourl VARCHAR(100) NULL,
     date timestamp NOT NULL,

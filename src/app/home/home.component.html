@@ -7,7 +7,7 @@
           <li class="speedrun" *ngFor="let record of latestRecords">
             <p><a>{{record.game}}</a></p>
             <p><a>{{record.category}}</a></p>
-            <p><a>{{record[record.timing] | millisecondsToTimeString}}</a> by <a>{{record.player}}</a></p>
+            <p><a>{{record[record.timing] | intervalJsonToTimeString}}</a> by <a>{{record.player}}</a></p>
           </li>
         </ul>
         <a id="view-leaderboards" class="button is-link is-block">View the Leaderboards</a>

@@ -20,7 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NewsComponent } from './news/news.component';
-import { MillisecondsToTimeStringPipe } from './pipes/milliseconds-to-time-string.pipe';
+import { IntervalJsonToTimeStringPipe } from './pipes/interval-json-to-time-string.pipe';
 
 export function getToken() {
   return localStorage.getItem('id_token');
@@ -34,7 +34,7 @@ export function getToken() {
     RegisterComponent,
     LoginComponent,
     NewsComponent,
-    MillisecondsToTimeStringPipe
+    IntervalJsonToTimeStringPipe
   ],
   imports: [
     AppRoutingModule,
