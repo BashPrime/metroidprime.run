@@ -2,14 +2,14 @@
 -- Any%
 INSERT INTO category_tags (id, categoryid, tag, name) VALUES (1, 1, 'normal', 'Normal');
 INSERT INTO category_tags (id, categoryid, tag, name) VALUES (2, 1, 'hard', 'Hard');
-INSERT INTO category_tags (id, categoryid, tag, name) VALUES (3, 1, 'seg', 'Normal (Segmented)');
-INSERT INTO category_tags (id, categoryid, tag, name) VALUES (4, 1, 'seg', 'Hard (Segmented)');
+INSERT INTO category_tags (id, categoryid, tag, name) VALUES (3, 1, 'normal-seg', 'Normal (Segmented)');
+INSERT INTO category_tags (id, categoryid, tag, name) VALUES (4, 1, 'hard-seg', 'Hard (Segmented)');
 
 -- 100%
 INSERT INTO category_tags (id, categoryid, tag, name) VALUES (5, 2, 'normal', 'Normal');
 INSERT INTO category_tags (id, categoryid, tag, name) VALUES (6, 2, 'hard', 'Hard');
-INSERT INTO category_tags (id, categoryid, tag, name) VALUES (7, 2, 'seg', 'Normal (Segmented)');
-INSERT INTO category_tags (id, categoryid, tag, name) VALUES (8, 2, 'seg', 'Hard (Segmented)');
+INSERT INTO category_tags (id, categoryid, tag, name) VALUES (7, 2, 'normal-seg', 'Normal (Segmented)');
+INSERT INTO category_tags (id, categoryid, tag, name) VALUES (8, 2, 'hard-seg', 'Hard (Segmented)');
 
 -- 21%
 INSERT INTO category_tags (id, categoryid, tag, name) VALUES (9, 3, 'normal', 'Normal');

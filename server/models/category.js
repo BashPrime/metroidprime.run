@@ -4,8 +4,7 @@ var Utilities = require('../utilities');
 function getCategoryById(categoryId, done) {
     knex.select('*')
     .from('categories')
-    .where('categories.id', categoryId)
-    .leftJoin('games', 'categories.gameid', 'games.id')
+    .where('id', categoryId)
     .then(categories => {
         if (categories.length === 1) {
             return categories[0];
@@ -21,8 +20,7 @@ function getCategoryById(categoryId, done) {
 async function getCategoryByIdSync(categoryId) {
     const categories = await knex.select('*')
     .from('categories')
-    .where('categories.id', categoryId)
-    .leftJoin('games', 'categories.gameid', 'games.id');
+    .where('id', categoryId);
 
     if (categories.length === 1) {
         return categories[0];

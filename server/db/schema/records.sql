@@ -8,7 +8,8 @@ CREATE TABLE records (
     escapetime INTEGER NULL, -- milliseconds
     comment VARCHAR(500) NULL,
     videourl VARCHAR(100) NULL,
-    submitted timestamp NULL,
+    date timestamp NOT NULL,
+    submitted timestamp NOT NULL,
     submitterid INTEGER NULL REFERENCES users(id),
     hidden BOOLEAN DEFAULT FALSE,
     rejected BOOLEAN DEFAULT FALSE,
