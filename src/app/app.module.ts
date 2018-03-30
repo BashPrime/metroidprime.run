@@ -11,6 +11,7 @@ import { UserService } from './services/user.service';
 import { NewsService } from './services/news.service';
 import { AuthService } from './services/auth.service';
 import { ValidatorService } from './services/validator.service';
+import { RecordsService } from './services/records.service';
 import { AuthGuard } from './guards/auth.guard';
 
 import { AppComponent } from './app.component';
@@ -19,6 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NewsComponent } from './news/news.component';
+import { MillisecondsToTimeStringPipe } from './pipes/milliseconds-to-time-string.pipe';
 
 export function getToken() {
   return localStorage.getItem('id_token');
@@ -31,7 +33,8 @@ export function getToken() {
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    NewsComponent
+    NewsComponent,
+    MillisecondsToTimeStringPipe
   ],
   imports: [
     AppRoutingModule,
@@ -51,7 +54,8 @@ export function getToken() {
     UserService,
     NewsService,
     AuthService,
-    ValidatorService
+    ValidatorService,
+    RecordsService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,21 @@
 <div class="section">
-  <div class="container">
-    <h2 class="title">Welcome!</h2>
-    <p class="subtitle">Welcome to the Metroid Prime speedrunning hub!</p>
+  <div class="columns">
+    <div class="column is-3">
+      <div class="box has-text-centered">
+        <p class="title is-4">Latest Speedruns</p>
+        <ul id="latest-speedruns">
+          <li class="speedrun" *ngFor="let record of latestRecords">
+            <p><a>{{record.game}}</a></p>
+            <p><a>{{record.category}}</a></p>
+            <p><a>{{record[record.timing] | millisecondsToTimeString}}</a> by <a>{{record.player}}</a></p>
+          </li>
+        </ul>
+        <a id="view-leaderboards" class="button is-link is-block">View the Leaderboards</a>
+      </div>
+    </div>
+    <div class="column">
+        <h1 class="title">Welcome!</h1>
+        <p class="subtitle">Welcome to the Metroid Prime speedrunning hub!</p>
+    </div>
   </div>
 </div>
