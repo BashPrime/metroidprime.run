@@ -6,17 +6,16 @@ async function getLeaderboardsByCategory(categoryId, queryParams, done) {
   try {
     const category = await Category.getCategoryByIdSync(categoryId);
     if (category) {
-      var minTimes = knex.select(['playerid', 'tagid'])
+      var minTimes = knex.select(['records.id', 'records.playerid'])
       .min(category.timing + ' as mingametime')
       .from('records')
-      .groupBy(['playerid', 'tagid'])
+      .leftJoin('records_variables', 'records.id', 'records_variables.recordid')
+      .where('records_variables.valueid', 1)
+      .groupBy(['playerid', 'id'])
       .as('min_times');
 
       var queryBuilder = knex.select({
         id: 'records.id',
-        tagid: 'records.tagid',
-        tag: 'category_tags.tag',
-        tagname: 'category_tags.name',
         categoryid: 'categories.id',
         category: 'categories.name',
         playerid: 'records.playerid',
@@ -33,21 +32,14 @@ async function getLeaderboardsByCategory(categoryId, queryParams, done) {
       })
       .from('records')
       .innerJoin(minTimes, 'min_times.playerid', 'records.playerid')
-      .whereRaw('records.' + category.timing + ' = min_times.mingametime');
-      
-      if (queryParams.tag) {
-        queryBuilder.andWhere('category_tags.tag', queryParams.tag);
-      } else if (category.defaulttag) {
-        queryBuilder.andWhere('records.tagid', category.defaulttag);
-      }
-
-      queryBuilder.andWhere('records.hidden', false)
-      .andWhere('records.rejected', false)
-      .andWhere('records.categoryid', categoryId)
-      .leftJoin('category_tags', 'records.tagid', 'category_tags.id')
-      .leftJoin('categories', 'category_tags.categoryid', 'categories.id')
+      .leftJoin('categories', 'records.categoryid', 'categories.id')
       .leftJoin('users as playerusers', 'records.playerid', 'playerusers.id')
       .leftJoin('users as submitusers', 'records.submitterid', 'submitusers.id')
+      .whereRaw('records.' + category.timing + ' = min_times.mingametime')
+      .andWhere('records.hidden', false)
+      .andWhere('records.rejected', false)
+      .andWhere('records.categoryid', categoryId)
+
       .orderBy(category.timing, 'asc')
       .then(leaderboards => {
         const rankedRecords = Utilities.rankRecords(leaderboards, category.timing);
