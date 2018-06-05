@@ -1,0 +1,13 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable()
+export class FileService {
+
+  constructor(private http: HttpClient) { }
+
+  getLocalFile(fileName: string) {
+    return this.http.get(fileName, {responseType: 'text'});
+  }
+
+}

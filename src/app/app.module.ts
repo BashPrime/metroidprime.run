@@ -12,6 +12,7 @@ import { NewsService } from './services/news.service';
 import { AuthService } from './services/auth.service';
 import { ValidatorService } from './services/validator.service';
 import { RecordsService } from './services/records.service';
+import { FileService } from './services/file.service';
 import { AuthGuard } from './guards/auth.guard';
 
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NewsComponent } from './news/news.component';
 import { IntervalJsonToTimeStringPipe } from './pipes/interval-json-to-time-string.pipe';
+import { GuideComponent } from './guide/guide.component';
 
 export function getToken() {
   return localStorage.getItem('id_token');
@@ -34,7 +36,8 @@ export function getToken() {
     RegisterComponent,
     LoginComponent,
     NewsComponent,
-    IntervalJsonToTimeStringPipe
+    IntervalJsonToTimeStringPipe,
+    GuideComponent
   ],
   imports: [
     AppRoutingModule,
@@ -55,7 +58,8 @@ export function getToken() {
     NewsService,
     AuthService,
     ValidatorService,
-    RecordsService
+    RecordsService,
+    FileService
   ],
   bootstrap: [AppComponent]
 })
