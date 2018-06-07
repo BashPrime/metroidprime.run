@@ -1,0 +1,22 @@
+{
+    "name": "Metroid Prime",
+    "items": [
+        {
+            "name": "Techniques",
+            "content": [
+                {
+                    "name": "Dash",
+                    "label": "dash"
+                },
+                {
+                    "name": "L Jump",
+                    "label": "l-jump"
+                },
+                {
+                    "name": "Ghetto Jump",
+                    "label": "ghetto-jump"
+                }
+            ]
+        }
+    ]
+}

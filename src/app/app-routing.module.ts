@@ -13,8 +13,12 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'news', component: NewsComponent },
-  { path: 'game/:game', component: GameComponent },
-  { path: 'game/:game/guide/:guidename', component: GuideComponent }
+  { path: 'game/:game', component: GameComponent,
+    children: [
+      { path: 'guide/:guidename', component: GuideComponent, pathMatch: 'full' },
+    ]
+  }
+  // { path: 'game/:game/guide/:guidename', component: GuideComponent }
 ];
 
 @NgModule({

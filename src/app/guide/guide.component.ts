@@ -16,13 +16,14 @@ export class GuideComponent implements OnInit {
   constructor(private route: ActivatedRoute, private fileService: FileService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.parent.params.subscribe(params => {
+      console.log(params);
       this.game = params['game'];
       this.guidename = params['guidename'];
 
       const fileName = '/assets/guides/' + this.game + '/' + this.guidename + '.html';
 
-      this.fileService.getLocalFile(fileName)
+      this.fileService.getLocalFileAsString(fileName)
       .subscribe(data => {
         this.content = this.sanitizer.bypassSecurityTrustHtml(data);
       });
