@@ -2,6 +2,23 @@
     "name": "Metroid Prime",
     "items": [
         {
+            "name": "General Info",
+            "content": [
+                {
+                    "name": "Version Differences",
+                    "label": "version-differences"
+                },
+                {
+                    "name": "Expansion Locations",
+                    "label": "expansion-locations"
+                },
+                {
+                    "name": "Upgrades",
+                    "label": "upgrades"
+                }
+            ]
+        },
+        {
             "name": "Techniques",
             "content": [
                 {

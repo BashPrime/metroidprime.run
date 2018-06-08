@@ -1,17 +1,33 @@
 <div class="section">
   <div class="container">
-    <aside class="menu" *ngIf="gameData">
-      <div *ngFor="let item of gameData['items']">
-        <p class="menu-label">
-          {{ item.name }}
-        </p>
-        <ul class="menu-list">
-          <li *ngFor="let contentItem of item['content']">
-            <a [routerLink]="['./guide/' + contentItem.label]">{{ contentItem.name }}</a>
-          </li>
-        </ul>
+    <div class="columns">
+      <div class="column is-2">
+        <aside class="menu" *ngIf="gameData">
+          <ul class="menu-list">
+            <li *ngFor="let item of gameData['items']">
+              <a (click)="item.selected = item.selected ? false : true">{{ item.name }}</a>
+              <ul *ngIf="item.selected">
+                <li *ngFor="let contentItem of item['content']">
+                  <a [routerLink]="['./guide/' + contentItem.label]" routerLinkActive="is-active">{{ contentItem.name }}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <!-- <div *ngFor="let item of gameData['items']">
+            <p class="menu-label">
+              {{ item.name }}
+            </p>
+            <ul class="menu-list">
+              <li *ngFor="let contentItem of item['content']">
+                <a [routerLink]="['./guide/' + contentItem.label]">{{ contentItem.name }}</a>
+              </li>
+            </ul>
+          </div> -->
+        </aside>
       </div>
-    </aside>
-    <router-outlet></router-outlet>
+      <div class="column">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
 </div>

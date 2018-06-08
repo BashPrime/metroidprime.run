@@ -12,16 +12,19 @@
     </div>
     <div class="navbar-menu" [ngClass]="{ 'is-active': showNav }">
       <div class="navbar-start">
-        <a class="navbar-item" routerLink="/news">
+        <a class="navbar-item" routerLink="/news" routerLinkActive="is-active">
           News
         </a>
         <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
+            <a class="navbar-link" [ngClass]="{'is-active': rla.isActive}">
               Games
             </a>
-            <div class="navbar-dropdown">
+            <div class="navbar-dropdown" routerLinkActive #rla="routerLinkActive">
               <a class="navbar-item" routerLink="/game/mp1">
                 Metroid Prime
+              </a>
+              <a class="navbar-item" routerLink="/game/mp2">
+                Metroid Prime 2: Echoes
               </a>
             </div>
           </div>

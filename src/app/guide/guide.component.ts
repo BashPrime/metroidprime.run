@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { FileService } from '../services/file.service';
+import { GameService } from '../services/game.service';
 
 @Component({
   selector: 'app-guide',
@@ -10,24 +11,30 @@ import { FileService } from '../services/file.service';
   styleUrls: ['./guide.component.scss']
 })
 export class GuideComponent implements OnInit {
-  game: string;
-  guidename: string;
+  gameName: string;
+  gameNameSubscription: any;
+  guideName: string;
   content: any;
-  constructor(private route: ActivatedRoute, private fileService: FileService, private sanitizer: DomSanitizer) { }
+  constructor(private route: ActivatedRoute, private fileService: FileService, private gameService: GameService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.route.parent.params.subscribe(params => {
-      console.log(params);
-      this.game = params['game'];
-      this.guidename = params['guidename'];
+    this.route.params.subscribe(params => {
+      this.guideName = params['guidename'];
+      this.gameNameSubscription = this.gameService.gameName$.subscribe(gameName => {
+        this.gameName = gameName;
+        const fileName = '/assets/guides/' + this.gameName + '/' + this.guideName + '.html';
 
-      const fileName = '/assets/guides/' + this.game + '/' + this.guidename + '.html';
-
-      this.fileService.getLocalFileAsString(fileName)
-      .subscribe(data => {
-        this.content = this.sanitizer.bypassSecurityTrustHtml(data);
+        this.fileService.getLocalFileAsString(fileName).subscribe(data => {
+          this.content = this.sanitizer.bypassSecurityTrustHtml(data);
+        });
       });
+
+
     });
+  }
+
+  ngOnDestroy() {
+    this.gameNameSubscription.unsubscribe();
   }
 
 }
