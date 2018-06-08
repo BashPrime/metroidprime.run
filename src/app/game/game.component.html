@@ -2,18 +2,23 @@
   <div class="container">
     <div class="columns">
       <div class="column is-2">
-        <aside class="menu" *ngIf="gameData">
-          <ul class="menu-list">
-            <li *ngFor="let item of gameData['items']">
-              <a (click)="item.selected = item.selected ? false : true">{{ item.name }}</a>
-              <ul *ngIf="item.selected">
-                <li *ngFor="let contentItem of item['content']">
-                  <a [routerLink]="['./guide/' + contentItem.label]" routerLinkActive="is-active">{{ contentItem.name }}</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <!-- <div *ngFor="let item of gameData['items']">
+        <div class="box">
+          <div class="image" id="gameArt">
+            <img src="/assets/images/covers/{{ gameData.art.cover }}" />
+          </div>
+          <h1 class="title has-text-centered"><a routerLink="/game/{{ gameName }}">{{ gameData.name }}</a></h1>
+          <aside class="menu" *ngIf="gameData">
+            <ul class="menu-list">
+              <li *ngFor="let item of gameData['items']">
+                <a (click)="item.selected = item.selected ? false : true">{{ item.name }}</a>
+                <ul *ngIf="item.selected">
+                  <li *ngFor="let contentItem of item['content']">
+                    <a [routerLink]="['./guide/' + contentItem.label]" routerLinkActive="is-active" #rli="routerLinkActive">{{ contentItem.name }}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- <div *ngFor="let item of gameData['items']">
             <p class="menu-label">
               {{ item.name }}
             </p>
@@ -23,10 +28,13 @@
               </li>
             </ul>
           </div> -->
-        </aside>
+          </aside>
+        </div>
       </div>
       <div class="column">
-        <router-outlet></router-outlet>
+        <div class="box">
+          <router-outlet></router-outlet>          
+        </div>
       </div>
     </div>
   </div>

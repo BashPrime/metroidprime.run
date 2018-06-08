@@ -1,5 +1,8 @@
 {
     "name": "Metroid Prime",
+    "art": {
+        "cover": "mp1.jpg"
+    },
     "items": [
         {
             "name": "General Info",
