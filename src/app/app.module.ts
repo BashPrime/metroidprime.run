@@ -24,6 +24,7 @@ import { NewsComponent } from './news/news.component';
 import { IntervalJsonToTimeStringPipe } from './pipes/interval-json-to-time-string.pipe';
 import { GuideComponent } from './guide/guide.component';
 import { GameComponent } from './game/game.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export function getToken() {
   return localStorage.getItem('id_token');
@@ -39,7 +40,8 @@ export function getToken() {
     NewsComponent,
     IntervalJsonToTimeStringPipe,
     GuideComponent,
-    GameComponent
+    GameComponent,
+    NotFoundComponent
   ],
   imports: [
     AppRoutingModule,

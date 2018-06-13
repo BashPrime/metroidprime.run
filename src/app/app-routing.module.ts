@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { NewsComponent } from './news/news.component';
 import { GuideComponent } from './guide/guide.component';
 import { GameComponent } from './game/game.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,7 +18,9 @@ const routes: Routes = [
     children: [
       { path: 'guide/:guidename', component: GuideComponent, pathMatch: 'full' },
     ]
-  }
+  },
+  { path: '404', component: NotFoundComponent },
+  { path: '**', redirectTo: '404' }
   // { path: 'game/:game/guide/:guidename', component: GuideComponent }
 ];
 

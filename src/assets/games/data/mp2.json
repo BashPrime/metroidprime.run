@@ -1,0 +1,42 @@
+{
+    "name": "Metroid Prime 2: Echoes",
+    "art": {
+        "cover": "mp2.jpg"
+    },
+    "items": [
+        {
+            "name": "General Info",
+            "content": [
+                {
+                    "name": "Version Differences",
+                    "label": "version-differences"
+                },
+                {
+                    "name": "Expansion Locations",
+                    "label": "expansion-locations"
+                },
+                {
+                    "name": "Upgrades",
+                    "label": "upgrades"
+                }
+            ]
+        },
+        {
+            "name": "Techniques",
+            "content": [
+                {
+                    "name": "Dash",
+                    "label": "dash"
+                },
+                {
+                    "name": "L Jump",
+                    "label": "l-jump"
+                },
+                {
+                    "name": "Ghetto Jump",
+                    "label": "ghetto-jump"
+                }
+            ]
+        }
+    ]
+}
