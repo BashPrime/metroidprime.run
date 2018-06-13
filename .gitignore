@@ -42,5 +42,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Angular assets
+/src/assets/games/covers/
+
 # metroidprime.run deployment files
 config.js
