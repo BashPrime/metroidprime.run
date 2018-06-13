@@ -5,20 +5,12 @@
     },
     "items": [
         {
-            "name": "General Info",
-            "label": "general-info",
+            "name": "Routes",
+            "label": "routes",
             "content": [
                 {
-                    "name": "Version Differences",
-                    "label": "version-differences"
-                },
-                {
-                    "name": "Expansion Locations",
-                    "label": "expansion-locations"
-                },
-                {
-                    "name": "Upgrades",
-                    "label": "upgrades"
+                    "name": "Any%",
+                    "label": "any"
                 }
             ]
         },
