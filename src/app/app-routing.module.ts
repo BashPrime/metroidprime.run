@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'news', component: NewsComponent },
   { path: 'game/:game', component: GameComponent,
     children: [
-      { path: 'guide/:guidename', component: GuideComponent, pathMatch: 'full' },
+      { path: 'guide/:guidetype/:guidename', component: GuideComponent, pathMatch: 'full' },
     ]
   },
   { path: '404', component: NotFoundComponent },

@@ -6,6 +6,7 @@
     "items": [
         {
             "name": "General Info",
+            "label": "general-info",
             "content": [
                 {
                     "name": "Version Differences",
@@ -23,6 +24,7 @@
         },
         {
             "name": "Techniques",
+            "label": "tech",
             "content": [
                 {
                     "name": "Dash",
