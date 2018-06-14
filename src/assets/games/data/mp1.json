@@ -1,9 +1,16 @@
 {
     "name": "Metroid Prime",
-    "art": {
-        "cover": "mp1.jpg"
-    },
     "items": [
+        {
+            "name": "General Information",
+            "label": "general-info",
+            "content": [
+                {
+                    "name": "Hard Mode",
+                    "label": "hard-mode"
+                }
+            ]
+        },
         {
             "name": "Routes",
             "label": "routes",
