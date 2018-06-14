@@ -26,16 +26,24 @@
             "label": "tech",
             "content": [
                 {
-                    "name": "Dash",
-                    "label": "dash"
-                },
-                {
                     "name": "L Jump",
                     "label": "l-jump"
                 },
                 {
+                    "name": "Dash",
+                    "label": "dash"
+                },
+                {
+                    "name": "R Jump",
+                    "label": "r-jump"
+                },
+                {
                     "name": "Ghetto Jump",
                     "label": "ghetto-jump"
+                },
+                {
+                    "name": "Rapid Fire Missiles",
+                    "label": "rapid-fire-missiles"
                 }
             ]
         }

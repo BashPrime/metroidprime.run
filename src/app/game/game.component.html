@@ -7,7 +7,7 @@
           <img src="/assets/games/covers/{{ gameName }}.jpg" class="mobile-image is-hidden-tablet"/>
         </div>
         <h1 class="title has-text-centered">
-          <a routerLink="/game/{{ gameName }}">{{ gameData.name }}</a>
+          <a routerLink="/game/{{ gameName }}">{{ gameData?.name }}</a>
         </h1>
         <aside class="menu" *ngIf="gameData">
           <ul class="menu-list">
