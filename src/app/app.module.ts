@@ -16,7 +16,7 @@ import { FileService } from './services/file.service';
 import { AuthGuard } from './guards/auth.guard';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -33,7 +33,7 @@ export function getToken() {
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
+    NavigationComponent,
     HomeComponent,
     RegisterComponent,
     LoginComponent,

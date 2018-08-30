@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavigationComponent implements OnInit, OnDestroy {
   showNav = false;
   user: any;
   _authSub: any;

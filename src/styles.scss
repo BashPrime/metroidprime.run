@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    overflow: auto;
+}
+
 .video-container {
     position: relative;
     padding-top: 56.25%;
