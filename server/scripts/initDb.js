@@ -6,22 +6,15 @@ var dbSchemas = [
   'users.sql',
   'news.sql',
   'games.sql',
-  'sections.sql',
   'categories.sql',
   'records.sql',
-  'variables.sql',
-  'variables_values.sql',
-  'categories_variables.sql',
-  'records_variables.sql'
+  'tags.sql'
 ];
 
 var dbData = [
   'games.sql',
-  'sections.sql',
   'categories.sql',
-  'variables.sql',
-  'variables_values.sql',
-  'categories_variables.sql',
+  'tags.sql'
 ];
 
 async function initDb() {

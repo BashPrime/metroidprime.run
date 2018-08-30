@@ -5,5 +5,5 @@ CREATE TABLE news (
     authorid INTEGER NOT NULL REFERENCES users(id),
     submitted TIMESTAMP NOT NULL,
     slug VARCHAR(80) NOT NULL UNIQUE,
-    enabled BOOLEAN DEFAULT TRUE
+    hidden BOOLEAN DEFAULT FALSE
 );

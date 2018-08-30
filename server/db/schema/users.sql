@@ -5,7 +5,6 @@ CREATE TABLE users (
 	password TEXT NOT NULL,
 	email TEXT NOT NULL UNIQUE,
   enabled BOOLEAN DEFAULT TRUE,
-	userlevel SMALLINT DEFAULT 0,
 	twitter TEXT NULL,
 	twitch TEXT NULL,
 	youtube TEXT NULL
