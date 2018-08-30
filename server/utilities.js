@@ -1,92 +1,19 @@
-function generateConfig() {
-    var fs = require('fs-extra');
-    var path = require('path');
-    try {
-        fs.copySync(path.resolve(__dirname,'./resources/example-config.js'), './config.js');
-        console.log("Generated config.js in application root directory.");
-    } catch (err) {
-        console.error(err);
+"use strict";
+exports.__esModule = true;
+var fs_extra_1 = require("fs-extra");
+var path = require("path");
+var Utilities = /** @class */ (function () {
+    function Utilities() {
     }
-}
-
-function handleQueryParams(params, allowedParams, queryBuilder) {
-  var queryKeys = Object.keys(params).filter(function (e) { return this.indexOf(e) > -1; }, Object.keys(allowedParams));
-  for (var i = 0; i < queryKeys.length; i++) {
-    let queryParam = queryKeys[i];
-    if (i === 0) {
-      queryBuilder.where(allowedParams[queryParam], 'in', params[queryParam]);
-    } else {
-      queryBuilder.andWhere(allowedParams[queryParam], 'in', params[queryParam]);
-    }
-  }
-
-  if (params.orderBy) {
-    const splitOrderBy = params.orderBy.split(' ');
-    queryBuilder.orderBy(splitOrderBy[0], splitOrderBy[1]);
-  }
-
-  if (params.limit) {
-    queryBuilder.limit(params.limit);
-  }
-
-  return queryBuilder;
-}
-
-function sortAndRankRecords(records, sortField) {
-  var sortedRecords = records.sort(function(a, b) {
-    if (a[sortField] < b[sortField])
-      return -1;
-    if (a[sortField] > b[sortField])
-      return 1;
-    return 0;
-  });
-
-  var rank = 1;
-  var numSameVal = 0;
-  var lastVal;
-
-  for (var i = 0; i < sortedRecords.length; i++) {
-    currentVal = sortedRecords[i][sortField];
-    
-    if (lastVal && currentVal === lastVal) {
-      numSameVal++;
-    } else {
-      rank += numSameVal;
-      numSameVal = 1;
-    }
-
-    sortedRecords[i].rank = rank;
-    lastVal = currentVal;
-  }
-
-  return sortedRecords;
-}
-
-function rankRecords(records, timeField) {
-  var rank = 1;
-  var numSameVal = 0;
-  var lastVal;
-
-  for (var i = 0; i < records.length; i++) {
-    currentVal = records[i][timeField];
-    
-    if (lastVal && currentVal === lastVal) {
-      numSameVal++;
-    } else {
-      rank += numSameVal;
-      numSameVal = 1;
-    }
-
-    records[i].rank = rank;
-    lastVal = currentVal;
-  }
-
-  return records;
-}
-
-module.exports = {
-    generateConfig: generateConfig,
-    handleQueryParams: handleQueryParams,
-    sortAndRankRecords: sortAndRankRecords,
-    rankRecords: rankRecords
-};
+    Utilities.generateConfig = function () {
+        try {
+            fs_extra_1.copySync(path.resolve(__dirname, './resources/example-config.js'), './config.js');
+            console.log('Generated config.js in application root directory.');
+        }
+        catch (err) {
+            console.error(err);
+        }
+    };
+    return Utilities;
+}());
+exports.Utilities = Utilities;
