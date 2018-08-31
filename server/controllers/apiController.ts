@@ -1,16 +1,15 @@
 import { Router } from 'express';
-import { Hello } from './hello';
+import { UserController } from './userController';
 
-export class Api {
+export class ApiController {
     router: Router = Router();
 
     constructor() {
         // Define node API routes here
-        // this.router.use('/users', require('./users'));
+        this.router.use('/users', new UserController().router);
         // this.router.use('/authenticate', require('./auth'));
         // this.router.use('/news', require('./news'));
         // this.router.use('/leaderboards', require('./leaderboards'));
         // this.router.use('/records', require('./records'));
-        this.router.use('/hello', new Hello().router);
     }
 }
