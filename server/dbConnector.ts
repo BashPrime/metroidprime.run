@@ -2,7 +2,7 @@ const config = require('../config.json');
 import * as knex from 'knex';
 
 export class DbConnector {
-  knex: knex = knex({
+  knex = knex({
     client: 'pg',
     connection: {
       host: config.database.host,

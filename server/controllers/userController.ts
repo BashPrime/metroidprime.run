@@ -1,20 +1,34 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import { Controller } from './controller';
+import { UserModel } from '../models/userModel';
 
-export class UserController {
-    router: Router = Router();
+export class UserController extends Controller {
+    protected model: UserModel;
 
     constructor() {
+        super();
+        this.model = new UserModel();
+
         // Define routes
-        this.router.get('/', this.sayHello);
-        this.router.get('/:name', this.sayHelloWithParam);
+        this.router.get('/', (req: Request, res: Response, next: NextFunction) => {
+            this.getUsers(req, res, next);
+        });
     }
 
-    private sayHello(req: Request, res: Response) {
-        res.send('Hello, world!');
+    getUsers(req, res, next) {
+        this.model.getUsers(req.query, (err, users) => {
+            if (err) {
+                return next(err);
+            }
+
+            return res.json({
+                success: true,
+                data: users
+            });
+        });
     }
 
-    private sayHelloWithParam(req: Request, res: Response) {
-        const { name } = req.params;
-        res.send(`Hello, ${name}!`);
+    getModel() {
+        return this.model;
     }
 }
