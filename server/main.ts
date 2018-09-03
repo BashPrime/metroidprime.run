@@ -4,7 +4,8 @@ import * as passport from 'passport';
 import * as path from 'path';
 import * as http from 'http';
 import { Utilities } from './utilities';
-import { ApiController } from './controllers/apiController';
+import { ApiController } from './controllers/api';
+import { PassportHandler } from './passport';
 
 const app = express();
 let config;
@@ -21,9 +22,8 @@ try {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// require('./passport')(passport);
-
 // Passport Middleware
+const passportHandler = new PassportHandler(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 

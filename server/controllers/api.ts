@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Controller } from './controller';
-import { UserController } from './userController';
+import { UserController } from './user';
 
 export class ApiController extends Controller {
     protected model;
