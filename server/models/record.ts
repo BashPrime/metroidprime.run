@@ -9,17 +9,13 @@ export class RecordModel extends Model {
     async getLatestRecords(done) {
         const queryBuilder = this.connector.knex.select({
             id: 'records.id',
-            tagid: 'records.tagid',
-            tag: 'category_tags.tag',
-            tagname: 'category_tags.name',
-            categoryid: 'categories.id',
+            categoryid: 'records.categoryid',
             category: 'categories.name',
             game: 'games.name',
-            timing: 'categories.timing',
             playerid: 'records.playerid',
             player: 'playerusers.displayname',
             realtime: 'records.realtime',
-            ingametime: 'records.ingametime',
+            gametime: 'records.gametime',
             escapetime: 'records.escapetime',
             comment: 'records.comment',
             videourl: 'records.videourl',
@@ -29,8 +25,7 @@ export class RecordModel extends Model {
         })
             .from('records')
             .where('records.rejected', false)
-            .leftJoin('category_tags', 'records.tagid', 'category_tags.id')
-            .leftJoin('categories', 'category_tags.categoryid', 'categories.id')
+            .leftJoin('categories', 'records.categoryid', 'categories.id')
             .leftJoin('games', 'categories.gameid', 'games.id')
             .leftJoin('users as playerusers', 'records.playerid', 'playerusers.id')
             .orderBy('date', 'desc')

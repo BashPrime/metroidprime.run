@@ -14,7 +14,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "generate:key": "node ./server/scripts/secretKey.js",
-    "initdb": "node ./server/scripts/initDb.js"
+    "initdb": "node ./server/scripts/initdb.js"
   },
   "private": true,
   "dependencies": {
