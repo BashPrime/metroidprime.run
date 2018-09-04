@@ -13,7 +13,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate:key": "node ./server/scripts/secretKey.js",
+    "generate:key": "node ./server/scripts/secretkey.js",
     "initdb": "node ./server/scripts/initdb.js"
   },
   "private": true,

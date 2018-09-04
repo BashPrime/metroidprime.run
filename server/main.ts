@@ -4,8 +4,6 @@ import * as passport from 'passport';
 import * as path from 'path';
 import * as http from 'http';
 import { Utilities } from './utilities';
-import { ApiController } from './controllers/api';
-import { PassportHandler } from './passport';
 
 const app = express();
 let config;
@@ -17,6 +15,9 @@ try {
     console.log('You will need to configure your database credentials in this file before running the server.');
     process.exit(e.code);
 }
+
+import { ApiController } from './controllers/api';
+import { PassportHandler } from './passport';
 
 // Parsers
 app.use(bodyParser.json());
