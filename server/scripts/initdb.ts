@@ -6,8 +6,13 @@ const connector = new DbConnector();
 
 const dbSchemas = [
     'users.sql',
+    'roles.sql',
+    'permissions.sql',
+    'roles_permissions.sql',
+    'users_roles.sql',
     'news.sql',
     'games.sql',
+    'users_games_roles.sql',
     'categories.sql',
     'records.sql',
     'tags.sql',
