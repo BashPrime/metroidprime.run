@@ -47,4 +47,4 @@ Thumbs.db
 /src/assets/games/covers/
 
 # metroidprime.run deployment files
-config.json
+/config.json
