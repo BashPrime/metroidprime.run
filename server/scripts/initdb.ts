@@ -22,7 +22,10 @@ const dbSchemas = [
 const dbData = [
     'games.sql',
     'categories.sql',
-    'tags.sql'
+    'tags.sql',
+    'roles.sql',
+    'permissions.sql',
+    'roles_permissions.sql'
 ];
 
 async function initDb() {
