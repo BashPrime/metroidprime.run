@@ -12,6 +12,8 @@ const dbSchemas = [
     'users_roles.sql',
     'news.sql',
     'games.sql',
+    'games_articles_categories.sql',
+    'games_articles.sql',
     'users_games_roles.sql',
     'categories.sql',
     'records.sql',
@@ -21,6 +23,7 @@ const dbSchemas = [
 
 const dbData = [
     'games.sql',
+    'games_articles_categories.sql',
     'categories.sql',
     'tags.sql',
     'roles.sql',
