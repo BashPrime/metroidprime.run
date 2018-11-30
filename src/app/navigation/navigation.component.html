@@ -2,7 +2,7 @@
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item brand-text" routerLink="/">
-        metroidprime.run
+        Metroid Prime Speedrunning
       </a>
       <div class="navbar-burger burger" [ngClass]="{ 'is-active': showNav }" (click)="showNav = !showNav">
         <span></span>
@@ -20,11 +20,8 @@
               Games
             </a>
             <div class="navbar-dropdown" routerLinkActive #rla="routerLinkActive">
-              <a class="navbar-item" routerLink="/game/mp1">
-                Metroid Prime
-              </a>
-              <a class="navbar-item" routerLink="/game/mp2">
-                Metroid Prime 2: Echoes
+              <a class="navbar-item" [routerLink]="'/game/' + game.value" *ngFor="let game of games">
+                {{ game.name }}
               </a>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { GameService } from '../services/game.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,11 +11,13 @@ import { AuthService } from '../services/auth.service';
 export class NavigationComponent implements OnInit, OnDestroy {
   showNav = false;
   user: any;
+  games: any;
   _authSub: any;
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private gameService: GameService
   ) {
     this._authSub = this.authService.authenticationChange.subscribe(loggedIn => {
       if (loggedIn) {
@@ -30,11 +33,18 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.getGamesList();
     this.getUserFromAuthService();
   }
 
   ngOnDestroy() {
     this._authSub.unsubscribe();
+  }
+
+  getGamesList() {
+    this.gameService.getAllGames().subscribe(res => {
+      this.games = res['data'];
+    });
   }
 
   getUserFromAuthService() {

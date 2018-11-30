@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { UserService } from './services/user.service';
 import { NewsService } from './services/news.service';
 import { AuthService } from './services/auth.service';
+import { GameService } from './services/game.service';
 import { ValidatorService } from './services/validator.service';
 import { RecordsService } from './services/records.service';
 import { FileService } from './services/file.service';
@@ -63,7 +64,8 @@ export function getToken() {
     AuthService,
     ValidatorService,
     RecordsService,
-    FileService
+    FileService,
+    GameService
   ],
   bootstrap: [AppComponent]
 })

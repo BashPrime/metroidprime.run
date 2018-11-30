@@ -5,31 +5,26 @@ export class GameModel extends Model {
     tableName = 'users';
     connector = new DbConnector();
 
-    getGameById(gameId, done) {
+    getGames(done) {
         this.connector.knex.select('*')
             .from('games')
-            .where('id', gameId)
             .then(games => {
-                if (games.length === 1) {
-                    return games[0];
-                } else {
-                    return done(null, null);
-                }
+                return done(null, games);
             })
             .catch(err => {
                 return done(err);
             });
     }
 
-    async getGameByIdSync(id) {
-        const games = await this.connector.knex.select('*')
+    getGameById(gameId, done) {
+        this.connector.knex.select('*')
             .from('games')
-            .where('id', id);
-
-        if (games.length === 1) {
-            return games[0];
-        } else {
-            return undefined;
-        }
+            .where('id', gameId)
+            .then(games => {
+                return done(null, games);
+            })
+            .catch(err => {
+                return done(err);
+            });
     }
 }

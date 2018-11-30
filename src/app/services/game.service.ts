@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class GameService {
-  private gameName = new BehaviorSubject<string>('');
-  gameName$ = this.gameName.asObservable();
+  constructor(private http: HttpClient) {}
 
-  setGameName(gameName: string) {
-    this.gameName.next(gameName);
+  getAllGames() {
+    return this.http.get('/api/game');
   }
-
 }

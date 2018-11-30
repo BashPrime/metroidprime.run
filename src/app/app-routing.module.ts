@@ -21,7 +21,6 @@ const routes: Routes = [
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }
-  // { path: 'game/:game/guide/:guidename', component: GuideComponent }
 ];
 
 @NgModule({
