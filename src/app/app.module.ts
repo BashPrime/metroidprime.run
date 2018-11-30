@@ -23,7 +23,6 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NewsComponent } from './news/news.component';
 import { IntervalJsonToTimeStringPipe } from './pipes/interval-json-to-time-string.pipe';
-import { GuideComponent } from './guide/guide.component';
 import { GameComponent } from './game/game.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
@@ -40,7 +39,6 @@ export function getToken() {
     LoginComponent,
     NewsComponent,
     IntervalJsonToTimeStringPipe,
-    GuideComponent,
     GameComponent,
     NotFoundComponent
   ],

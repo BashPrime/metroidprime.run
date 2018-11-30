@@ -2,12 +2,13 @@ import { Model } from './model';
 import { DbConnector } from '../dbConnector';
 
 export class GameModel extends Model {
-    tableName = 'users';
+    tableName = 'games';
     connector = new DbConnector();
 
     getGames(done) {
         this.connector.knex.select('*')
-            .from('games')
+            .from(this.tableName)
+            .limit(10)
             .then(games => {
                 return done(null, games);
             })
@@ -16,12 +17,12 @@ export class GameModel extends Model {
             });
     }
 
-    getGameById(gameId, done) {
-        this.connector.knex.select('*')
-            .from('games')
-            .where('id', gameId)
-            .then(games => {
-                return done(null, games);
+    getGameByValue(gameVal, done) {
+        this.connector.knex.first('*')
+            .from(this.tableName)
+            .where('value', gameVal)
+            .then(game => {
+                return done(null, game);
             })
             .catch(err => {
                 return done(err);

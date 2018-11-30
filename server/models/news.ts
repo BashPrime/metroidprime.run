@@ -18,7 +18,8 @@ export class NewsModel extends Model {
         })
             .from(this.tableName)
             .where('news.hidden', false)
-            .leftJoin('users as authorusers', 'news.authorid', 'authorusers.id');
+            .leftJoin('users as authorusers', 'news.authorid', 'authorusers.id')
+            .limit(10);
 
         const allowedParams = {
             id: 'news.id',

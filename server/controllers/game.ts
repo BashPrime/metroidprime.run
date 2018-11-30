@@ -12,6 +12,10 @@ export class GameController extends Controller {
         this.router.get('/', (req: Request, res: Response, next: NextFunction) => {
             this.getGames(req, res, next);
         });
+
+        this.router.get('/:value', (req: Request, res: Response, next: NextFunction) => {
+            this.getGameByValue(req, res, next);
+        });
     }
 
     getGames(req, res, next) {
@@ -23,6 +27,18 @@ export class GameController extends Controller {
                 success: true,
                 data: games,
             });
+        });
+    }
+
+    getGameByValue(req, res, next) {
+        this.model.getGameByValue(req.params.value, (err, game) => {
+            if (err) {
+                return next(err);
+            } else if (!game) {
+                return res.json({});
+            }
+
+            return res.json(game);
         });
     }
 }

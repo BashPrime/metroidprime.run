@@ -22,7 +22,7 @@ export class ApiController extends Controller {
         this.router.use('/users', this.userController.router);
         this.router.use('/authenticate', this.authController.router);
         this.router.use('/news', this.newsController.router);
-        this.router.use('/game/', this.gameController.router);
+        this.router.use('/games', this.gameController.router);
         // this.router.use('/leaderboards', require('./leaderboards'));
         this.router.use('/records', this.recordController.router);
     }
