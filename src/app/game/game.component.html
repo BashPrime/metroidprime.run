@@ -3,13 +3,13 @@
     <div class="columns">
       <div class="column is-2">
         <div class="image" id="gameArt">
-          <img src="/assets/games/covers/{{ gameName }}.jpg" class="is-hidden-mobile"/>
-          <img src="/assets/games/covers/{{ gameName }}.jpg" class="mobile-image is-hidden-tablet"/>
+          <img src="https://dummyimage.com/300x400/000/fff" class="is-hidden-mobile"/>
+          <img src="https://dummyimage.com/300x400/000/fff" class="mobile-image is-hidden-tablet"/>
         </div>
         <h1 class="title has-text-centered">
-          <a routerLink="/game/{{ gameName }}">{{ gameData?.name }}</a>
+          {{ game?.name }}
         </h1>
-        <aside class="menu" *ngIf="gameData">
+        <!-- <aside class="menu" *ngIf="gameData">
           <ul class="menu-list">
             <li *ngFor="let item of gameData['items']">
               <a (click)="item.selected = item.selected ? false : true">{{ item.name }}</a>
@@ -20,7 +20,7 @@
               </ul>
             </li>
           </ul>
-        </aside>
+        </aside> -->
       </div>
       <div class="column">
         <router-outlet></router-outlet>

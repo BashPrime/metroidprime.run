@@ -16,8 +16,16 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.game = params['game'];
+      this.getGame(params['game']);
     });
   }
 
+  private getGame(value: string) {
+    this.gameService.getGameByValue(value).subscribe(res => {
+      this.game = res['data'] as Game;
+      if (Object.keys(this.game).length === 0) {
+        this.router.navigate(['/404']);
+      }
+    });
+  }
 }

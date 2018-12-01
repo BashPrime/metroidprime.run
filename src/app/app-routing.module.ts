@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'news', component: NewsComponent },
-  { path: 'game/:game', component: GameComponent
+  { path: 'games/:game', component: GameComponent
     // children: [
     //   { path: 'guide/:guidetype/:guidename', component: GuideComponent, pathMatch: 'full' },
     // ]

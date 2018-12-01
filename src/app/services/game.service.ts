@@ -8,4 +8,8 @@ export class GameService {
   getAllGames() {
     return this.http.get('/api/games');
   }
+
+  getGameByValue(value: string) {
+    return this.http.get('/api/games/' + value);
+  }
 }

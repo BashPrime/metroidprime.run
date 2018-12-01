@@ -16,15 +16,15 @@
           News
         </a>
         <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" [ngClass]="{'is-active': rla.isActive}">
-              Games
+          <a class="navbar-link" [ngClass]="{'is-active': rla.isActive}">
+            Games
+          </a>
+          <div class="navbar-dropdown" routerLinkActive #rla="routerLinkActive">
+            <a class="navbar-item" [routerLink]="'/games/' + game.abbreviation" *ngFor="let game of games">
+              {{ game.name }}
             </a>
-            <div class="navbar-dropdown" routerLinkActive #rla="routerLinkActive">
-              <a class="navbar-item" [routerLink]="'/game/' + game.value" *ngFor="let game of games">
-                {{ game.name }}
-              </a>
-            </div>
           </div>
+        </div>
         <a class="navbar-item" href="https://chozopedia.wikia.com" target="_blank">
           Wiki
         </a>

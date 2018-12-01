@@ -17,10 +17,13 @@ export class GameModel extends Model {
             });
     }
 
-    getGameByValue(gameVal, done) {
+    getDetailedGameById(id, done) {
+        // Allow checking id or abbreviated name
+        const column = isNaN(Number(id)) ? 'abbreviation' : 'id';
+
         this.connector.knex.first('*')
             .from(this.tableName)
-            .where('value', gameVal)
+            .where(column, id)
             .then(game => {
                 return done(null, game);
             })

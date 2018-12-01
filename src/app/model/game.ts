@@ -1,5 +1,5 @@
 export class Game {
     id: number;
     name: string;
-    value: string;
+    abbreviation: string;
 }
