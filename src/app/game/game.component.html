@@ -9,18 +9,18 @@
         <h1 class="title has-text-centered">
           {{ game?.name }}
         </h1>
-        <!-- <aside class="menu" *ngIf="gameData">
+        <aside class="menu" *ngIf="articlesByCategory">
           <ul class="menu-list">
-            <li *ngFor="let item of gameData['items']">
-              <a (click)="item.selected = item.selected ? false : true">{{ item.name }}</a>
-              <ul *ngIf="item.selected">
-                <li *ngFor="let contentItem of item['content']">
-                  <a [routerLink]="['./guide/' + item.label + '/' + contentItem.label]" routerLinkActive="is-active" #rli="routerLinkActive">{{ contentItem.name }}</a>
+            <li *ngFor="let category of articlesByCategory">
+              <a (click)="category.selected = category.selected ? false : true">{{ category.name }}</a>
+              <ul *ngIf="category.selected">
+                <li *ngFor="let article of category.articles">
+                  <a [routerLink]="['./guide/' + category.abbreviation + '/' + article.name]" routerLinkActive="is-active" #rli="routerLinkActive">{{ article.title }}</a>
                 </li>
               </ul>
             </li>
           </ul>
-        </aside> -->
+        </aside>
       </div>
       <div class="column">
         <router-outlet></router-outlet>

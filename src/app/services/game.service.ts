@@ -9,7 +9,11 @@ export class GameService {
     return this.http.get('/api/games');
   }
 
-  getGameByValue(value: string) {
-    return this.http.get('/api/games/' + value);
+  getGameByAbbreviatedName(abbreviation: string) {
+    return this.http.get('/api/games/' + abbreviation);
+  }
+
+  getArticlesForGame(abbreviation: string) {
+    return this.http.get('/api/games/' + abbreviation + '/articles');
   }
 }
