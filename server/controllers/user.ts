@@ -88,7 +88,7 @@ export class UserController extends Controller {
     }
 
     getUserProfile(req, res, next) {
-        this.model.getUserById(req.user.id, (err, user) => {
+        this.model.getSingleUser(req.user.id, (err, user) => {
             if (err) {
                 return next(err);
             }

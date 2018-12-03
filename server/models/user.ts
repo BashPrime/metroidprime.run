@@ -25,19 +25,32 @@ export class UserModel extends Model {
       .catch(err => done(err));
   }
 
-  getUserById(userId, done) {
-    this.connector.knex.select(this.selectableColumns)
-      .from(this.tableName)
-      .where('id', userId)
-      .then(users => {
-        console.log(users);
-        if (users.length > 0) {
-          return done(null, users[0]);
-        } else {
-          return done(Error('User not found'));
-        }
+  getSingleUser(id, done) {
+    this.getUserById(id)
+      .then(user => {
+        return done(null, user);
       })
       .catch(err => done(err));
+  }
+
+  getUsersByMultpleIds(ids) {
+    return this.connector.knex.select(this.selectableColumns)
+      .from('users')
+      .whereIn('id', ids);
+  }
+
+  getUserById(id) {
+    return this.connector.knex.first(this.selectableColumns)
+      .from(this.tableName)
+      .where('id', id);
+  }
+
+  async getUserByIdSync(userId) {
+    const user = await this.connector.knex.first(this.selectableColumns)
+      .from(this.tableName)
+      .where('id', userId);
+
+    return user;
   }
 
   getUserByName(userName, done) {

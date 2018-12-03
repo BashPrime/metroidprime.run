@@ -5,6 +5,7 @@ import { DbConnector } from '../dbConnector';
 export class GameModel extends Model {
     tableName = 'games';
     gameArticleTableName = 'games_articles';
+    gameArticleCategoryTableName = 'games_articles_categories';
     connector = new DbConnector();
 
     getGames(done) {
@@ -50,6 +51,8 @@ export class GameModel extends Model {
     }
 
     async getArticlesForGame(id, done) {
+        const selectableColumns = ['id', 'name', 'title', 'description', 'categoryid as category',
+            'last_updated_user', 'last_updated_date'];
         const user = new UserModel();
         let articles;
 
@@ -59,19 +62,24 @@ export class GameModel extends Model {
             id = game.id;
         }
 
-        this.connector.knex.select('*')
+        this.connector.knex.select(selectableColumns)
             .from(this.gameArticleTableName)
             .where('gameid', id)
             .then(articleData => {
                 articles = articleData;
                 const updatedUsers = articles.map(article => article.last_updated_user);
-                return this.connector.knex.select('*').from('users').whereIn('id', updatedUsers);
-                // return done(null, articles);
+                return user.getUsersByMultpleIds(updatedUsers);
             })
             .then(users => {
-                console.log(JSON.stringify(users));
                 articles.map(article => {
-                    article.userInfo = users.find(userItem => userItem.id === article.last_updated_user);
+                    article.last_updated_user = users.find(userItem => userItem.id === article.last_updated_user);
+                });
+                const categories = articles.map(article => article.category);
+                return this.connector.knex.select('*').from('games_articles_categories').whereIn('id', categories);
+            })
+            .then(categories => {
+                articles.map(article => {
+                    article.category = categories.find(categoryItem => categoryItem.id === article.category);
                 });
                 return done(null, articles);
             })
