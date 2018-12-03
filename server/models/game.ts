@@ -87,4 +87,38 @@ export class GameModel extends Model {
                 return done(err);
             });
     }
+
+    async getSingleArticleForGame(gameId, articleName, done) {
+        const selectableColumns = ['id', 'name', 'title', 'description', 'content', 'categoryid as category',
+            'last_updated_user', 'last_updated_date'];
+        const user = new UserModel();
+        let article;
+
+        // if id isn't numeric, get the id from the game via a game query
+        if (isNaN(Number(gameId))) {
+            const game = await this.getGameByIdSync(gameId);
+            gameId = game.id;
+        }
+
+        this.connector.knex.first(selectableColumns)
+            .from(this.gameArticleTableName)
+            .where('gameid', gameId)
+            .andWhere('name', articleName)
+            .then(articleData => {
+                article = articleData;
+                const userId = article.last_updated_user;
+                return user.getUserById(userId);
+            })
+            .then(userData => {
+                article.last_updated_user = userData;
+                return this.connector.knex.first('*').from('games_articles_categories').where('id', article.category);
+            })
+            .then(categoryData => {
+                article.category = categoryData;
+                return done(null, article);
+            })
+            .catch(err => {
+                return done(err);
+            });
+    }
 }
