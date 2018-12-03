@@ -16,4 +16,8 @@ export class GameService {
   getArticlesForGame(abbreviation: string) {
     return this.http.get('/api/games/' + abbreviation + '/articles');
   }
+
+  getSingleArticleForGame(abbreviation: string, articleName: string) {
+    return this.http.get('/api/games/' + abbreviation + '/articles/' + articleName);
+  }
 }

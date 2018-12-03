@@ -1,3 +1,7 @@
-<p>
-  game-article works!
-</p>
+<div class="section" *ngIf="article">
+  <div class="container">
+    <h2 class="title">{{ article.title }}</h2>
+    <p class="subtitle last-updated">Last Updated on {{ article.last_updated_date | date: 'MMMM d, y' }} by {{ article.last_updated_user.displayname }}</p>
+    <div class="content" [innerHtml]="article.content"></div>
+  </div>
+</div>

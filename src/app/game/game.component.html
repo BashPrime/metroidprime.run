@@ -15,7 +15,7 @@
               <a (click)="category.selected = category.selected ? false : true">{{ category.name }}</a>
               <ul *ngIf="category.selected">
                 <li *ngFor="let article of category.articles">
-                  <a [routerLink]="['./article/' + category.abbreviation + '/' + article.name]" routerLinkActive="is-active" #rli="routerLinkActive">{{ article.title }}</a>
+                  <a [routerLink]="['./articles/' + article.name]" routerLinkActive="is-active" #rli="routerLinkActive">{{ article.title }}</a>
                 </li>
               </ul>
             </li>
