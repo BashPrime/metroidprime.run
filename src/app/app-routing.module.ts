@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NewsComponent } from './news/news.component';
 import { GameComponent } from './game/game.component';
+import { GameArticleComponent } from './game-article/game-article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
@@ -13,10 +14,10 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'news', component: NewsComponent },
-  { path: 'games/:game', component: GameComponent
-    // children: [
-    //   { path: 'guide/:guidetype/:guidename', component: GuideComponent, pathMatch: 'full' },
-    // ]
+  { path: 'games/:game', component: GameComponent,
+    children: [
+      { path: 'article/:category/:article', component: GameArticleComponent, pathMatch: 'full' },
+    ]
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }
