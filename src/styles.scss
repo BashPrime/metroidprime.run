@@ -1,4 +1,10 @@
+// Import bulma, bulmaswatch
+@import "~bulmaswatch/darkly/_variables.scss";
+@import "~bulma/bulma.sass";
+@import "~bulmaswatch/darkly/_overrides.scss";
+
 /* You can add global styles to this file, and also import other style files */
+
 html {
     overflow: auto;
 }
