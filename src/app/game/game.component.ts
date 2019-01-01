@@ -17,18 +17,15 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.getGame(params['game']);
-      this.getArticlesForGameByCategory(params['game']);
+      this.getGame();
     });
   }
 
-  private getGame(abbreviation: string) {
-    this.gameService.getGameByAbbreviatedName(abbreviation).subscribe(res => {
-      this.game = res['data'] as Game;
-      if (Object.keys(this.game).length === 0) {
-        this.router.navigate(['/404']);
-      }
-    });
+  private getGame() {
+    this.game = this.route.snapshot.data['game'].data as Game;
+    if (Object.keys(this.game).length === 0) {
+      this.router.navigate(['/404']);
+    }
   }
 
   private getArticlesForGameByCategory(abbreviation: string) {

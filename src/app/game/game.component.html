@@ -1,30 +1,25 @@
-<div class="section">
-  <div class="container">
-    <div class="columns">
-      <div class="column is-2">
-        <div class="image" id="gameArt">
-          <img src="https://dummyimage.com/300x400/000/fff" class="is-hidden-mobile"/>
-          <img src="https://dummyimage.com/300x400/000/fff" class="mobile-image is-hidden-tablet"/>
+<section class="hero is-link">
+  <div class="hero-body">
+    <div class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-2">
+            <div class="image">
+              <img src="https://dummyimage.com/300x400/000/fff" class="is-hidden-mobile" />
+            </div>
+          </div>
+          <div class="column">
+            <h1 class="title">
+              {{ game?.name }}
+            </h1>
+          </div>
         </div>
-        <h1 class="title has-text-centered">
-          {{ game?.name }}
-        </h1>
-        <aside class="menu" *ngIf="articlesByCategory">
-          <ul class="menu-list">
-            <li *ngFor="let category of articlesByCategory">
-              <a (click)="category.selected = category.selected ? false : true">{{ category.name }}</a>
-              <ul *ngIf="category.selected">
-                <li *ngFor="let article of category.articles">
-                  <a [routerLink]="['./articles/' + article.name]" routerLinkActive="is-active" #rli="routerLinkActive">{{ article.title }}</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </aside>
-      </div>
-      <div class="column">
-        <router-outlet></router-outlet>
       </div>
     </div>
+  </div>
+</section>
+<div class="section">
+  <div class="container">
+    <router-outlet></router-outlet>
   </div>
 </div>

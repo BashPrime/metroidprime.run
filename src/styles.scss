@@ -9,6 +9,10 @@ html {
     overflow: auto;
 }
 
+html.has-navbar-fixed-top, body.has-navbar-fixed-top {
+    padding-top: 3.75rem;
+}
+
 .video-container {
     position: relative;
     padding-top: 56.25%;
