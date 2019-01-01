@@ -13,6 +13,12 @@ import { GameService } from '../services/game.service';
 export class GameComponent implements OnInit {
   game: Game;
   articlesByCategory: any;
+  tabs = [
+    'Overview',
+    'Articles'
+  ];
+  selectedTab = 0;
+
   constructor(private gameService: GameService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {

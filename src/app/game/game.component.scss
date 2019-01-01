@@ -5,8 +5,17 @@
         .title {
             font-size: 32px;
             font-weight: 700;
+
+            a:hover {
+                text-decoration: underline;
+            }
         }
     }
+}
+
+.hero.game-bg {
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 @media screen and (min-width: $tablet + 1) {
