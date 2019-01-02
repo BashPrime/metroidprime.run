@@ -17,6 +17,7 @@ export class GameComponent implements OnInit {
   ];
   readonly overviewTab = 'overview';
   selectedTab = this.overviewTab;
+  readonly config = require('../../assets/resources/config.json');
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -106,5 +107,11 @@ export class GameComponent implements OnInit {
 
   getCategoryArticles(abbr: string) {
     return this.articlesByCategory.find(category => category.abbreviation === abbr).articles;
+  }
+
+  get heroStyle() {
+    return {
+      'background-image': 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + this.config.cdnUrl + 'games/banners/' + this.game.banner + ')'
+    }
   }
 }
