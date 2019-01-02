@@ -1,4 +1,4 @@
-
+<p>{{ tabs | json }}</p>
 <section class="hero is-link game-bg" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://dummyimage.com/1920x1080/666/fff)">
   <div class="hero-body">
     <div class="container">
@@ -19,13 +19,34 @@
 </section>
 <div class="tabs is-centered">
   <ul>
-    <li *ngFor="let tab of tabs; let i = index" [ngClass]="{'is-active': selectedTab === i}" (click)="selectedTab = i">
-      <a>{{ tab }}</a>
+    <li *ngFor="let tab of tabs; let i = index" [ngClass]="{'is-active': selectedTab === tab.value}" (click)="selectedTab = tab.value">
+      <a>{{ tab.text }}</a>
     </li>
   </ul>
 </div>
 <div class="section">
   <div class="container">
-    <router-outlet></router-outlet>
+    <div *ngIf="selectedTab === overviewTab; then overview else article"></div>
+    <ng-template #overview>
+      This is the overview.
+    </ng-template>
+    <ng-template #article>
+      <div class="columns">
+        <div class="column is-2">
+          <aside class="menu">
+            <p class="menu-label">Articles</p>
+            <ul class="menu-list">
+              <li *ngFor="let article of getCategoryArticles(selectedTab)">
+                <a [routerLink]="['./articles/' + article.name]" routerLinkActive="is-active" #rli="routerLinkActive">{{
+                  article.title }}</a>
+              </li>
+            </ul>
+          </aside>
+        </div>
+        <div class="column">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>

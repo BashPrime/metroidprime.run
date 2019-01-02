@@ -9,7 +9,7 @@ import { GameComponent } from './game/game.component';
 import { GameArticleComponent } from './game-article/game-article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
-import { GameResolve } from './services/game.service';
+import { GameResolve, GameArticlesResolve, GameSingleArticleResolve } from './services/game.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,10 +19,18 @@ const routes: Routes = [
   {
     path: 'games/:game', component: GameComponent,
     resolve: {
-      game: GameResolve
+      game: GameResolve,
+      articles: GameArticlesResolve
     },
     children: [
-      { path: 'articles/:article', component: GameArticleComponent, pathMatch: 'full' },
+      {
+        path: 'articles/:article',
+        component: GameArticleComponent,
+        pathMatch: 'full',
+        resolve: {
+          article: GameSingleArticleResolve
+        }
+      },
     ]
   },
   { path: '404', component: NotFoundComponent },
@@ -32,6 +40,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [GameResolve]
+  providers: [GameResolve, GameArticlesResolve, GameSingleArticleResolve]
 })
 export class AppRoutingModule { }

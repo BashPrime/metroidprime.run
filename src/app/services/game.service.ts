@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  Router, Resolve,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable()
 export class GameService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllGames() {
     return this.http.get('/api/games');
@@ -28,9 +25,27 @@ export class GameService {
 
 @Injectable()
 export class GameResolve implements Resolve<Object> {
-    constructor(private gameService: GameService, private router: Router) { }
-    
-    resolve(route: ActivatedRouteSnapshot) {
-        return this.gameService.getGameByAbbreviatedName(route.params['game']);
-    }
+  constructor(private gameService: GameService) { }
+
+  resolve(route: ActivatedRouteSnapshot) {
+    return this.gameService.getGameByAbbreviatedName(route.params['game']);
+  }
+}
+
+@Injectable()
+export class GameArticlesResolve implements Resolve<Object> {
+  constructor(private gameService: GameService) { }
+
+  resolve(route: ActivatedRouteSnapshot) {
+    return this.gameService.getArticlesForGame(route.params['game']);
+  }
+}
+
+@Injectable()
+export class GameSingleArticleResolve implements Resolve<Object> {
+  constructor(private gameService: GameService) { }
+
+  resolve(route: ActivatedRouteSnapshot) {
+    return this.gameService.getSingleArticleForGame(route.parent.params['game'], route.params['article']);
+  }
 }

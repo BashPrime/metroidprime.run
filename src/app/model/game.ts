@@ -3,3 +3,9 @@ export class Game {
     name: string;
     abbreviation: string;
 }
+
+export class GameTab {
+  text: string;
+  value: string;
+  route?: string;
+}
