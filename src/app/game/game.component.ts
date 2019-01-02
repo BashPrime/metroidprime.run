@@ -26,6 +26,20 @@ export class GameComponent implements OnInit {
       this.selectedTab = this.overviewTab;
       this.getGame();
       this.getArticlesForGameByCategory();
+
+      // Get article parameter from child route.
+      const childRoute = this.route.firstChild;
+
+      // If the article exists, get the category it belongs to and set the appropriate tab.
+      if (childRoute) {
+        const childArticle = childRoute.snapshot.data.article.data;
+        if (childArticle) {
+          this.selectedTab = childArticle.category.abbreviation;
+        }
+      } else {
+        // Not in the article route, so display the overview tab
+        this.selectedTab = this.overviewTab;
+      }
     });
   }
 
