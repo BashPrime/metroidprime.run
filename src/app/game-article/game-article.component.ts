@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+
+import { GameArticle, SectionType } from '../model/game-article';
 
 @Component({
   selector: 'app-game-article',
@@ -7,12 +10,25 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./game-article.component.scss']
 })
 export class GameArticleComponent implements OnInit {
-  article: any;
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  article: GameArticle;
+  types = {
+    markdown: SectionType.MARKDOWN,
+    youtube: SectionType.YOUTUBE
+  };
+
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.route.params.subscribe(() => {
-      this.article = this.route.snapshot.data.article.data;
+      const article = this.route.snapshot.data.article.data
+      this.article = article as GameArticle;
+
+      // Article content is stored as a JSON string, so parse it
+      this.article.content = JSON.parse(article.content);
     });
+  }
+
+  getTrustedYouTubeUrl(id: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + id);
   }
 }

@@ -1,7 +1,11 @@
-<div class="section" *ngIf="article">
-  <div class="container">
-    <h2 class="title">{{ article.title }}</h2>
-    <p class="subtitle last-updated">Last Updated on {{ article.last_updated_date | date: 'MMMM d, y' }} by {{ article.last_updated_user.displayname }}</p>
-    <div class="content" [innerHtml]="article.content"></div>
+<div *ngIf="article">
+  <h2 class="title">{{ article.title }}</h2>
+  <p class="subtitle last-updated">Last Updated on {{ article.last_updated_date | date: 'MMMM d, y' }} by {{ article.last_updated_user.displayname }}</p>
+  <div *ngFor="let section of article.content" class="content">
+    <markdown [data]="section.markdown" *ngIf="section.type === types.markdown"></markdown>
+    <div class="video-container" *ngIf="section.type === types.youtube">
+      <iframe width="560" height="315" [src]="getTrustedYouTubeUrl(section.youtubeId)" frameborder="0" allow="autoplay; encrypted-media"
+        allowfullscreen></iframe>
+    </div>
   </div>
 </div>
