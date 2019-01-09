@@ -16,19 +16,16 @@
     </div>
   </div>
 </section>
-<div class="tabs is-centered">
+<div [ngClass]="{ 'tabs is-centered': tabs.length > 0 }">
   <ul>
-    <li *ngFor="let tab of tabs; let i = index" [ngClass]="{'is-active': selectedTab === tab.value}" (click)="selectedTab = tab.value">
+    <li *ngFor="let tab of tabs; let i = index" [ngClass]="{'is-active': selectedTab === tab.value}" routerLink="." (click)="selectedTab = tab.value">
       <a>{{ tab.text }}</a>
     </li>
   </ul>
 </div>
 <div class="section">
   <div class="container">
-    <div *ngIf="selectedTab === overviewTab; then overview else article"></div>
-    <ng-template #overview>
-      This is the overview.
-    </ng-template>
+    <div *ngIf="tabs.length > 0 && selectedTab; then article else empty"></div>
     <ng-template #article>
       <div class="columns">
         <div class="column is-2">
@@ -47,6 +44,9 @@
           <router-outlet></router-outlet>
         </div>
       </div>
+    </ng-template>
+    <ng-template #empty>
+      We're sorry! This game doesn't have any content yet. ☹️
     </ng-template>
   </div>
 </div>

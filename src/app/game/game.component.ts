@@ -12,19 +12,14 @@ export class GameComponent implements OnInit {
   game: Game;
   articlesByCategory: any;
   tabs: GameTab[];
-  private readonly defaultTabs: GameTab[] = [
-    { text: 'Overview', value: 'overview' }
-  ];
-  readonly overviewTab = 'overview';
-  selectedTab = this.overviewTab;
+  selectedTab: string;
   readonly config = require('../../assets/resources/config.json');
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.route.params.subscribe(() => {
-      this.tabs = this.defaultTabs;
-      this.selectedTab = this.overviewTab;
+      this.tabs = [];
       this.getGame();
       this.getArticlesForGameByCategory();
 
@@ -37,9 +32,6 @@ export class GameComponent implements OnInit {
         if (childArticle) {
           this.selectedTab = childArticle.category.abbreviation;
         }
-      } else {
-        // Not in the article route, so display the overview tab
-        this.selectedTab = this.overviewTab;
       }
     });
   }
@@ -52,11 +44,6 @@ export class GameComponent implements OnInit {
   }
 
   private getArticlesForGameByCategory() {
-    // Clear non-overview tabs if needed
-    if (this.tabs.length > 1) {
-    this.tabs = this.tabs.filter(tab => tab.value === this.overviewTab);
-
-    }
     const articles = this.route.snapshot.data.articles.data;
     const categories = [];
 
@@ -80,11 +67,6 @@ export class GameComponent implements OnInit {
       return category;
     });
 
-    // Push categories to tabstrip
-    for (const category of categories) {
-      this.tabs.push({ text: category.name, value: category.abbreviation });
-    }
-
     // Add articles to their categories
     for (const article of articles) {
       categories.find(category => category.id === article.category.id).articles.push(article);
@@ -100,6 +82,16 @@ export class GameComponent implements OnInit {
         }
         return 0;
       });
+    }
+
+    // Push categories to tabstrip
+    for (const category of categories) {
+      this.tabs.push({ text: category.name, value: category.abbreviation });
+    }
+
+    // Set first tab as selected if not in an article route
+    if (!this.selectedTab && this.tabs.length > 0) {
+      this.selectedTab = this.tabs[0].value;
     }
 
     this.articlesByCategory = categories;
