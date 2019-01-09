@@ -8,7 +8,7 @@
     "server": "npm run server:tsc && node ./server/main.js",
     "server:dev": "npm run server:tsc && nodemon ./server/main.js",
     "server:tsc": "tsc --project ./server",
-    "client": "ng serve --proxy-config proxy.conf.json --port 4201",
+    "client": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
