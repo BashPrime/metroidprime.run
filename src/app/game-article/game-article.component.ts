@@ -22,9 +22,6 @@ export class GameArticleComponent implements OnInit {
     this.route.params.subscribe(() => {
       const article = this.route.snapshot.data.article.data
       this.article = article as GameArticle;
-
-      // Article content is stored as a JSON string, so parse it
-      this.article.content = JSON.parse(article.content);
     });
   }
 

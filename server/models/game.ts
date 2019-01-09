@@ -131,6 +131,7 @@ export class GameModel extends Model {
               return this.connector.knex.first('*').from('games_articles_categories').where('id', article.category);
             })
             .then(categoryData => {
+              article.content = JSON.parse(article.content);
               article.category = categoryData;
               return done(null, article);
             })
