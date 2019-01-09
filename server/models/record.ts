@@ -4,7 +4,7 @@ import { Utilities } from '../utilities';
 
 export class RecordModel extends Model {
     tableName = 'records';
-    connector = new DbConnector();
+    connector: DbConnector;
 
     async getLatestRecords(done) {
         const queryBuilder = this.connector.knex.select({

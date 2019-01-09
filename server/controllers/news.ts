@@ -1,12 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { Controller } from './controller';
 import { NewsModel } from '../models/news';
+import { DbConnector } from '../dbConnector';
 
 export class NewsController extends Controller {
-    protected model = new NewsModel();
+    protected model: NewsModel;
 
-    constructor() {
+    constructor(connector: DbConnector) {
         super();
+        this.model = new NewsModel(connector);
 
         // Define routes
         this.router.get('/', (req: Request, res: Response, next: NextFunction) => {

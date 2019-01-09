@@ -2,12 +2,14 @@ import { Request, Response, NextFunction } from 'express';
 import * as passport from 'passport';
 import { Controller } from './controller';
 import { UserModel } from '../models/user';
+import { DbConnector } from '../dbConnector';
 
 export class UserController extends Controller {
-    protected model = new UserModel();
+    protected model: UserModel;
 
-    constructor() {
+    constructor(connector: DbConnector) {
         super();
+        this.model = new UserModel(connector);
 
         // Define routes
         this.router.get('/', (req: Request, res: Response, next: NextFunction) => {

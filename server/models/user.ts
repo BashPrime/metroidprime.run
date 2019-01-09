@@ -6,7 +6,7 @@ import { DbConnector } from '../dbConnector';
 
 export class UserModel extends Model {
   tableName = 'users';
-  connector = new DbConnector();
+  connector: DbConnector;
   selectableColumns = ['id', 'name', 'displayname', 'twitter', 'twitch', 'youtube'];
 
   getUsers(params, done) {

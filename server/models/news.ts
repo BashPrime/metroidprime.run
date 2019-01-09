@@ -4,7 +4,7 @@ import { Utilities } from '../utilities';
 
 export class NewsModel extends Model {
     tableName = 'news';
-    connector = new DbConnector();
+    connector: DbConnector;
 
     getNews(params = undefined, done) {
         let queryBuilder = this.connector.knex.select({

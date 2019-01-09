@@ -3,5 +3,9 @@ import * as knex from 'knex';
 
 export abstract class Model {
     protected abstract tableName: string;
-    protected abstract connector: DbConnector;
+    protected connector: DbConnector;
+
+    constructor(connector: DbConnector) {
+      this.connector = connector;
+    }
 }

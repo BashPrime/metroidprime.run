@@ -5,13 +5,15 @@ import * as jwt from 'jsonwebtoken';
 
 import { Controller } from './controller';
 import { UserModel } from '../models/user';
+import { DbConnector } from '../dbConnector';
 const config = require('../../config.json');
 
 export class AuthController extends Controller {
-    protected model = new UserModel();
+    protected model: UserModel;
 
-    constructor() {
+    constructor(connector: DbConnector) {
         super();
+        this.model = new UserModel(connector);
 
         // Define routes
         this.router.post('/', (req: Request, res: Response, next: NextFunction) => {

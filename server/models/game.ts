@@ -6,7 +6,7 @@ export class GameModel extends Model {
   tableName = 'games';
   gameArticleTableName = 'games_articles';
   gameArticleCategoryTableName = 'games_articles_categories';
-  connector = new DbConnector();
+  connector: DbConnector;
 
   getGames(done) {
     this.connector.knex.select('*')
@@ -53,7 +53,7 @@ export class GameModel extends Model {
   async getArticlesForGame(id, done) {
     const selectableColumns = ['id', 'name', 'title', 'description', 'categoryid as category',
       'last_updated_user', 'last_updated_date'];
-    const user = new UserModel();
+    const user = new UserModel(this.connector);
     let articles;
 
     // if id isn't numeric, get the id from the game via a game query
@@ -103,7 +103,7 @@ export class GameModel extends Model {
   async getSingleArticleForGame(gameId, articleName, done) {
     const selectableColumns = ['id', 'name', 'title', 'description', 'content', 'categoryid as category',
       'last_updated_user', 'last_updated_date'];
-    const user = new UserModel();
+    const user = new UserModel(this.connector);
     let article;
 
     // if id isn't numeric, get the id from the game via a game query

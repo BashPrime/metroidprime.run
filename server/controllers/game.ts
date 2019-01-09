@@ -1,12 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { Controller } from './controller';
 import { GameModel } from '../models/game';
+import { DbConnector } from '../dbConnector';
 
 export class GameController extends Controller {
-    protected model = new GameModel();
+    protected model: GameModel;
 
-    constructor() {
+    constructor(connector: DbConnector) {
         super();
+        this.model = new GameModel(connector);
 
         // Define routes
         this.router.get('/', (req: Request, res: Response, next: NextFunction) => {

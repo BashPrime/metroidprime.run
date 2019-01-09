@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { DbConnector } from '../dbConnector';
 import { Controller } from './controller';
 import { UserController } from './user';
 import { AuthController } from './auth';
@@ -8,11 +9,12 @@ import { GameController } from './game';
 
 export class ApiController extends Controller {
     protected model;
-    private userController = new UserController();
-    private authController = new AuthController();
-    private newsController = new NewsController();
-    private recordController = new RecordController();
-    private gameController = new GameController();
+    protected connector = new DbConnector();
+    private userController = new UserController(this.connector);
+    private authController = new AuthController(this.connector);
+    private newsController = new NewsController(this.connector);
+    private recordController = new RecordController(this.connector);
+    private gameController = new GameController(this.connector);
 
     constructor() {
         super();
