@@ -55,16 +55,16 @@ npm run initdb
 
 To start the Angular client with hot reloading support, run the following command, then open [http://localhost:4200](http://localhost:4200) in your browser:
 
-(NOTE: You will need to change the port in `proxy.conf.json` if you change the server port in `config.js`)
+(NOTE: You will need to change the port in `proxy.conf.json` if you change the server port in `config.json`)
 
 ```bash
 npm run client
 ```
 
-To start the Express server, run the following command. The server does not support hot reloading, so you will have to restart it after making any changes.
+To start the Express server with hot reloading support, run the following command:
 
 ```bash
-npm run server
+npm run server:dev
 ```
 
 ### Production
@@ -80,7 +80,3 @@ Then, start the Express server:
 ```bash
 npm run server
 ```
-
-Any routes outside of `/api` will redirect to the Angular website on your server port.
-
-At this point, you will want to set up a separate web server for HTTPS and reverse proxying to the application.
