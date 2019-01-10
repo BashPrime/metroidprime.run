@@ -18,8 +18,8 @@
 </section>
 <div class="tabs is-centered">
   <ul>
-    <li *ngFor="let tab of tabs; let i = index" [routerLink]="['./' + tab.value]" routerLinkActive="is-active">
-      <a>{{ tab.text }}</a>
+    <li *ngFor="let tab of tabs; let i = index" [ngClass]="{ 'is-active': tabActive.isActive }">
+      <a [routerLink]="['./' + tab.value]" routerLinkActive #tabActive="routerLinkActive">{{ tab.text }}</a>
     </li>
   </ul>
 </div>

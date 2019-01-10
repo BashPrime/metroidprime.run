@@ -11,6 +11,7 @@ import { GameArticleMenuComponent } from './game-article/game-article-menu.compo
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import { GameResolve, GameArticlesResolve, GameSingleArticleResolve } from './services/game.service';
+import { GameArticleEditComponent } from './game-article/game-article-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -39,6 +40,10 @@ const routes: Routes = [
             }
           }
         ]
+      },
+      {
+        path: 'add-article',
+        component: GameArticleEditComponent
       }
     ]
   },
