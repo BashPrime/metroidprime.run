@@ -57,5 +57,16 @@ export class GameArticleMenuComponent implements OnInit {
     }
 
     this.articlesByCategory = categories;
+
+    // Get article parameter from child route.
+    const childRoute = this.route.firstChild;
+
+    // If the article exists, get the category it belongs to and set it as selected
+    if (childRoute) {
+      const childArticle = childRoute.snapshot.data.article.data;
+      if (childArticle) {
+        this.articlesByCategory.find(category => category.abbreviation === childArticle.category.abbreviation).selected = true;
+      }
+    }
   }
 }
