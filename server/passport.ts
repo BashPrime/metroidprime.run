@@ -1,13 +1,15 @@
 const config = require('../config.json');
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UserModel } from './models/user';
+import { DbConnector } from './dbConnector';
 
 export class PassportHandler {
-    private jwt;
-    private secretKey;
-    private user = new UserModel();
+    private user: UserModel;
+    private connector: DbConnector;
 
-    constructor(passport) {
+    constructor(passport, connector: DbConnector) {
+        this.connector = connector;
+        this.user = new UserModel(this.connector);
         const opts: { jwtFromRequest, secretOrKey } = { jwtFromRequest: undefined, secretOrKey: undefined };
         opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
         opts.secretOrKey = config.token.secretKey;

@@ -1,4 +1,3 @@
-import { Router } from 'express';
 import { DbConnector } from '../dbConnector';
 import { Controller } from './controller';
 import { UserController } from './user';
@@ -9,16 +8,24 @@ import { GameController } from './game';
 
 export class ApiController extends Controller {
     protected model;
-    protected connector = new DbConnector();
-    private userController = new UserController(this.connector);
-    private authController = new AuthController(this.connector);
-    private newsController = new NewsController(this.connector);
-    private recordController = new RecordController(this.connector);
-    private gameController = new GameController(this.connector);
+    protected connector: DbConnector;
+    private userController: UserController;
+    private authController: AuthController;
+    private newsController: NewsController;
+    private recordController: RecordController;
+    private gameController: GameController;
 
-    constructor() {
+    constructor(connector: DbConnector) {
         super();
+        this.connector = connector;
         this.model = null;
+
+        // Initialize controllers
+        this.userController = new UserController(this.connector);
+        this.authController = new AuthController(this.connector);
+        this.newsController = new NewsController(this.connector);
+        this.recordController = new RecordController(this.connector);
+        this.gameController = new GameController(this.connector);
 
         // Define node API routes here
         this.router.use('/users', this.userController.router);

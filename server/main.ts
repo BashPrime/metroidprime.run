@@ -4,6 +4,9 @@ import * as passport from 'passport';
 import * as path from 'path';
 import * as http from 'http';
 import { Utilities } from './utilities';
+import { ApiController } from './controllers/api';
+import { PassportHandler } from './passport';
+import { DbConnector } from './dbConnector';
 
 const app = express();
 let config;
@@ -16,15 +19,15 @@ try {
   process.exit(e.code);
 }
 
-import { ApiController } from './controllers/api';
-import { PassportHandler } from './passport';
+// Create database connection pool
+const connector = new DbConnector();
 
 // Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Passport Middleware
-const passportHandler = new PassportHandler(passport);
+const passportHandler = new PassportHandler(passport, connector);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -32,7 +35,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../dist')));
 
 // API location (all node routes will fall under /api path)
-app.use('/api', new ApiController().router);
+app.use('/api', new ApiController(connector).router);
 
 // Error handler
 app.use((err, req, res, next) => {
