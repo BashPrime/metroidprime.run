@@ -27,6 +27,8 @@ import { GameComponent } from './game/game.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { GameArticleComponent } from './game-article/game-article.component';
 import { FooterComponent } from './footer/footer.component';
+import { GameArticleEditComponent } from './game-article/game-article-edit.component';
+import { GameArticleMenuComponent } from './game-article/game-article-menu.component';
 
 export function getToken() {
   return localStorage.getItem('id_token');
@@ -44,7 +46,9 @@ export function getToken() {
     GameComponent,
     NotFoundComponent,
     GameArticleComponent,
-    FooterComponent
+    FooterComponent,
+    GameArticleEditComponent,
+    GameArticleMenuComponent
   ],
   imports: [
     AppRoutingModule,

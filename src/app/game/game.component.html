@@ -16,37 +16,11 @@
     </div>
   </div>
 </section>
-<div [ngClass]="{ 'tabs is-centered': tabs.length > 0 }">
+<div class="tabs is-centered">
   <ul>
-    <li *ngFor="let tab of tabs; let i = index" [ngClass]="{'is-active': selectedTab === tab.value}" routerLink="." (click)="selectedTab = tab.value">
+    <li *ngFor="let tab of tabs; let i = index" [routerLink]="['./' + tab.value]" routerLinkActive="is-active">
       <a>{{ tab.text }}</a>
     </li>
   </ul>
 </div>
-<div class="section">
-  <div class="container">
-    <div *ngIf="tabs.length > 0 && selectedTab; then article else empty"></div>
-    <ng-template #article>
-      <div class="columns">
-        <div class="column is-2">
-          <aside class="menu">
-            <p class="menu-label">Articles</p>
-            <ul class="menu-list">
-              <li *ngFor="let article of getCategoryArticles(selectedTab)">
-                <a [routerLink]="['./articles/' + article.name]" routerLinkActive="is-active" #rli="routerLinkActive">
-                  {{ article.title }}
-                </a>
-              </li>
-            </ul>
-          </aside>
-        </div>
-        <div class="column">
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </ng-template>
-    <ng-template #empty>
-      We're sorry! This game doesn't have any content yet. ☹️
-    </ng-template>
-  </div>
-</div>
+<router-outlet></router-outlet>

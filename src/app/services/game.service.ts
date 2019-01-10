@@ -37,7 +37,7 @@ export class GameArticlesResolve implements Resolve<Object> {
   constructor(private gameService: GameService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
-    return this.gameService.getArticlesForGame(route.params['game']);
+    return this.gameService.getArticlesForGame(route.parent.params['game']);
   }
 }
 
@@ -46,6 +46,6 @@ export class GameSingleArticleResolve implements Resolve<Object> {
   constructor(private gameService: GameService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
-    return this.gameService.getSingleArticleForGame(route.parent.params['game'], route.params['article']);
+    return this.gameService.getSingleArticleForGame(route.parent.parent.params['game'], route.params['article']);
   }
 }
