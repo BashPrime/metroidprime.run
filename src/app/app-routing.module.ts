@@ -42,7 +42,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'add-article',
+        path: 'create-article',
         component: GameArticleEditComponent
       }
     ]
