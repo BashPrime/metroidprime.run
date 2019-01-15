@@ -13,8 +13,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate:key": "node ./server/scripts/secretkey.js",
-    "initdb": "node ./server/scripts/initdb.js"
+    "generate:key": "ts-node --project ./server/tsconfig.json ./server/scripts/secretkey.ts",
+    "initdb": "ts-node --project ./server/tsconfig.json ./server/scripts/initdb.ts"
   },
   "private": true,
   "dependencies": {
