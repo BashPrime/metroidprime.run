@@ -14,16 +14,16 @@ export class PassportHandler {
         opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
         opts.secretOrKey = config.token.secretKey;
         passport.use(new Strategy(opts, (jwt_payload, done) => {
-            console.log(jwt_payload.data.id);
             this.user.getUserByParameter(jwt_payload.data.id, 'id', true, (err, user) => {
                 if (err) {
                     return done(err, false);
                 }
+
                 if (user.enabled) {
                     return done(null, user);
-                } else {
-                    return done(null, false);
                 }
+
+                return done(null, false);
             });
         }));
     }

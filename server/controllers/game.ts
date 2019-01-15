@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import * as passport from 'passport';
+
 import { Controller } from './controller';
 import { GameModel } from '../models/game';
 import { DbConnector } from '../dbConnector';
@@ -26,6 +28,10 @@ export class GameController extends Controller {
         this.router.get('/:id/articles/:articleName', (req: Request, res: Response, next: NextFunction) => {
             this.getSingleArticleForGame(req, res, next);
         });
+
+        this.router.post('/:id/create-article', passport.authenticate('jwt', { session: false }), (req: Request, res: Response, next: NextFunction) => {
+          this.createArticle(req, res, next);
+      });
     }
 
     getGames(req, res, next) {
@@ -75,5 +81,19 @@ export class GameController extends Controller {
                 data: article
             });
         });
+    }
+
+    createArticle(req, res, next) {
+      this.model.createArticle(req.body, req.user, req.params.id, (err, article) => {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        return res.status(200)
+            .json({
+                success: true,
+                message: 'Successfully created article'
+            });
+      });
     }
 }

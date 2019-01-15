@@ -1,3 +1,4 @@
+import * as getSlug from 'speakingurl';
 import { Model } from './model';
 import { UserModel } from './user';
 import { DbConnector } from '../dbConnector';
@@ -48,6 +49,16 @@ export class GameModel extends Model {
     return await this.connector.knex.first(selectableColumns)
       .from(this.tableName)
       .where(column, id);
+  }
+
+  async getGameIdFromName(name: string) {
+    const game = await this.getGameByIdSync(name);
+
+    if (game) {
+      return game.id;
+    }
+
+    return null;
   }
 
   async getArticlesForGame(id, done) {
@@ -149,11 +160,34 @@ export class GameModel extends Model {
 
   getArticleCategories(done) {
     this.connector.knex.select().table('games_articles_categories')
-    .then(categories => {
-      return done(null, categories);
+      .then(categories => {
+        return done(null, categories);
+      })
+      .catch(err => {
+        return done(err);
+      });
+  }
+
+  async createArticle(newArticle, user, game, done) {
+    if (!newArticle.slug) {
+      newArticle.slug = getSlug(newArticle.title);
+    }
+
+    this.connector.knex.insert({
+      title: newArticle.title,
+      name: newArticle.slug,
+      categoryid: newArticle.category,
+      content: JSON.stringify(newArticle.content), // store content as JSON string
+      last_updated_user: user.id,
+      last_updated_date: new Date().toISOString(),
+      gameid: await this.getGameIdFromName(game)
     })
-    .catch(err => {
-      return done(err);
-    })
+      .into(this.gameArticleTableName)
+      .then(article => {
+        return done(null, article);
+      })
+      .catch(err => {
+        return done(err);
+      });
   }
 }

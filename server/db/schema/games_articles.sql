@@ -1,5 +1,5 @@
 CREATE TABLE games_articles (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(80) NOT NULL,
     title VARCHAR(150) NOT NULL,
     description VARCHAR(250) NULL,

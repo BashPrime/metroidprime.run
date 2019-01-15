@@ -11,16 +11,22 @@
           </select>
         </div>
       </div>
-      <div class="field">
-        <label class="label">Title</label>
-        <div class="control">
-          <input class="input" type="text" formControlName="title">
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+              <input class="input" type="text" formControlName="title">
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <label class="label">Slug</label>
-        <div class="control">
-          <input class="input" type="text" formControlName="abbreviation">
+        <div class="column">
+          <div class="field">
+            <label class="label">Slug</label>
+            <div class="control">
+              <input class="input" type="text" [value]="articleForm.get('slug').value" disabled>
+            </div>
+          </div>
         </div>
       </div>
       <hr>
