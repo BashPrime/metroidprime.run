@@ -25,6 +25,10 @@ export class GameService {
   getArticleCategories() {
     return this.http.get('/api/articleCategories');
   }
+
+  createArticle(game: string, newArticle: any) {
+    return this.http.post('/api/games/' + game + '/create-article', newArticle);
+  }
 }
 
 @Injectable()

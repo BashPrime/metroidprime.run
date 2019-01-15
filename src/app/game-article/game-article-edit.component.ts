@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import * as getSlug from 'speakingurl';
 
-import { GameArticle, SectionType, GameArticleSection } from '../model/game-article';
+import { GameArticle, SectionType } from '../model/game-article';
+import { GameService } from '../services/game.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameArticleEditComponent implements OnInit {
   article: GameArticle = new GameArticle();
+  game: string;
   articleForm: FormGroup;
   types = [
     { text: 'Markdown', value: SectionType.MARKDOWN },
@@ -23,11 +25,16 @@ export class GameArticleEditComponent implements OnInit {
   };
   categories = [];
   valueChangeSub: any;
+  submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private gameService: GameService, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.categories = this.route.snapshot.data.categories.data;
+
+    this.route.parent.params.subscribe(params => {
+      this.game = params['game'];
+    });
 
     this.articleForm = this.formBuilder.group({
       title: [''],
@@ -52,6 +59,14 @@ export class GameArticleEditComponent implements OnInit {
         this.articleForm.patchValue({ slug: getSlug(title) }, { emitEvent: false });
       }
     });
+  }
+
+  onArticleSubmit() {
+    if (this.articleForm.valid) {
+      this.gameService.createArticle(this.game, this.articleForm.value).subscribe(article => {
+        alert('success');
+      });
+    }
   }
 
   createSection(): FormGroup {
