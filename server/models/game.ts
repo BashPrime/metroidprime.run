@@ -146,4 +146,14 @@ export class GameModel extends Model {
         return done(err);
       });
   }
+
+  getArticleCategories(done) {
+    this.connector.knex.select().table('games_articles_categories')
+    .then(categories => {
+      return done(null, categories);
+    })
+    .catch(err => {
+      return done(err);
+    })
+  }
 }

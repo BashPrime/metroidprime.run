@@ -1,3 +1,4 @@
+import { Request, Response, NextFunction } from 'express';
 import { DbConnector } from '../dbConnector';
 import { Controller } from './controller';
 import { UserController } from './user';
@@ -5,6 +6,7 @@ import { AuthController } from './auth';
 import { NewsController } from './news';
 import { RecordController } from './record';
 import { GameController } from './game';
+import { GameModel } from '../models/game';
 
 export class ApiController extends Controller {
     protected model;
@@ -34,5 +36,18 @@ export class ApiController extends Controller {
         this.router.use('/games', this.gameController.router);
         // this.router.use('/leaderboards', require('./leaderboards'));
         this.router.use('/records', this.recordController.router);
+
+        // Custom routes
+        this.router.get('/articleCategories', (req: Request, res: Response, next: NextFunction) => {
+          const gameModel = new GameModel(this.connector);
+          gameModel.getArticleCategories((err, categories) => {
+            if (err) {
+                return next(err);
+            }
+            return res.json({
+                data: categories
+            });
+        });
+      });
     }
 }

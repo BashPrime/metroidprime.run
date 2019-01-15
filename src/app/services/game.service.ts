@@ -21,6 +21,10 @@ export class GameService {
   getSingleArticleForGame(abbreviation: string, articleName: string) {
     return this.http.get('/api/games/' + abbreviation + '/articles/' + articleName);
   }
+
+  getArticleCategories() {
+    return this.http.get('/api/articleCategories');
+  }
 }
 
 @Injectable()
@@ -47,5 +51,14 @@ export class GameSingleArticleResolve implements Resolve<Object> {
 
   resolve(route: ActivatedRouteSnapshot) {
     return this.gameService.getSingleArticleForGame(route.parent.parent.params['game'], route.params['article']);
+  }
+}
+
+@Injectable()
+export class GameArticleCategoriesResolve implements Resolve<Object> {
+  constructor(private gameService: GameService) { }
+
+  resolve(route: ActivatedRouteSnapshot) {
+    return this.gameService.getArticleCategories();
   }
 }
