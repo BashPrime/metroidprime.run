@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import * as getSlug from 'speakingurl';
 
-import { GameArticle, SectionType } from '../model/game-article';
+import { GameArticle, GameArticleSection, SectionType } from '../model/game-article';
 import { GameService } from '../services/game.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,7 +12,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./game-article-edit.component.scss']
 })
 export class GameArticleEditComponent implements OnInit {
-  article: GameArticle = new GameArticle();
+  isEdit = false;
+  article: GameArticle;
   game: string;
   articleForm: FormGroup;
   types = [
@@ -42,6 +43,20 @@ export class GameArticleEditComponent implements OnInit {
       category: [this.categories[0].id],
       content: this.formBuilder.array([ this.createSection() ])
     });
+
+    // Set flag, form, if an article is being edited
+    if (this.route.snapshot.data.isEdit) {
+      this.isEdit = true;
+      this.article = this.route.snapshot.data.article.data as GameArticle;
+      
+      this.articleForm.patchValue({
+        title: this.article.title,
+        slug: this.article.name,
+        category: this.article.category.id
+      });
+
+      this.articleForm.setControl('content', this.getArticleContentFormArray(this.article.content));
+    }
 
     this.onChanges();
   }
@@ -77,6 +92,20 @@ export class GameArticleEditComponent implements OnInit {
     });
   }
 
+  getArticleContentFormArray(newContent: GameArticleSection[]): FormArray {
+    const content = this.formBuilder.array([]);
+
+    for (const section of newContent) {
+      content.push(this.formBuilder.group({
+        type: [section.type],
+        markdown: [section.markdown],
+        youtubeId: [section.youtubeId]
+      }));
+    }
+
+    return content;
+  }
+
   addSection() {
     const content = this.articleForm.get('content') as FormArray;
     content.push(this.createSection());
@@ -88,5 +117,13 @@ export class GameArticleEditComponent implements OnInit {
     if (content.length > 1) {
       content.removeAt(index);
     }
+  }
+
+  getTitle() {
+    if (this.isEdit) {
+      return 'Editing \'' + this.article.title + '\'';
+    }
+
+    return 'Create Article';
   }
 }

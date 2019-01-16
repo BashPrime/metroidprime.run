@@ -43,7 +43,11 @@ const routes: Routes = [
             path: ':article/edit',
             component: GameArticleEditComponent,
             canActivate: [AuthGuard],
+            data: {
+              isEdit: true
+            },
             resolve: {
+              article: GameSingleArticleResolve,
               categories: GameArticleCategoriesResolve
             }
           }

@@ -1,4 +1,5 @@
 <div *ngIf="article">
+  <a class="button is-primary" routerLink="./edit">Edit</a>
   <h2 class="title">{{ article.title }}</h2>
   <p class="subtitle last-updated">Last Updated on {{ article.last_updated_date | date: 'MMMM d, y' }} by {{ article.last_updated_user.displayname }}</p>
   <div *ngFor="let section of article.content" class="content">

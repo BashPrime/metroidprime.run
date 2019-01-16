@@ -20,7 +20,7 @@ export class GameArticleComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(() => {
-      const article = this.route.snapshot.data.article.data
+      const article = this.route.snapshot.data.article.data;
       this.article = article as GameArticle;
     });
   }
