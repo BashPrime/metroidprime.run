@@ -59,6 +59,15 @@ export class GameSingleArticleResolve implements Resolve<Object> {
 }
 
 @Injectable()
+export class GameEditArticleResolve implements Resolve<Object> {
+  constructor(private gameService: GameService) { }
+
+  resolve(route: ActivatedRouteSnapshot) {
+    return this.gameService.getSingleArticleForGame(route.parent.params['game'], route.params['article']);
+  }
+}
+
+@Injectable()
 export class GameArticleCategoriesResolve implements Resolve<Object> {
   constructor(private gameService: GameService) { }
 

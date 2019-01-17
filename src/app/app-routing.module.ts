@@ -10,7 +10,7 @@ import { GameArticleComponent } from './game-article/game-article.component';
 import { GameArticleMenuComponent } from './game-article/game-article-menu.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
-import { GameResolve, GameArticlesResolve, GameSingleArticleResolve, GameArticleCategoriesResolve } from './services/game.service';
+import { GameResolve, GameArticlesResolve, GameSingleArticleResolve, GameArticleCategoriesResolve, GameEditArticleResolve } from './services/game.service';
 import { GameArticleEditComponent } from './game-article/game-article-edit.component';
 
 const routes: Routes = [
@@ -38,18 +38,6 @@ const routes: Routes = [
             resolve: {
               article: GameSingleArticleResolve
             }
-          },
-          {
-            path: ':article/edit',
-            component: GameArticleEditComponent,
-            canActivate: [AuthGuard],
-            data: {
-              isEdit: true
-            },
-            resolve: {
-              article: GameSingleArticleResolve,
-              categories: GameArticleCategoriesResolve
-            }
           }
         ]
       },
@@ -58,6 +46,18 @@ const routes: Routes = [
         component: GameArticleEditComponent,
         canActivate: [AuthGuard],
         resolve: {
+          categories: GameArticleCategoriesResolve
+        }
+      },
+      {
+        path: 'edit-article/:article',
+        component: GameArticleEditComponent,
+        canActivate: [AuthGuard],
+        data: {
+          isEdit: true
+        },
+        resolve: {
+          article: GameEditArticleResolve,
           categories: GameArticleCategoriesResolve
         }
       }
@@ -70,6 +70,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [GameResolve, GameArticlesResolve, GameSingleArticleResolve, GameArticleCategoriesResolve]
+  providers: [GameResolve, GameArticlesResolve, GameSingleArticleResolve, GameArticleCategoriesResolve, GameEditArticleResolve]
 })
 export class AppRoutingModule { }
