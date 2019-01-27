@@ -26,8 +26,12 @@ export class GameService {
     return this.http.get('/api/articleCategories');
   }
 
-  createArticle(game: string, newArticle: any) {
-    return this.http.post('/api/games/' + game + '/article', newArticle);
+  createArticle(game: string, articlePayload: any) {
+    return this.http.post('/api/games/' + game + '/article', articlePayload);
+  }
+
+  updateArticle(game: string, articleId: number, articlePayload: any) {
+    return this.http.put('/api/games/' + game + '/article/' + articleId, articlePayload);
   }
 }
 

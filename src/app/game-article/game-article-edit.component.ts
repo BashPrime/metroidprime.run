@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import * as getSlug from 'speakingurl';
 
 import { GameArticle, GameArticleSection, SectionType } from '../model/game-article';
 import { GameService } from '../services/game.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game-article-edit',
   templateUrl: './game-article-edit.component.html',
   styleUrls: ['./game-article-edit.component.scss']
 })
-export class GameArticleEditComponent implements OnInit {
+export class GameArticleEditComponent implements OnInit, OnDestroy {
   isEdit = false;
   article: GameArticle;
   game: string;
@@ -28,7 +28,7 @@ export class GameArticleEditComponent implements OnInit {
   valueChangeSub: any;
   submitted = false;
 
-  constructor(private gameService: GameService, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private gameService: GameService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.categories = this.route.snapshot.data.categories.data;
@@ -41,14 +41,14 @@ export class GameArticleEditComponent implements OnInit {
       title: [''],
       slug: [''],
       category: [this.categories[0].id],
-      content: this.formBuilder.array([ this.createSection() ])
+      content: this.formBuilder.array([this.createSection()])
     });
 
     // Set flag, form, if an article is being edited
     if (this.route.snapshot.data.isEdit) {
       this.isEdit = true;
       this.article = this.route.snapshot.data.article.data as GameArticle;
-      
+
       this.articleForm.patchValue({
         title: this.article.title,
         slug: this.article.name,
@@ -78,8 +78,13 @@ export class GameArticleEditComponent implements OnInit {
 
   onArticleSubmit() {
     if (this.articleForm.valid) {
-      this.gameService.createArticle(this.game, this.articleForm.value).subscribe(article => {
-        alert('success');
+      const formValue = this.articleForm.value;
+      const request = this.isEdit ? this.gameService.updateArticle(this.game, this.article.id, formValue)
+        : this.gameService.createArticle(this.game, formValue);
+
+      request.subscribe(() => {
+        const routePrefix = this.isEdit ? '../../articles/' : '../articles/';
+        this.router.navigate([routePrefix + formValue.slug], { relativeTo: this.route });
       });
     }
   }
