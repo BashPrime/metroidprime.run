@@ -190,4 +190,27 @@ export class GameModel extends Model {
         return done(err);
       });
   }
+
+  async updateArticle(article, user, articleId, done) {
+    if (!article.slug) {
+      article.slug = getSlug(article.title);
+    }
+
+    this.connector.knex(this.gameArticleTableName)
+    .where('id', articleId)
+    .update({
+      title: article.title,
+      name: article.slug,
+      categoryid: article.category,
+      content: JSON.stringify(article.content), // store content as JSON string
+      last_updated_user: user.id,
+      last_updated_date: new Date().toISOString()
+    })
+    .then(() => {
+      return done(null);
+    })
+    .catch(err => {
+      return done(err);
+    });
+  }
 }

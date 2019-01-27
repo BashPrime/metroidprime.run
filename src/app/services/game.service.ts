@@ -27,7 +27,7 @@ export class GameService {
   }
 
   createArticle(game: string, newArticle: any) {
-    return this.http.post('/api/games/' + game + '/create-article', newArticle);
+    return this.http.post('/api/games/' + game + '/article', newArticle);
   }
 }
 

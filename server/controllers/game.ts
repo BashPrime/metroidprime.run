@@ -29,9 +29,13 @@ export class GameController extends Controller {
             this.getSingleArticleForGame(req, res, next);
         });
 
-        this.router.post('/:id/create-article', passport.authenticate('jwt', { session: false }), (req: Request, res: Response, next: NextFunction) => {
-          this.createArticle(req, res, next);
-      });
+        this.router.post('/:id/article', passport.authenticate('jwt', { session: false }), (req: Request, res: Response, next: NextFunction) => {
+            this.createArticle(req, res, next);
+        });
+
+        this.router.put('/:id/article/:articleId', passport.authenticate('jwt', { session: false }), (req: Request, res: Response, next: NextFunction) => {
+            this.updateArticle(req, res, next);
+        });
     }
 
     getGames(req, res, next) {
@@ -84,16 +88,30 @@ export class GameController extends Controller {
     }
 
     createArticle(req, res, next) {
-      this.model.createArticle(req.body, req.user, req.params.id, (err, article) => {
-        if (err) {
-            console.log(err);
-            return next(err);
-        }
-        return res.status(200)
-            .json({
-                success: true,
-                message: 'Successfully created article'
-            });
-      });
+        this.model.createArticle(req.body, req.user, req.params.id, (err, article) => {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            return res.status(200)
+                .json({
+                    success: true,
+                    message: 'Successfully created article'
+                });
+        });
+    }
+
+    updateArticle(req, res, next) {
+        this.model.updateArticle(req.body, req.user, req.params.articleId, (err) => {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            return res.status(200)
+                .json({
+                    success: true,
+                    message: 'Successfully updated article'
+                });
+        });
     }
 }
