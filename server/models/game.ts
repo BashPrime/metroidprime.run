@@ -51,6 +51,13 @@ export class GameModel extends Model {
       .where(column, id);
   }
 
+  async getGamesByCollectionSync(gameCollection, columns?) {
+    const selectableColumns = columns ? columns : '*';
+    return await this.connector.knex.select(selectableColumns)
+      .from(this.tableName)
+      .whereIn('id', gameCollection);
+  }
+
   async getGameIdFromName(name: string) {
     const game = await this.getGameByIdSync(name);
 

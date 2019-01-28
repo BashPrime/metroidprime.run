@@ -19,6 +19,14 @@ export class PermissionController extends Controller {
     }
 
     private getUserPermissions(req, res, next) {
+        this.model.getUserPermissions(req.user, (err, permissions) => {
+            if (err) {
+                return next(err);
+            }
 
+            return res.json({
+                data: permissions
+            });
+        });
     }
 }
