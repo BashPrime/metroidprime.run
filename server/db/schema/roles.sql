@@ -1,4 +1,4 @@
 CREATE TABLE roles (
   id INTEGER PRIMARY KEY,
-  value TEXT NOT NULL
+  name TEXT NOT NULL
 );
