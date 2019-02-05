@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Game } from './game';
 
 export class GameArticle {
   id: number;
@@ -6,6 +7,7 @@ export class GameArticle {
   title: string;
   description: string;
   content: GameArticleSection[];
+  game: Game;
   category: GameArticleCategory;
   last_updated_user: User;
   last_updated_date: Date;

@@ -119,7 +119,7 @@ export class GameModel extends Model {
   }
 
   async getSingleArticleForGame(gameId, articleName, done) {
-    const selectableColumns = ['id', 'name', 'title', 'description', 'content', 'categoryid as category',
+    const selectableColumns = ['id', 'name', 'title', 'description', 'content', 'gameid as game', 'categoryid as category',
       'last_updated_user', 'last_updated_date'];
     const user = new UserModel(this.connector);
     let article;
@@ -149,8 +149,12 @@ export class GameModel extends Model {
               return this.connector.knex.first('*').from('games_articles_categories').where('id', article.category);
             })
             .then(categoryData => {
-              article.content = JSON.parse(article.content);
               article.category = categoryData;
+              return this.getGameById(article.game);
+            })
+            .then(gameData => {
+              article.content = JSON.parse(article.content);
+              article.game = gameData;
               return done(null, article);
             })
             .catch(err => {
