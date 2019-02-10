@@ -1,5 +1,15 @@
-<div *ngIf="article">
-  <h2 class="title">{{ article.title }} <a class="button is-primary" [routerLink]="'../../edit-article/' + article.name" *ngIf="user?.hasPermission(UPDATE_ARTICLE, article.game.abbreviation)">Edit</a></h2>
+<div>
+  <div class="level">
+    <div class="level-left">
+      <h2 class="title">{{ article.title }}</h2>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <a class="button is-primary" [routerLink]="'../../edit-article/' + article.name" *ngIf="user?.hasPermission(UPDATE_ARTICLE, article.game.abbreviation)">Edit</a>
+      </div>
+    </div>
+  </div>
+  <!-- <h2 class="title">{{ article.title }} <a class="button is-primary" [routerLink]="'../../edit-article/' + article.name" *ngIf="user?.hasPermission(UPDATE_ARTICLE, article.game.abbreviation)">Edit</a></h2> -->
   <p class="subtitle last-updated">Last Updated on {{ article.last_updated_date | date: 'MMMM d, y' }} by {{ article.last_updated_user.displayname }}</p>
   <div *ngFor="let section of article.content" class="content">
     <markdown [data]="section.markdown" *ngIf="section.type === types.markdown"></markdown>
