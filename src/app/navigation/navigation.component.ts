@@ -43,7 +43,15 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   getGamesList() {
     this.gameService.getAllGames().subscribe(res => {
-      this.games = res['data'];
+      this.games = res['data'].sort((a, b) => {
+        if (a.id < b.id) {
+          return -1;
+        } else if (a.id > b.id) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
     });
   }
 
