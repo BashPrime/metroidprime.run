@@ -67,8 +67,14 @@
         </div>
         <hr>
       </div>
-      <button class="button" (click)="addSection()">Add Section</button>
-      <button class="button is-primary" (click)="onArticleSubmit()">{{ isEdit ? 'Update' : 'Create' }}</button>
+      <div class="field is-grouped is-grouped-centered">
+        <div class="control">
+          <button class="button" (click)="addSection()">Add Section</button>
+        </div>
+        <div class="control">
+          <button class="button is-primary" (click)="onArticleSubmit()">{{ isEdit ? 'Update' : 'Create' }}</button>
+        </div>
+      </div>
     </form>
   </div>
 </div>
