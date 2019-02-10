@@ -69,4 +69,8 @@ export class GameArticleMenuComponent implements OnInit {
       }
     }
   }
+
+  get hasChildRoute(): boolean {
+    return this.route.firstChild ? true: false;
+  }
 }
