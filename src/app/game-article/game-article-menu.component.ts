@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LoggedInUser } from '../model/user';
+import { AuthService } from '../services/auth.service';
+import { Game } from '../model/game';
 
 
 @Component({
@@ -9,10 +12,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameArticleMenuComponent implements OnInit {
   articlesByCategory: any;
-  constructor(private route: ActivatedRoute) { }
+  private game: Game;
+  private user: LoggedInUser;
+  private createArticlePerm = 'game.createArticle';
+
+  constructor(private route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
     this.getArticlesForGameByCategory();
+    this.user = this.authService.getLoggedInUser();
+    this.game = this.route.parent.snapshot.data.game.data;
   }
 
   private getArticlesForGameByCategory() {
@@ -71,6 +80,10 @@ export class GameArticleMenuComponent implements OnInit {
   }
 
   get hasChildRoute(): boolean {
-    return this.route.firstChild ? true: false;
+    return this.route.firstChild ? true : false;
+  }
+
+  protected canCreateArticle(): boolean {
+    return this.user.hasPermission(this.createArticlePerm, this.game.abbreviation);
   }
 }
