@@ -25,11 +25,6 @@ const routes: Routes = [
     },
     children: [
       {
-        path: '',
-        redirectTo: 'articles',
-        pathMatch: 'full'
-      },
-      {
         path: 'articles',
         component: GameArticleMenuComponent,
         resolve: {
