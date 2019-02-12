@@ -84,6 +84,10 @@ export class GameArticleMenuComponent implements OnInit {
   }
 
   protected canCreateArticle(): boolean {
-    return this.user.hasPermission(this.createArticlePerm, this.game.abbreviation);
+    if (this.user) {
+      return this.user.hasPermission(this.createArticlePerm, this.game.abbreviation);
+    }
+
+    return false;
   }
 }
