@@ -12,6 +12,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 import { GameResolve, GameArticlesResolve, GameSingleArticleResolve, GameArticleCategoriesResolve, GameEditArticleResolve } from './services/game.service';
 import { GameArticleEditComponent } from './game-article/game-article-edit.component';
+import { PermissionGuard } from './guards/permission.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,7 +45,15 @@ const routes: Routes = [
       {
         path: 'create-article',
         component: GameArticleEditComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, PermissionGuard],
+        data: {
+          permissions: {
+            gameBased: true,
+            keys: [
+              'game.createArticle'
+            ]
+          }
+        },
         resolve: {
           categories: GameArticleCategoriesResolve
         }
@@ -52,9 +61,15 @@ const routes: Routes = [
       {
         path: 'edit-article/:article',
         component: GameArticleEditComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, PermissionGuard],
         data: {
-          isEdit: true
+          isEdit: true,
+          permissions: {
+            gameBased: true,
+            keys: [
+              'game.updateArticle'
+            ]
+          }
         },
         resolve: {
           article: GameEditArticleResolve,

@@ -46,3 +46,9 @@ export class LoggedInUser extends User {
     Object.assign(this, permissionObj);
   }
 }
+
+export class UserPermissions {
+  role: any;
+  permissions: any[];
+  games: any[];
+}
