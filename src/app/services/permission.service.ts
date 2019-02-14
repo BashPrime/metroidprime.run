@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { UserPermissions } from '../model/user';
@@ -55,13 +55,24 @@ export class PermissionService {
       if (wildCardPerms) {
         // Get permission module and append wildcard to it
         const wildCardKey = key.split('.')[0] + '.*';
-        if (wildCardPerms.find(permission => permission === wildCardKey)) {
+        if (wildCardPerms.includes(wildCardKey)) {
           return true;
         }
       }
 
-      // If no wildcards are found, check for an exact match.
-      return data.permissions.find(permission => permission.value === key) ? true : false;
+      // If no wildcards are found, check if user has exact permission key
+      return data.permissions.includes(key);
+    }));
+  }
+
+  hasPermissions(keys: string[]): Observable<boolean> {
+    const sources: Observable<boolean>[] = [];
+    for(const key of keys) {
+      sources.push(this.hasPermission(key));
+    }
+
+    return combineLatest(sources).pipe(map(data => {
+      return data.includes(true) && !data.includes(false);
     }));
   }
 }

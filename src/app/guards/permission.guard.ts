@@ -12,8 +12,8 @@ export class PermissionGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const key = route.data.permissions.keys[0];
+    const keys = route.data.permissions.keys;
 
-    return this.permissionService.hasPermission(key);
+    return this.permissionService.hasPermissions(keys);
   }
 }
