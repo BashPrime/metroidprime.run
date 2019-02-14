@@ -15,7 +15,7 @@ export class PermissionGuard implements CanActivate {
     const routePerms = route.data.permissions;
 
     // If permissions are game-based, get game parameter from route parent (since we can't resolve the game yet)
-    if (routePerms.forGame && !this.permissionService.hasGameSet()) {
+    if (routePerms.forGame) {
       let currentRoute = route;
       for(let i = 0; i < route.data.levelsToGameParent; i++) {
         currentRoute = route.parent;

@@ -10,7 +10,6 @@ import { UserPermissions } from '../model/user';
 })
 export class PermissionService {
   private permissionsFetched = false;
-  private gameSet = false;
 
   private permissionsSubject = new ReplaySubject<UserPermissions>(1);
   permissions$ = this.permissionsSubject.asObservable();
@@ -31,9 +30,6 @@ export class PermissionService {
   }
 
   setGame(game: string) {
-    if (!this.gameSet) {
-      this.gameSet = true;
-    }
     this.gameSubject.next(game);
   }
 
@@ -62,9 +58,5 @@ export class PermissionService {
     return combineLatest(sources).pipe(map(data => {
       return data.includes(true) && !data.includes(false);
     }));
-  }
-
-  hasGameSet() {
-    return this.gameSet;
   }
 }
