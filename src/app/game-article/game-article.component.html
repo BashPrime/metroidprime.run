@@ -5,7 +5,7 @@
     </div>
     <div class="level-right">
       <div class="level-item">
-        <a class="button is-primary" [routerLink]="'../../edit-article/' + article.name" *ngIf="user?.hasPermission(UPDATE_ARTICLE, article.game.abbreviation)">Edit</a>
+        <a class="button is-primary" [routerLink]="'../../edit-article/' + article.name" *ngIf="canEditArticle() | async">Edit</a>
       </div>
     </div>
   </div>

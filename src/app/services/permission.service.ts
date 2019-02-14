@@ -10,69 +10,61 @@ import { UserPermissions } from '../model/user';
 })
 export class PermissionService {
   private permissionsFetched = false;
+  private gameSet = false;
 
-  private permissions: UserPermissions;
   private permissionsSubject = new ReplaySubject<UserPermissions>(1);
   permissions$ = this.permissionsSubject.asObservable();
 
   // "Current Game". If defined, this is used to enforce moderator permissions.
-  private game: string;
   private gameSubject = new ReplaySubject<string>(1);
   game$ = this.gameSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.gameSubject.next(null);
-  }
+  constructor(private http: HttpClient) {}
 
   fetch() {
     this.permissionsFetched = true;
     this.http.get('/api/permissions').subscribe(res => {
-      const data = res['data'] as UserPermissions;
-      this.permissionsSubject.next(data);
-      this.permissions = data;
+      const userPermissions = new UserPermissions();
+      Object.assign(userPermissions, res['data']);
+      this.permissionsSubject.next(userPermissions);
     });
   }
 
   setGame(game: string) {
-    this.game = game;
+    if (!this.gameSet) {
+      this.gameSet = true;
+    }
     this.gameSubject.next(game);
   }
 
-  hasPermission(key: string): Observable<boolean> {
+  hasPermission(key: string, forGame?: boolean): Observable<boolean> {
     if (!this.permissionsFetched) {
       this.fetch();
     }
 
-    return this.permissions$.pipe(map(data => {
-      // Check if user has permissions
-      if (!data.permissions || !data.role) {
-        return false;
-      }
+    if (forGame) {
+      return combineLatest(this.permissions$, this.game$).pipe(map(([userPermissions, game]) => {
+        return userPermissions.hasPermissionKey(key) && userPermissions.isAuthorizedForGame(game);
+      }));
+    }
 
-      // Check if user has matching wildcard permission for permission module.
-      // Permissions are always formatted as 'module.permission'.
-      const wildCardPerms = data.permissions.map(permission => permission.value).filter(permission => permission.indexOf('*') > -1);
-      if (wildCardPerms) {
-        // Get permission module and append wildcard to it
-        const wildCardKey = key.split('.')[0] + '.*';
-        if (wildCardPerms.includes(wildCardKey)) {
-          return true;
-        }
-      }
-
-      // If no wildcards are found, check if user has exact permission key
-      return data.permissions.includes(key);
+    return this.permissions$.pipe(map(userPermissions => {
+      return userPermissions.hasPermissionKey(key);
     }));
   }
 
-  hasPermissions(keys: string[]): Observable<boolean> {
+  hasPermissions(keys: string[], forGame?: boolean): Observable<boolean> {
     const sources: Observable<boolean>[] = [];
     for(const key of keys) {
-      sources.push(this.hasPermission(key));
+      sources.push(this.hasPermission(key, forGame));
     }
 
     return combineLatest(sources).pipe(map(data => {
       return data.includes(true) && !data.includes(false);
     }));
+  }
+
+  hasGameSet() {
+    return this.gameSet;
   }
 }

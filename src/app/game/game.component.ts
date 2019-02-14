@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Game, GameTab } from '../model/game';
+import { PermissionService } from '../services/permission.service';
 
 @Component({
   selector: 'app-game',
@@ -15,7 +16,7 @@ export class GameComponent implements OnInit {
   ];
   readonly config = require('../../assets/resources/config.json');
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router, private permissionService: PermissionService) {}
 
   ngOnInit() {
     this.route.params.subscribe(() => {
@@ -24,8 +25,13 @@ export class GameComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.permissionService.setGame(null);
+  }
+
   private getGame() {
     this.game = this.route.snapshot.data.game.data as Game;
+    this.permissionService.setGame(this.game.abbreviation);
     if (Object.keys(this.game).length === 0) {
       this.router.navigate(['/404']);
     }
