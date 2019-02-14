@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../model/user';
@@ -20,6 +20,8 @@ export class AuthService {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       this.setLoggedInUser(user);
+    } else {
+      this.permissionService.setPermissions(null);
     }
   }
 
@@ -53,6 +55,7 @@ export class AuthService {
     this.user = null;
     localStorage.clear();
     this.authenticationChange.next(false);
+    this.permissionService.setPermissions(null);
   }
 
   getLoggedInUser() {
@@ -61,5 +64,6 @@ export class AuthService {
 
   setLoggedInUser(user) {
     this.user = user;
+    this.permissionService.resetPermissions();
   }
 }

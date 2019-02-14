@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, ReplaySubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserPermissions } from '../model/user';
+import { UserPermissions } from '../model/permission';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,31 @@ export class PermissionService {
     });
   }
 
+  setPermissions(permissions: UserPermissions) {
+    this.permissionsFetched = true;
+    this.permissionsSubject.next(permissions);
+  }
+
+  resetPermissions() {
+    if (this.permissionsFetched) {
+      this.permissionsFetched = false;
+      this.permissionsSubject = new ReplaySubject<UserPermissions>(1);
+      this.permissions$ = this.permissionsSubject.asObservable();
+    }
+  }
+
   setGame(game: string) {
     this.gameSubject.next(game);
+  }
+
+  resolvePermissions() {
+    if (!this.permissionsFetched) {
+      this.fetch();
+    }
+
+    return this.permissions$.pipe(map(data => {
+      return true;
+    }));
   }
 
   hasPermission(key: string, forGame?: boolean): Observable<boolean> {
@@ -40,12 +64,14 @@ export class PermissionService {
 
     if (forGame) {
       return combineLatest(this.permissions$, this.game$).pipe(map(([userPermissions, game]) => {
-        return userPermissions.hasPermissionKey(key) && userPermissions.isAuthorizedForGame(game);
+        // userPermissions may not necessarily be defined, such as if no user is logged into client
+        return userPermissions && userPermissions.hasPermissionKey(key) && userPermissions.isAuthorizedForGame(game);
       }));
     }
 
     return this.permissions$.pipe(map(userPermissions => {
-      return userPermissions.hasPermissionKey(key);
+      // userPermissions may not necessarily be defined, such as if no user is logged into client
+      return userPermissions && userPermissions.hasPermissionKey(key);
     }));
   }
 
@@ -58,5 +84,14 @@ export class PermissionService {
     return combineLatest(sources).pipe(map(data => {
       return data.includes(true) && !data.includes(false);
     }));
+  }
+}
+
+@Injectable()
+export class PermissionObjectResolve implements Resolve<Object> {
+  constructor(private permissionService: PermissionService) { }
+
+  resolve(route: ActivatedRouteSnapshot) {
+    return this.permissionService.resolvePermissions();
   }
 }
