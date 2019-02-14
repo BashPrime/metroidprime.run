@@ -48,7 +48,8 @@ const routes: Routes = [
         canActivate: [AuthGuard, PermissionGuard],
         data: {
           permissions: {
-            gameBased: true,
+            forGame: true,
+            levelsToGameParent: 1,
             keys: [
               'game.createArticle'
             ]
@@ -64,8 +65,9 @@ const routes: Routes = [
         canActivate: [AuthGuard, PermissionGuard],
         data: {
           isEdit: true,
+          levelsToGameParent: 1,
           permissions: {
-            gameBased: true,
+            forGame: true,
             keys: [
               'game.updateArticle'
             ]

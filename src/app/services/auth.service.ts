@@ -2,17 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { LoggedInUser } from '../model/user';
+import { User } from '../model/user';
+import { PermissionService } from './permission.service';
 
 @Injectable()
 export class AuthService {
   authToken: any;
-  user: LoggedInUser;
+  user: User;
   authenticationChange: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private http: HttpClient,
-    private jwtHelperService: JwtHelperService
+    private jwtHelperService: JwtHelperService,
+    private permissionService: PermissionService
   ) {
     this.authToken = localStorage.getItem('id_token');
     const user = JSON.parse(localStorage.getItem('user'));
@@ -23,12 +25,6 @@ export class AuthService {
 
   authenticateUser(user) {
     return this.http.post('/api/authenticate', user);
-  }
-
-  getAndStoreUserPermissions() {
-    this.http.get('/api/permissions').subscribe(res => {
-      this.user.setPermissions(res['data']);
-    });
   }
 
   storeUserData(token, user) {
@@ -64,8 +60,6 @@ export class AuthService {
   }
 
   setLoggedInUser(user) {
-    this.user = new LoggedInUser();
-    Object.assign(this.user, user);
-    this.getAndStoreUserPermissions();
+    this.user = user;
   }
 }

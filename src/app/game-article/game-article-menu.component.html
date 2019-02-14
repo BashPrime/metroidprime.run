@@ -18,7 +18,7 @@
               </li>
             </ul>
           </aside>
-          <a class="button is-primary" routerLink="../create-article" *ngIf="canCreateArticle()">Create Article</a>
+          <a class="button is-primary" routerLink="../create-article" *ngIf="canCreateArticle() | async">Create Article</a>
         </div>
         <div class="column">
           <div *ngIf="!hasChildRoute">
@@ -33,7 +33,7 @@
       <div class="has-text-centered">
           <h2 class="title">We're Sorry!</h2>
           <p class="subtitle">This game doesn't have any articles yet. ☹️</p>
-          <a class="button is-primary" routerLink="../create-article" *ngIf="canCreateArticle()">Create Article</a>
+          <a class="button is-primary" routerLink="../create-article" *ngIf="canCreateArticle() | async">Create Article</a>
       </div>
     </ng-template>
   </div>
