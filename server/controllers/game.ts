@@ -3,6 +3,7 @@ import * as passport from 'passport';
 
 import { Controller } from './controller';
 import { GameModel } from '../models/game';
+import { permit } from '../middleware/permission';
 import { DbConnector } from '../dbConnector';
 
 export class GameController extends Controller {
@@ -29,11 +30,11 @@ export class GameController extends Controller {
             this.getSingleArticleForGame(req, res, next);
         });
 
-        this.router.post('/:id/article', passport.authenticate('jwt', { session: false }), (req: Request, res: Response, next: NextFunction) => {
+        this.router.post('/:id/article', passport.authenticate('jwt', { session: false }), permit(['game.createArticle'], connector, 'id'), (req: Request, res: Response, next: NextFunction) => {
             this.createArticle(req, res, next);
         });
 
-        this.router.put('/:id/article/:articleId', passport.authenticate('jwt', { session: false }), (req: Request, res: Response, next: NextFunction) => {
+        this.router.put('/:id/article/:articleId', passport.authenticate('jwt', { session: false }), permit(['game.updateArticle'], connector,  'id'), (req: Request, res: Response, next: NextFunction) => {
             this.updateArticle(req, res, next);
         });
     }
