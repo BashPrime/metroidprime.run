@@ -66,7 +66,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   onLogoutClicked() {
     this.authService.logout();
-    this.router.navigate(['/login', {loggedOut: true}]);
   }
 
 }
