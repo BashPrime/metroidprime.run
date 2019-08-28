@@ -1,0 +1,40 @@
+@import "~bulma/sass/utilities/mixins";
+
+.hero {
+    .hero-body {
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+
+            a {
+                color: white;
+            }
+        }
+
+        .image {
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 0 1px #000;
+        }
+    }
+}
+
+.column.game-icon-column {
+  flex: none;
+  width: 12.5%;
+}
+
+.hero.game-bg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.title a.game-link {
+  margin-right: 0.5em;
+}
+
+@media screen and (min-width: $tablet) {
+    .hero-body {
+        padding: 1.5rem;
+    }
+}

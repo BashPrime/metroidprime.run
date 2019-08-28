@@ -1,0 +1,27 @@
+.hero.has-bg-img {
+  background: #505050;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.level-item {
+  a:hover .image {
+    box-shadow: 0 0 10px white;
+  }
+
+  .heading {
+    color: white;
+    font-size:14px;
+  }
+
+  .image {
+    img {
+      max-height: 480px;
+      max-width: 100%;
+      width: auto;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 0 1px #000;
+    }
+  }
+}

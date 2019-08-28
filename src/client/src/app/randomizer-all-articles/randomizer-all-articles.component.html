@@ -1,0 +1,47 @@
+<div *ngIf="getArticles() && getArticles().length > 0; then articlesView else noArticlesView"></div>
+<ng-template #articlesView>
+    <div class="columns">
+        <div class="column is-one-fifth">
+            <div class="box">
+                <p class="label">Filter by Category<a class="is-pulled-right" (click)="clearFilters()">Clear</a></p>
+                <hr>
+                <div class="field" *ngFor="let category of getDistinctCategories()">
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" [(ngModel)]="getCategoryFilters()[category.abbreviation]">
+                            {{ category.name }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>User</th>
+                        <th>Last Updated</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let article of getFilteredArticles()">
+                        <td>
+                            <a [routerLink]="'../article/' + article.slug">
+                                {{ (article.title.length > 30) ? (article.title | slice:0:29) + '...' : (article.title) }}
+                            </a>
+                        </td>
+                        <td>{{ article.last_updated_user.displayname }}</td>
+                        <td>{{ article.last_updated_date | date }}</td>
+                        <td>{{ article.category.name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-template>
+<ng-template #noArticlesView>
+    <h1 class="title">We're Sorry!</h1>
+    <p class="subtitle">We could not find any articles for this randomizer.</p>
+</ng-template>

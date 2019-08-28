@@ -1,0 +1,17 @@
+<section class="hero is-info is-fullheight has-bg-img" [ngStyle]="heroStyle">
+  <div class="hero-body">
+    <div class="container">
+      <p class="title has-text-centered">Select a Randomizer</p>
+      <div class="level">
+        <div class="level-item has-text-centered" *ngFor="let randomizer of randomizers">
+          <a [routerLink]="'/randomizer/' + randomizer.abbreviation">
+            <p class="heading">{{ randomizer.name }}</p>
+            <div class="image">
+              <img [src]="cdnUrl + 'games/icons/' + randomizer.game.icon">
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
