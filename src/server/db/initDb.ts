@@ -7,19 +7,29 @@ const connection = getConnection();
 
 const dbSchemas = [
     'users.sql',
+    'roles.sql',
+    'permissions.sql',
+    'roles_permissions.sql',
+    'users_roles.sql',
     'news.sql',
     'games.sql',
-    'randomizers.sql',
-    'randomizers_articles_categories.sql',
-    'randomizers_articles.sql',
-    'randomizers_authors.sql'
+    'moderators_games.sql',
+    'games_articles_categories.sql',
+    'games_articles.sql',
+    'categories.sql',
+    'records.sql',
+    'tags.sql',
+    'records_tags.sql'
 ];
 
 const dbData = [
     'games.sql',
-    'randomizers.sql',
-    'randomizers_articles_categories.sql',
-    'randomizers_authors.sql'
+    'games_articles_categories.sql',
+    'categories.sql',
+    'tags.sql',
+    'roles.sql',
+    'permissions.sql',
+    'roles_permissions.sql'
 ];
 
 async function initDb() {
