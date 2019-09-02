@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import { getConnection } from "../config/database";
 
 const knex = getConnection();
@@ -9,7 +10,7 @@ const columns = [
 ];
 
 export function getAll() {
-    return knex.column(columns).select().from('users');
+  return knex.column(columns).select().from('users');
 };
 
 export function getOneById(id: number) {
@@ -25,5 +26,20 @@ export async function getOneByIdSync(id: number) {
 };
 
 export function getOneByName(name: string) {
-    return knex.column(columns).select().from('users').where('name', name).first();
+  return knex.column(columns).select().from('users').where('name', name).first();
+}
+
+export function create(userName: string, password: string, email: string) {
+  const saltRounds = 10;
+
+  // Hash password with bcrypt before storing in database
+  return bcrypt.hash(password, saltRounds)
+  .then(hash => {
+    return knex('users').insert({
+      displayname: userName,
+      name: userName.toLowerCase(),
+      password: hash,
+      email: email
+    });
+  });
 }

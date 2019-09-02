@@ -6,6 +6,7 @@ import * as path from 'path';
 
 import * as config from './config.json';
 import { getConnection } from './config/database';
+import { getPassportStrategies } from './config/passport';
 import { defineControllers } from './controllers';
 
 // Initialize express
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Set up passport middleware
 app.use(passport.initialize());
+getPassportStrategies();
 
 // Angular dist output folder for static files
 app.use(express.static(path.join(__dirname, './client')));
