@@ -1,9 +1,13 @@
 import * as passport from 'passport';
 import * as bcrypt from 'bcrypt';
+import * as passportJwt from 'passport-jwt';
 import * as passportLocal from 'passport-local';
 
+import * as config from '../config.json';
 import * as users from '../models/users';
 
+const ExtractJwt = passportJwt.ExtractJwt;
+const JwtStrategy = passportJwt.Strategy;
 const LocalStrategy = passportLocal.Strategy;
 const incorrectUsernameOrPassword = 'Incorrect username or password.';
 
@@ -27,4 +31,18 @@ export function getPassportStrategies() {
       .catch(err => cb(err));
   }
   ));
+
+  passport.use(new JwtStrategy({
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: config.server.token.secretKey
+  }, (jwt_payload, cb) => {
+    users.getOneById(jwt_payload.sub)
+    .then(user => {
+      if (!user) {
+        return cb(null, false);
+      }
+      return cb(null, user);
+    })
+    .catch(err => cb(err, false));
+}));
 }
