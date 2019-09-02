@@ -1,4 +1,6 @@
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as passport from 'passport';
 import * as http from 'http';
 import * as path from 'path';
 
@@ -11,6 +13,13 @@ const app = express();
 
 // Initialize knex connection
 getConnection();
+
+// Set up body-parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Set up passport middleware
+app.use(passport.initialize());
 
 // Angular dist output folder for static files
 app.use(express.static(path.join(__dirname, './client')));

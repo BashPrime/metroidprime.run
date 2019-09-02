@@ -16,6 +16,10 @@ export function getOneById(id: number) {
   return knex.column(columns).select().from('users').where('id', id).first();
 };
 
+export function getOneByNameAllColumns(name: string) {
+  return knex('users').where('name', name).first();
+}
+
 export async function getOneByIdSync(id: number) {
   return await knex.column(columns).select().from('users').where('id', id).first();
 };

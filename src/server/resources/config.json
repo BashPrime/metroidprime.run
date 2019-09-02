@@ -7,7 +7,10 @@
       "database": "metroidprimerun"
     },
     "server": {
-      "port": 3000
+      "port": 3000,
+      "token": {
+        "secretKey": "",
+        "expiresIn": 86400
+      }
     }
   }
-  
