@@ -9,17 +9,14 @@ import { RandomizerArticleComponent } from './randomizer-article/randomizer-arti
 import { NotFoundComponent } from './not-found/not-found.component';
 
 // Services
-import { AllRandomizersResolve, SingleRandomizerResolve } from './services/randomizer.service';
+import { SingleRandomizerResolve } from './services/randomizer.service';
 import { AllRandomizerArticlesResolve, OneRandomizerArticleResolve } from './services/randomizer-article.service';
 import { RandomizerAllArticlesComponent } from './randomizer-all-articles/randomizer-all-articles.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    resolve: {
-      randomizers: AllRandomizersResolve
-    }
+    component: HomeComponent
   },
   {
     path: 'randomizer/:randomizer',

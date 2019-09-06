@@ -1,17 +1,32 @@
-<section class="hero is-info is-fullheight has-bg-img" [ngStyle]="heroStyle">
+<section class="hero is-info is-small has-bg-img" [ngStyle]="heroStyle">
   <div class="hero-body">
     <div class="container">
-      <p class="title has-text-centered">Select a Randomizer</p>
-      <div class="level">
-        <div class="level-item has-text-centered" *ngFor="let randomizer of randomizers">
-          <a [routerLink]="'/randomizer/' + randomizer.abbreviation">
-            <p class="heading">{{ randomizer.name }}</p>
-            <div class="image">
-              <img [src]="cdnUrl + 'games/icons/' + randomizer.game.icon">
-            </div>
-          </a>
-        </div>
+      <div class="has-text-centered">
+        <h1 class="title is-1">Metroid Prime Speedrunning</h1>
       </div>
     </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <p class="title is-2 has-text-centered">World Records</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Game</th>
+          <th>Runner</th>
+          <th>World Record</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of worldRecords">
+          <td><a [href]="'https://speedrun.com/' + record.speedrunComId" target="_blank">{{ record.gameTitle }}</a></td>
+          <td>{{ record.runner }}</td>
+          <td>{{ record.time }}</td>
+          <td><a [href]="record.video" target="_blank">{{ getLinkText(record.video) }}</a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
