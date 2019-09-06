@@ -12,10 +12,10 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FooterComponent } from './footer/footer.component';
 import { GameComponent } from './game/game.component';
-import { RandomizerArticleComponent } from './randomizer-article/randomizer-article.component';
-import { RandomizerOverviewComponent } from './randomizer-overview/randomizer-overview.component';
-import { RandomizerAllArticlesComponent } from './randomizer-all-articles/randomizer-all-articles.component';
 import { BaseComponent } from './base/base.component';
+import { GameArticleComponent } from './game-article/game-article.component';
+import { GameAllArticlesComponent } from './game-all-articles/game-all-articles.component';
+import { GameOverviewComponent } from './game-overview/game-overview.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +25,10 @@ import { BaseComponent } from './base/base.component';
     NotFoundComponent,
     FooterComponent,
     GameComponent,
-    RandomizerArticleComponent,
-    RandomizerOverviewComponent,
-    RandomizerAllArticlesComponent,
-    BaseComponent
+    BaseComponent,
+    GameArticleComponent,
+    GameAllArticlesComponent,
+    GameOverviewComponent
   ],
   imports: [
     BrowserModule,

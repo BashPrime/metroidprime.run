@@ -11,6 +11,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 // Services
 import { AllGamesResolve, SingleGameResolve } from './services/game.service';
+import { AllGameArticlesResolve } from './services/game-article.service';
+import { GameOverviewComponent } from './game-overview/game-overview.component';
+import { GameAllArticlesComponent } from './game-all-articles/game-all-articles.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -30,7 +33,25 @@ const routes: Routes = [
         component: GameComponent,
         resolve: {
           game: SingleGameResolve
-        }
+        },
+        children: [
+          {
+            path: '',
+            component: GameOverviewComponent,
+            pathMatch: 'full',
+            resolve: {
+              articles: AllGameArticlesResolve
+            }
+          },
+          {
+            path: 'articles',
+            component: GameAllArticlesComponent,
+            pathMatch: 'full',
+            resolve: {
+              articles: AllGameArticlesResolve
+            }
+          },
+        ]
       },
       { path: '404', component: NotFoundComponent },
       { path: '**', redirectTo: '404' }

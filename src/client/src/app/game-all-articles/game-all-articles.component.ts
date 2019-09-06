@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
-import { RandomizerArticle } from '../../../../common/models/randomizerArticle';
+import { GameArticle } from '../../../../common/models/gameArticle';
 
 @Component({
-  selector: 'app-randomizer-all-articles',
-  templateUrl: './randomizer-all-articles.component.html',
-  styleUrls: ['./randomizer-all-articles.component.scss']
+  selector: 'app-game-all-articles',
+  templateUrl: './game-all-articles.component.html',
+  styleUrls: ['./game-all-articles.component.scss']
 })
-export class RandomizerAllArticlesComponent implements OnInit {
-  private articles: RandomizerArticle[];
+export class GameAllArticlesComponent implements OnInit {
+  private articles: GameArticle[];
   private categoryFilters: { [key: string]: boolean } = {};
   objectKeys = Object.keys;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(() => {
