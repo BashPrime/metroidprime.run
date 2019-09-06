@@ -15,6 +15,7 @@ import { GameComponent } from './game/game.component';
 import { RandomizerArticleComponent } from './randomizer-article/randomizer-article.component';
 import { RandomizerOverviewComponent } from './randomizer-overview/randomizer-overview.component';
 import { RandomizerAllArticlesComponent } from './randomizer-all-articles/randomizer-all-articles.component';
+import { BaseComponent } from './base/base.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RandomizerAllArticlesComponent } from './randomizer-all-articles/random
     GameComponent,
     RandomizerArticleComponent,
     RandomizerOverviewComponent,
-    RandomizerAllArticlesComponent
+    RandomizerAllArticlesComponent,
+    BaseComponent
   ],
   imports: [
     BrowserModule,

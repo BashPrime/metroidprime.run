@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
+
+import { Game } from '../../../../common/models/game';
 
 @Component({
   selector: 'app-navigation',
@@ -8,11 +11,23 @@ import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 })
 export class NavigationComponent implements OnInit {
   private showNav: boolean = false;
+  private games: Game[];
   faDiscord = faDiscord;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(() => {
+      this.setGames(this.route.snapshot.data.games);
+    });
+  }
+
+  getGames() {
+    return this.games;
+  }
+
+  setGames(games: Game[]) {
+    this.games = games;
   }
 
   getShowNav() {
