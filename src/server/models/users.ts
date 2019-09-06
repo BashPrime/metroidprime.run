@@ -5,8 +5,7 @@ const knex = getConnection();
 const columns = [
   'id',
   'name',
-  'displayname',
-  'enabled'
+  'displayname'
 ];
 
 export function getAll() {

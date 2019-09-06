@@ -11,7 +11,7 @@ const columns = [
   'categoryid',
   'last_updated_user',
   'last_updated_date',
-  'randomizerid'
+  'gameid'
 ];
 
 export function getAllForGame(gameAbbreviation: string) {
@@ -28,7 +28,7 @@ export function getAllForGame(gameAbbreviation: string) {
           article.last_updated_user = await users.getOneByIdSync(article.last_updated_user);
           article.category = await gamesArticlesCategories.getOneByIdSync(article.categoryid);
 
-          delete article.randomizerid;
+          delete article.gameid;
           delete article.categoryid;
         }
       }
@@ -50,6 +50,9 @@ export function getOneForGame(slug: string, gameAbbreviation: string) {
         article.content = parseContent(article.content);
         article.last_updated_user = await users.getOneByIdSync(article.last_updated_user);
         article.category = await gamesArticlesCategories.getOneByIdSync(article.categoryid);
+
+        delete article.gameid;
+        delete article.categoryid;
       }
 
       return article;
