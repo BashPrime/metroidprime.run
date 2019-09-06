@@ -19,7 +19,7 @@ export function getAllForGame(gameAbbreviation: string) {
   return games.getOneByAbbreviation(gameAbbreviation)
     .then(game => {
       fetchedGame = game;
-      return knex.columns(columns).select().from('games_randomizers_articles').where('gameid', game.id);
+      return knex.columns(columns).select().from('games_articles').where('gameid', game.id);
     })
     .then(async articles => {
       for (let article of articles) {
