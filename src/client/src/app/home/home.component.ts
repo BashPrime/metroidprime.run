@@ -10,6 +10,8 @@ import * as config from '../../assets/resources/config.json';
 })
 export class HomeComponent implements OnInit {
   cdnUrl: string = config.cdnUrl;
+  homeBannerImg: string = config.homeBannerImg;
+
   worldRecords: WorldRecord[] = [
     {
       gameTitle: 'Metroid Prime',
@@ -61,7 +63,7 @@ export class HomeComponent implements OnInit {
 
   get heroStyle() {
     return {
-      'background-image': 'linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("' + this.cdnUrl + 'home/home-banner.jpg")'
+      'background-image': 'linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("' + this.cdnUrl + this.homeBannerImg + '")'
     };
   }
 

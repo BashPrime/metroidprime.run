@@ -1,3 +1,4 @@
 {
-    "cdnUrl": "/assets/cdn/"
+    "cdnUrl": "/assets/cdn/",
+    "homeBannerImg": "home/home-banner.jpg"
 }
