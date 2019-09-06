@@ -16,42 +16,42 @@ export class HomeComponent implements OnInit {
       runner: 'T3',
       time: '0:49 (IGT)',
       video: 'https://www.youtube.com/watch?v=1p3jBuvu0Ao',
-      speedrunComId: 'mp',
+      gameAbbreviation: 'prime',
     },
     {
       gameTitle: 'Metroid Prime 2: Echoes',
       runner: 'LivingCircuitry',
       time: '0:53 (IGT)',
       video: 'https://www.youtube.com/watch?v=n5nYdYIotoM',
-      speedrunComId: 'mp2_echoes',
+      gameAbbreviation: 'echoes',
     },
     {
       gameTitle: 'Metroid Prime 3: Corruption',
       runner: 'Claris',
       time: '1:46:52 (IGT)',
       video: 'https://www.youtube.com/watch?v=2u-7mZO69E8',
-      speedrunComId: 'mp3'
+      gameAbbreviation: 'corruption'
     },
     {
       gameTitle: 'Metroid Prime Hunters',
       runner: 'Dann_1',
       time: '1:01:23 (IGT)',
       video: 'https://www.youtube.com/watch?v=QVqHcRCg6Lg',
-      speedrunComId: 'mph'
+      gameAbbreviation: 'hunters'
     },
     {
       gameTitle: 'Metroid Prime Pinball',
       runner: 'UchihaMadao',
       time: '17:37',
       video: 'https://www.youtube.com/watch?v=cZ5-A_3MWzQ',
-      speedrunComId: 'Metroid_Prime_Pinball'
+      gameAbbreviation: 'pinball'
     },
     {
       gameTitle: 'Metroid Prime: Federation Force',
       runner: 'kirbyellowkine',
       time: '2:16:59',
       video: 'https://www.youtube.com/watch?v=7w7y51lvick',
-      speedrunComId: 'mpff'
+      gameAbbreviation: 'federationforce'
     }
   ]
 
@@ -83,5 +83,5 @@ interface WorldRecord {
   runner: string;
   time: string;
   video: string;
-  speedrunComId: string;
+  gameAbbreviation: string;
 }

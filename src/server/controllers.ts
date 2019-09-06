@@ -8,7 +8,7 @@ import * as packageJson from '../../package.json';
 export function defineControllers(): Router {
     const router = Router();
 
-    router.get('/', (req, res) => res.send('metroid-prime-randomizer-website API v' + packageJson.version));
+    router.get('/', (req, res) => res.send('metroidprime.run API v' + packageJson.version));
 
     // Define controller-specific routes
     router.use('/games', gamesController);

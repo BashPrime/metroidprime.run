@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to metroid-prime-randomizer-website!');
+    expect(page.getTitleText()).toEqual('Welcome to metroidprime.run!');
   });
 
   afterEach(async () => {

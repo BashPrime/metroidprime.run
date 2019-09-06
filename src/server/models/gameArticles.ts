@@ -24,7 +24,7 @@ export function getAllForGame(gameAbbreviation: string) {
     .then(async articles => {
       for (let article of articles) {
         if (article) {
-          article.randomizer = fetchedGame;
+          article.game = fetchedGame;
           article.last_updated_user = await users.getOneByIdSync(article.last_updated_user);
           article.category = await gamesArticlesCategories.getOneByIdSync(article.categoryid);
 

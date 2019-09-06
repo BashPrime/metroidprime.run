@@ -1,5 +1,5 @@
 {
-  "name": "metroid-prime-randomizer-website-client",
+  "name": "metroidprime.run-client",
   "version": "1.0.0",
   "scripts": {
     "ng:serve": "ng serve --proxy-config proxy.conf.json",

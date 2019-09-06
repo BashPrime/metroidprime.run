@@ -40,7 +40,7 @@ app.set('port', port);
 const server = http.createServer(app);
 
 server.listen(port, () => {
-  console.log(`metroid-prime-randomizer server running on localhost:${port}`);
+  console.log(`metroidprime.run server running on localhost:${port}`);
 });
 
 process.on('SIGTERM', shutDown);

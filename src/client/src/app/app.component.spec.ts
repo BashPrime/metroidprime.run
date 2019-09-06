@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'metroid-prime-randomizer-website'`, () => {
+  it(`should have as title 'metroidprime.run'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('metroid-prime-randomizer-website');
+    expect(app.title).toEqual('metroidprime.run');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to metroid-prime-randomizer-website!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to metroidprime.run!');
   });
 });

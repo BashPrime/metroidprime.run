@@ -7,26 +7,28 @@
     </div>
   </div>
 </section>
-<section class="section">
-  <div class="container">
-    <p class="title is-2 has-text-centered">World Records</p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Game</th>
-          <th>Runner</th>
-          <th>World Record</th>
-          <th>Link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let record of worldRecords">
-          <td><a [href]="'https://speedrun.com/' + record.speedrunComId" target="_blank">{{ record.gameTitle }}</a></td>
-          <td>{{ record.runner }}</td>
-          <td>{{ record.time }}</td>
-          <td><a [href]="record.video" target="_blank">{{ getLinkText(record.video) }}</a></td>
-        </tr>
-      </tbody>
-    </table>
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <p class="title is-2 has-text-centered">World Records</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Game</th>
+            <th>Runner</th>
+            <th>World Record</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of worldRecords">
+            <td><a [routerLink]="'/game/' + record.gameAbbreviation">{{ record.gameTitle }}</a></td>
+            <td>{{ record.runner }}</td>
+            <td>{{ record.time }}</td>
+            <td><a [href]="record.video" target="_blank">{{ getLinkText(record.video) }}</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
