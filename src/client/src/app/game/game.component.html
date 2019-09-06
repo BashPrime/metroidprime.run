@@ -1,0 +1,31 @@
+<section class="hero is-info is-small game-bg" [ngStyle]="heroStyle">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns">
+        <div class="column game-icon-column is-hidden-mobile">
+          <div class="image">
+            <img [src]="cdnUrl + 'games/icons/' + getGame().icon" />
+          </div>
+        </div>
+        <div class="column">
+          <h1 class="title">
+            <a class="game-link" routerLink=".">{{ getGame().name }}</a>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="tabs is-centered">
+  <ul>
+    <li *ngFor="let tab of getTabs(); let i = index" [ngClass]="{ 'is-active': tabActive.isActive }">
+      <a [routerLink]="['./' + tab.route]" routerLinkActive #tabActive="routerLinkActive" [routerLinkActiveOptions]="{exact:
+        true}">{{ tab.name }}</a>
+    </li>
+  </ul>
+</div>
+<section class="section">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</section>
