@@ -4,4 +4,6 @@ export interface Game {
     abbreviation: string;
     icon: string;
     banner: string;
+    order: number;
+    release_date: Date;
 }
