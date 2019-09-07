@@ -4,5 +4,6 @@ CREATE TABLE games (
     abbreviation TEXT NOT NULL UNIQUE,
     icon TEXT NOT NULL DEFAULT 'default.jpg',
     banner TEXT NOT NULL DEFAULT 'default.jpg',
-    order INTEGER NOT NULL
+    order INTEGER NOT NULL,
+    release_date DATE NOT NULL
 );
