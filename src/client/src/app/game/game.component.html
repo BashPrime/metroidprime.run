@@ -11,6 +11,7 @@
           <h1 class="title">
             <a class="game-link" routerLink=".">{{ getGame().name }}</a>
           </h1>
+          <p class="subtitle">Released {{ getGame().release_date | date:'mediumDate' }}</p>
         </div>
       </div>
     </div>
