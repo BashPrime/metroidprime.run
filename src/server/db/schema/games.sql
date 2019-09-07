@@ -3,5 +3,6 @@ CREATE TABLE games (
     name TEXT NOT NULL,
     abbreviation TEXT NOT NULL UNIQUE,
     icon TEXT NOT NULL DEFAULT 'default.jpg',
-    banner TEXT NOT NULL DEFAULT 'default.jpg'
+    banner TEXT NOT NULL DEFAULT 'default.jpg',
+    order INTEGER NOT NULL
 );

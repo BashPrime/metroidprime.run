@@ -3,7 +3,7 @@ import { getConnection } from "../config/database";
 const knex = getConnection();
 
 export function getAll() {
-    return knex('games');
+    return knex('games').orderBy('order');
 };
 
 export function getOneById(id: number) {
