@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
+
 
 import * as config from '../../assets/resources/config.json';
-
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,7 @@ import * as config from '../../assets/resources/config.json';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  faDiscord = faDiscord;
   cdnUrl: string = config.cdnUrl;
   homeBannerImg: string = config.homeBannerImg;
 
