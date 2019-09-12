@@ -1,29 +1,24 @@
 # metroidprime.run
 
-Code and database scaffolding for the metroidprime.run website.
+Code and database scaffolding for https://metroidprime.run.
 
 ## About
 
-The web application is powered by [Angular](https://angular.io), [Node.js](https://nodejs.org), and [Express.js](https://expressjs.com/).
+This web application is powered by [Angular](https://angular.io), [TypeScript](https://www.typescriptlang.org), [Node.js](https://nodejs.org), [Express.js](https://expressjs.com), and [Knex.js](https://knexjs.org).
 
-The database used on metroidprime.run is [PostgreSQL 10](https://www.postgresql.org/). While other databases can technically be used due this project using [Knex.js](http://knexjs.org), this project assumes you are using a PostgreSQL server.
+This app uses [PostgreSQL 10](https://www.postgresql.org/) for the database. While other databases can technically be used due this project using Knex, this project assumes you are using a PostgreSQL server.
 
 ## Install
 
-You will need [Node.js](https://nodejs.org) to download the project dependencies using `npm`. Once you're ready to go, run the following commands:
+You will need to install [Node.js](https://nodejs.org) to download the project dependencies using `npm`. Once you have Node installed, run the following commands:
+
+Run the following command to create a new config file for the application:
 
 ```bash
-npm install -g @angular/cli
-npm install
+npm run generate:config
 ```
 
-Run the following command to create a new config file, `config.js`, for the application:
-
-```bash
-npm run server
-```
-
-You will need to configure your database connection settings in `config.js`. For example:
+You will need to configure your database connection settings in `/src/server/config.json`. For example:
 
 ```javascript
 database: {
@@ -35,15 +30,7 @@ database: {
 }
 ```
 
-In the `token` section of your `config.js` file, you will see the `secretKey` entry; it is higly recommended you use a randomly-generated key for signing any authentication tokens the app creates. For convenience, you can run the following command to generate a secret key.
-
-```bash
-npm run generate:secret
-```
-
-Just copy and paste the generated key to your `secretKey` value once it is generated.
-
-After setting up your server/database configuration, run the following command to scaffold your Postgres tables:
+After configuring your server, run the following command to scaffold the database:
 
 ```bash
 npm run initdb
@@ -69,14 +56,16 @@ npm run server:dev
 
 ### Production
 
-First, run a production build of the Angular webapp:
+To build the application for production use, run the following command:
 
 ```bash
-ng build --prod
+npm run build:prod
 ```
 
-Then, start the Express server:
+This will build both the Angular client and Node server for production use, and output both bundles to the `/dist` folder.
+
+To run the application in production, run the following command:
 
 ```bash
-npm run server
+npm run server:prod
 ```
