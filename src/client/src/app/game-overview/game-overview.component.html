@@ -1,26 +1,29 @@
-<div *ngIf="getArticles() && getArticles().length">
-    <h1 class="title">Recent Articles & Edits</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>User</th>
-          <th>Last Updated</th>
-          <th>Category</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let article of getLatestArticles()">
-          <td>
-            <a [routerLink]="'./article/' + article.slug">
-              {{ (article.title.length > 30) ? (article.title | slice:0:29) + '...' : (article.title) }}
-            </a>
-          </td>
-          <td>{{ article.last_updated_user.displayname }}</td>
-          <td>{{ article.last_updated_date | date }}</td>
-          <td>{{ article.category.name }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+<h1 class="title">Recent Articles & Edits</h1>
+<div *ngIf="canShowArticles; then articlesView else noArticlesView"></div>
+<ng-template #articlesView>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>User</th>
+        <th>Last Updated</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let article of getLatestArticles()">
+        <td>
+          <a [routerLink]="'./article/' + article.slug">
+            {{ (article.title.length > 30) ? (article.title | slice:0:29) + '...' : (article.title) }}
+          </a>
+        </td>
+        <td>{{ article.last_updated_user.displayname }}</td>
+        <td>{{ article.last_updated_date | date }}</td>
+        <td>{{ article.category.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #noArticlesView>
+  <p>No articles found.</p>
+</ng-template>

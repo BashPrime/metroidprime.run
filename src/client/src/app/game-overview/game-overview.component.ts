@@ -28,4 +28,8 @@ export class GameOverviewComponent implements OnInit {
       return new Date(b.last_updated_date).getTime() - new Date(a.last_updated_date).getTime();
     }).slice(0, (limit - 1));
   }
+
+  get canShowArticles(): boolean {
+    return this.articles && this.articles.length > 0;
+  }
 }
