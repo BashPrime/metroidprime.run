@@ -13,7 +13,7 @@ export function defineControllers(): Router {
     // Define controller-specific routes
     router.use('/games', gamesController);
     router.use('/news', newsController);
-    router.use('/auth', authController);
+    // router.use('/auth', authController);
 
     return router;
 };
